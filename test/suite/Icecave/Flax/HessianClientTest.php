@@ -7,7 +7,7 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->client = new HessianClient;
+        // $this->client = new HessianClient;
     }
 
     public function testPlaceHolder()

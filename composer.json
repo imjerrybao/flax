@@ -1,6 +1,6 @@
 {
     "name": "icecave/flax",
-    "description": "A Hessian 2 client for PHP",
+    "description": "A client library for the Hessian binary web services protocol.",
     "keywords": ["hessian", "burlap", "binary", "protocol", "java", "webservice", "api"],
     "homepage": "https://github.com/IcecaveStudios/flax",
     "license": "MIT",
@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3"
+        "php": ">=5.3",
+        "kriswallsmith/buzz": "~0.10.0"
     },
     "require-dev": {
         "eloquent/typhoon": "~0.9.0",

@@ -4,7 +4,7 @@
 [![Test Coverage]](https://coveralls.io/r/IcecaveStudios/flax?branch=develop)
 [![SemVer]](http://semver.org)
 
-**Flax** needs a description!
+**Flax** is a client library for the Hessian binary web services protocol.
 
 * Install via [Composer](http://getcomposer.org) package [icecave/flax](https://packagist.org/packages/icecave/flax)
 * Read the [API documentation](http://icecavestudios.github.io/flax/artifacts/documentation/api/)
