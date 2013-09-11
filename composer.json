@@ -1,0 +1,34 @@
+{
+    "name": "icecave/flax",
+    "description": "A Hessian 2 client for PHP",
+    "keywords": ["hessian", "burlap", "binary", "protocol", "java", "webservice", "api"],
+    "homepage": "https://github.com/IcecaveStudios/flax",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "James Harris",
+            "email": "james.harris@icecave.com.au",
+            "homepage": "https://github.com/jmalloc"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "require-dev": {
+        "eloquent/typhoon": "~0.9.0",
+        "icecave/archer": "~1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Icecave\\Flax": "src",
+            "Icecave\\Flax\\TypeCheck": "src-typhoon"
+        }
+    },
+    "extra": {
+        "typhoon": {
+            "output-path": "src-typhoon",
+            "validator-namespace": "Icecave\\Flax\\TypeCheck",
+            "use-native-callable": false
+        }
+    }
+}
