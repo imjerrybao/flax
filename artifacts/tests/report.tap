@@ -28,5 +28,5 @@ ok 26 - Icecave\Flax\Wire\ValueWriterTest::testEncode with data set "integer - 3
 ok 27 - Icecave\Flax\Wire\ValueWriterTest::testEncode with data set "integer - 3 octet max" (262143, '×ÿÿ')
 ok 28 - Icecave\Flax\Wire\ValueWriterTest::testEncode with data set "integer - 3 octet midway" (-4000, 'Óð`')
 ok 29 - Icecave\Flax\Wire\ValueWriterTest::testEncode with data set "integer - 4 octet" (270544960, 'I 0@')
-ok 30 - Icecave\Flax\Wire\ValueWriterTest::testEncode with data set "integer - 8 octet" (1161981756646125696, 'I 0@P`p€')
+ok 30 - Icecave\Flax\Wire\ValueWriterTest::testEncode with data set "integer - 8 octet" (1161981756646125696, 'L 0@P`p€')
 1..30
