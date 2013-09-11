@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1378859639">
+  <project timestamp="1378859639">
+    <package name="Icecave\Flax">
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClient.php">
+        <class name="HessianClient" namespace="Icecave\Flax">
+          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        </class>
+        <line num="7" type="stmt" count="0"/>
+        <metrics loc="6" ncloc="6" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </file>
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClientFactory.php">
+        <class name="HessianClientFactory" namespace="Icecave\Flax">
+          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
+        </class>
+        <line num="6" type="method" name="connect" crap="2" count="0"/>
+        <line num="7" type="stmt" count="0"/>
+        <line num="8" type="stmt" count="0"/>
+        <metrics loc="9" ncloc="9" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
+      </file>
+    </package>
+    <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClientInterface.php">
+      <line num="7" type="stmt" count="0"/>
+      <metrics loc="6" ncloc="6" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <metrics files="3" loc="21" ncloc="21" classes="2" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
+  </project>
+</coverage>
