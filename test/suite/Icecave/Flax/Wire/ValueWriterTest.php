@@ -80,7 +80,7 @@ class ValueWriterTest extends PHPUnit_Framework_TestCase
         );
 
         if (PHP_INT_SIZE > 4) {
-            $data['integer - 8 octet'] = array(0x1020304050607080, "I\x10\x20\x30\x40\x50\x60\x70\x80");
+            $data['integer - 8 octet'] = array(0x1020304050607080, "L\x10\x20\x30\x40\x50\x60\x70\x80");
         }
 
         return $data;

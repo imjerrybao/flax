@@ -76,7 +76,7 @@ class ValueWriter
             return 'I' . pack('N', $value);
         }
 
-        return 'I' . Utility::packInt64($value);
+        return 'L' . Utility::packInt64($value);
     }
 
     /**
