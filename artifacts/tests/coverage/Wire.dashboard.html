@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /home/travis/build/IcecaveLabs/flax/src/Icecave/Flax</title>
+  <title>Dashboard for /home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -17,7 +17,8 @@
     <div class="row">
      <div class="span12">
       <ul class="breadcrumb">
-        <li><a href="index.html">/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax</a></li>
+        <li><a href="index.html">/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax</a> <span class="divider">/</span></li>
+        <li><a href="Wire.html">Wire</a></li>
         <li class="active">(Dashboard)</li>
 
       </ul>
@@ -48,16 +49,16 @@
     <div class="span6">
      <h2>Least Tested Methods</h2>
      <ul>
-              <li><a href="Wire_Utility.php.html#54">Utility::unpackInt64</a> (0%)</li>
-              <li><a href="Wire_ValueWriter.php.html#13">ValueWriter::write</a> (0%)</li>
               <li><a href="Wire_ValueWriter.php.html#144">ValueWriter::encodeArray</a> (0%)</li>
               <li><a href="Wire_ValueWriter.php.html#152">ValueWriter::encodeObject</a> (0%)</li>
-              <li><a href="HessianClient.php.html#13">HessianClient::__construct</a> (0%)</li>
-              <li><a href="Wire_Utility.php.html#38">Utility::packInt64</a> (0%)</li>
-              <li><a href="HessianClient.php.html#27">HessianClient::__call</a> (0%)</li>
+              <li><a href="Wire_Utility.php.html#11">Utility::isBigEndian</a> (0%)</li>
+              <li><a href="Wire_ValueWriter.php.html#13">ValueWriter::write</a> (0%)</li>
+              <li><a href="Wire_Utility.php.html#54">Utility::unpackInt64</a> (0%)</li>
               <li><a href="Wire_Utility.php.html#24">Utility::convertEndianness</a> (0%)</li>
-              <li><a href="HessianClientFactory.php.html#15">HessianClientFactory::connect</a> (0%)</li>
-              <li><a href="HessianClient.php.html#40">HessianClient::invoke</a> (0%)</li>
+              <li><a href="Wire_Utility.php.html#38">Utility::packInt64</a> (0%)</li>
+              <li><a href="Wire_ValueWriter.php.html#93">ValueWriter::encodeString</a> (80%)</li>
+              <li><a href="Wire_ValueWriter.php.html#23">ValueWriter::encode</a> (82%)</li>
+              <li><a href="Wire_ValueWriter.php.html#113">ValueWriter::encodeDouble</a> (93%)</li>
 
      </ul>
     </div>
@@ -93,7 +94,7 @@ $(document).ready(function() {
    labels: {style: {fontSize: '8px'}},
   },
   series: [{
-   data: [3,0,0,0,0,0,0,0,0,1,0,0]
+   data: [1,0,0,0,0,0,0,0,0,1,0,0]
   }],
  });
 
@@ -119,7 +120,7 @@ $(document).ready(function() {
    }
   },
   series: [{
-   data: [[0,3,"<a href=\"HessianClient.php.html#7\">HessianClient<\/a>"],[0,1,"<a href=\"HessianClientFactory.php.html#8\">HessianClientFactory<\/a>"],[0,6,"<a href=\"Wire_Utility.php.html#6\">Utility<\/a>"],[83.333333333333,35,"<a href=\"Wire_ValueWriter.php.html#7\">ValueWriter<\/a>"]],
+   data: [[0,6,"<a href=\"Wire_Utility.php.html#6\">Utility<\/a>"],[83.333333333333,35,"<a href=\"Wire_ValueWriter.php.html#7\">ValueWriter<\/a>"]],
    marker: {
     symbol: 'diamond'
    }
