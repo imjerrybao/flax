@@ -3,22 +3,19 @@ namespace Icecave\Flax\Wire;
 
 use PHPUnit_Framework_TestCase;
 
-class ValueWriterTest extends PHPUnit_Framework_TestCase
+class ValueEncoderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->writer = new ValueWriter;
+        $this->encoder = new ValueEncoder;
     }
 
     /**
      * @dataProvider getTestValues
      */
-    public function testWrite($value, $expectedResult)
+    public function testEncode($value, $expectedResult)
     {
-        $buffer = '...';
-        $expectedResult = '...' . $expectedResult;
-
-        $this->writer->write($buffer, $value);
+        $buffer = $this->encoder->encode($value);
 
         if ($buffer !== $expectedResult) {
             $this->assertSame(
@@ -31,11 +28,29 @@ class ValueWriterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider getTestValues
+     * @dataProvider getBinaryTestValues
      */
-    public function testEncode($value, $expectedResult)
+    public function testEncodeBinary($value, $expectedResult)
     {
-        $buffer = $this->writer->encode($value);
+        $buffer = $this->encoder->encodeBinary($value);
+
+        if ($buffer !== $expectedResult) {
+            $this->assertSame(
+                $this->formatBinaryData($expectedResult),
+                $this->formatBinaryData($buffer)
+            );
+        } else {
+            $this->assertTrue(true);
+        }
+    }
+
+
+    /**
+     * @dataProvider getTimestampTestValues
+     */
+    public function testEncodeTimestamp($value, $expectedResult)
+    {
+        $buffer = $this->encoder->encodeTimestamp($value);
 
         if ($buffer !== $expectedResult) {
             $this->assertSame(
@@ -49,10 +64,10 @@ class ValueWriterTest extends PHPUnit_Framework_TestCase
 
     public function getTestValues()
     {
-        $string = $this->generateString(1000);
-        $chunkA = $this->generateString(0xffff);
-        $chunkB = $this->generateString(0xffff);
-        $chunkC = $this->generateString(0x7fff);
+        $string = $this->generateData(1000);
+        $chunkA = $this->generateData(0xffff);
+        $chunkB = $this->generateData(0xffff);
+        $chunkC = $this->generateData(0x7fff);
 
 
         $data = array(
@@ -102,48 +117,11 @@ class ValueWriterTest extends PHPUnit_Framework_TestCase
         return $data;
     }
 
-    /**
-     * @dataProvider getBinaryTestValues
-     */
-    public function testWriteBinary($value, $expectedResult)
-    {
-        $buffer = '...';
-        $expectedResult = '...' . $expectedResult;
-
-        $this->writer->writeBinary($buffer, $value);
-
-        if ($buffer !== $expectedResult) {
-            $this->assertSame(
-                $this->formatBinaryData($expectedResult),
-                $this->formatBinaryData($buffer)
-            );
-        } else {
-            $this->assertTrue(true);
-        }
-    }
-
-    /**
-     * @dataProvider getBinaryTestValues
-     */
-    public function testEncodeBinary($value, $expectedResult)
-    {
-        $buffer = $this->writer->encodeBinary($value);
-
-        if ($buffer !== $expectedResult) {
-            $this->assertSame(
-                $this->formatBinaryData($expectedResult),
-                $this->formatBinaryData($buffer)
-            );
-        } else {
-            $this->assertTrue(true);
-        }
-    }
-
     public function getBinaryTestValues()
     {
-        $chunkA = $this->generateString(0xffff);
-        $chunkB = $this->generateString(0xffff);
-        $chunkC = $this->generateString(0x7fff);
+        $chunkA = $this->generateData(0xffff);
+        $chunkB = $this->generateData(0xffff);
+        $chunkC = $this->generateData(0x7fff);
 
         return array(
             'binary - empty'            => array("",                          "\x20"),
@@ -154,7 +132,15 @@ class ValueWriterTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    private function generateString($length)
+    public function getTimestampTestValues()
+    {
+        return array(
+            'timestamp - milliseconds' => array(strtotime('09:51:31 May 8, 1998 UTC') * 1000, "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),
+            'timestamp - minutes'      => array(strtotime('09:51:00 May 8, 1998 UTC') * 1000, "\x4b\x00\xe3\x83\x8f"),
+        );
+    }
+
+    private function generateData($length)
     {
         $text = preg_replace(
             '/\s+/',

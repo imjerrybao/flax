@@ -1,33 +1,13 @@
 <?php
 namespace Icecave\Flax\Wire;
 
+use DateTime;
+use Icecave\Chrono\TimePointInterface;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use InvalidArgumentException;
 
-class ValueWriter
+class ValueEncoder
 {
-    /**
-     * @param string &$buffer
-     * @param mixed $value
-     */
-    public function write(&$buffer, $value)
-    {
-        TypeCheck::get(__CLASS__)->write(func_get_args());
-
-        $buffer .= $this->encode($value);
-    }
-
-    /**
-     * @param string &$buffer
-     * @param string $value
-     */
-    public function writeBinary(&$buffer, $value)
-    {
-        TypeCheck::get(__CLASS__)->writeBinary(func_get_args());
-
-        $buffer .= $this->encodeBinary($value);
-    }
-
     /**
      * @param mixed $value
      */
@@ -92,6 +72,24 @@ class ValueWriter
         } while ($length);
 
         return $buffer;
+    }
+
+    /**
+     * @param integer $timestamp Number of milliseconds since unix epoch.
+     *
+     * @return string
+     */
+    public function encodeTimestamp($timestamp)
+    {
+        TypeCheck::get(__CLASS__)->encodeTimestamp(func_get_args());
+
+        $msPerMinute = 60000;
+
+        if ($timestamp % $msPerMinute) {
+            return "\x4a" . Utility::packInt64($timestamp);
+        } else {
+            return "\x4b" . pack('N', $timestamp / $msPerMinute);
+        }
     }
 
     /**
@@ -219,6 +217,12 @@ class ValueWriter
      */
     private function encodeObject($value)
     {
+        if ($value instanceof DateTime) {
+            return $this->encodeTimestamp($value->getTimestamp() * 1000);
+        } elseif ($value instanceof TimePointInterface) {
+            return $this->encodeTimestamp($value->unixTime() * 1000);
+        }
+
         throw new \Exception;
     }
 

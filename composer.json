@@ -14,6 +14,7 @@
     "require": {
         "php": ">=5.3",
         "icecave/collections": "~0.7.0",
+        "icecave/chrono": "~0.2.0",
         "kriswallsmith/buzz": "~0.10.0"
     },
     "require-dev": {
