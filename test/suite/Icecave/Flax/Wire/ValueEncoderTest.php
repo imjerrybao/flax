@@ -92,7 +92,7 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
         $chunkA = $this->generateData(0xffff);
         $chunkB = $this->generateData(0x012C);
 
-        $this->testEncodeBinary($chunkA . $chunkB, "b\xff\xff" . $chunkA . "B\x01\x2c" . $chunkB);
+        $this->testEncodeBinary($chunkA . $chunkB, "A\xff\xff" . $chunkA . "B\x01\x2c" . $chunkB);
     }
 
     /**

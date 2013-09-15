@@ -56,7 +56,7 @@ class ValueEncoder
         do {
             if ($length > self::MAX_CHUNK_LENGTH) {
                 $chunkLength = self::MAX_CHUNK_LENGTH;
-                $buffer .= 'b';
+                $buffer .= 'A';
             } else {
                 $chunkLength = $length;
                 $buffer .= 'B';
