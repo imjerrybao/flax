@@ -7,7 +7,7 @@ use Icecave\Flax\TypeCheck\TypeCheck;
 class HessianClient implements HessianClientInterface
 {
     /**
-     * @param string $url
+     * @param string  $url
      * @param Browser $httpBrowser
      */
     public function __construct($url, Browser $httpBrowser)
@@ -21,7 +21,7 @@ class HessianClient implements HessianClientInterface
     /**
      * Invoke a Hessian operation.
      *
-     * @param string $name The name of the operation to invoke.
+     * @param string       $name      The name of the operation to invoke.
      * @param array<mixed> $arguments Arguments to the operation.
      */
     public function __call($name, array $arguments)
@@ -34,7 +34,7 @@ class HessianClient implements HessianClientInterface
     /**
      * Invoke a Hessian operation.
      *
-     * @param string $name The name of the operation to invoke.
+     * @param string       $name      The name of the operation to invoke.
      * @param array<mixed> $arguments Arguments to the operation.
      */
     public function invoke($name, array $arguments = array())

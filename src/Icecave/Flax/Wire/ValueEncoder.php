@@ -3,6 +3,7 @@ namespace Icecave\Flax\Wire;
 
 use DateTime;
 use Icecave\Chrono\TimePointInterface;
+use Icecave\Collections\Collection;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use InvalidArgumentException;
 
@@ -36,7 +37,6 @@ class ValueEncoder
 
         throw new InvalidArgumentException;
     }
-
 
     /**
      * @param string $value
@@ -208,7 +208,51 @@ class ValueEncoder
      */
     private function encodeArray(array $value)
     {
-        throw new \Exception;
+        if (Collection::isSequential($value)) {
+            return $this->encodeVector($value);
+        } else {
+            return $this->encodeMap($value);
+        }
+    }
+
+    /**
+     * @param array $value
+     */
+    private function encodeVector(array $value)
+    {
+        $size = count($value);
+
+        if (0 === $size) {
+            $buffer = "\x57Z";
+        } elseif ($size <= 7) {
+            $buffer = pack('c', $size + 0x78);
+        } else {
+            $buffer = "\x58" . $this->encodeInteger($size);
+        }
+
+        foreach ($value as $element) {
+            $buffer .= $this->encode($element);
+        }
+
+        return $buffer;
+    }
+
+    /**
+     * @param array $value
+     */
+    private function encodeMap(array $value)
+    {
+        $size = count($value);
+        $buffer = 'H';
+
+        foreach ($value as $key => $value) {
+            $buffer .= $this->encode($key);
+            $buffer .= $this->encode($value);
+        }
+
+        $buffer .= 'Z';
+
+        return $buffer;
     }
 
     /**

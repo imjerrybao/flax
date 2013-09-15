@@ -148,6 +148,11 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
             'integer - 3 octet max'          => array(    262143, "\xd7\xff\xff"),
             'integer - 3 octet midway'       => array(     -4000, "\xd3\xf0\x60"),
             'integer - 4 octet'              => array(0x10203040, "I\x10\x20\x30\x40"),
+
+            'array - empty'                  => array(array(),                       "\x57Z"),
+            'array - small'                  => array(array(1, 2, 3),                "\x7b\x91\x92\x93"),
+            'array - longer'                 => array(array(1, 2, 3, 4, 5, 6, 7, 8), "\x58\x98\x91\x92\x93\x94\x95\x96\x97\x98"),
+            'array - map'                    => array(array(10 => 1, 15 => 2),       "H\x9a\x91\x9f\x92Z"),
         );
 
         if (PHP_INT_SIZE > 4) {

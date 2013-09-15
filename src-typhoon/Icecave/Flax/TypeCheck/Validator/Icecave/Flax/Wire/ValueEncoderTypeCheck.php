@@ -137,6 +137,26 @@ class ValueEncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
+    public function encodeVector(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'array');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function encodeMap(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'array');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
     public function encodeObject(array $arguments)
     {
         $argumentCount = \count($arguments);
