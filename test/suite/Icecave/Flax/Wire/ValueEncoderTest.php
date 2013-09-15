@@ -27,6 +27,35 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testEncodeMediumLengthString()
+    {
+        $value = $this->generateData(1000);
+
+        $this->testEncode($value, "\x33\xe8" . $value);
+    }
+
+    public function testEncodeStringWholeChunk()
+    {
+        $chunk = $this->generateData(0xffff);
+
+        $this->testEncode($chunk, "S\xff\xff" . $chunk);
+    }
+
+    public function testEncodeStringPartialChunk()
+    {
+        $chunk = $this->generateData(0x7fff);
+
+        $this->testEncode($chunk, "S\x7f\xff" . $chunk);
+    }
+
+    public function testEncodeStringMultipleChunks()
+    {
+        $chunkA = $this->generateData(0xffff);
+        $chunkB = $this->generateData(0x012C);
+
+        $this->testEncode($chunkA . $chunkB, "R\xff\xff" . $chunkA . "S\x01\x2c" . $chunkB);
+    }
+
     /**
      * @dataProvider getBinaryTestValues
      */
@@ -44,6 +73,27 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testEncodeBinaryWholeChunk()
+    {
+        $chunk = $this->generateData(0xffff);
+
+        $this->testEncodeBinary($chunk, "B\xff\xff" . $chunk);
+    }
+
+    public function testEncodeBinaryPartialChunk()
+    {
+        $chunk = $this->generateData(0x7fff);
+
+        $this->testEncodeBinary($chunk, "B\x7f\xff" . $chunk);
+    }
+
+    public function testEncodeBinaryMultipleChunks()
+    {
+        $chunkA = $this->generateData(0xffff);
+        $chunkB = $this->generateData(0x012C);
+
+        $this->testEncodeBinary($chunkA . $chunkB, "b\xff\xff" . $chunkA . "B\x01\x2c" . $chunkB);
+    }
 
     /**
      * @dataProvider getTimestampTestValues
@@ -64,25 +114,15 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
 
     public function getTestValues()
     {
-        $string = $this->generateData(1000);
-        $chunkA = $this->generateData(0xffff);
-        $chunkB = $this->generateData(0xffff);
-        $chunkC = $this->generateData(0x7fff);
-
-
         $data = array(
             'null'                           => array(null, 'N'),
 
             'boolean - true'                 => array(true,  'T'),
             'boolean - false'                => array(false, 'F'),
 
-            'string'                         => array("",                          "\x00"),
-            'string - hello'                 => array("hello",                     "\x05hello"),
-            'string - unicode'               => array("\xc3\x83",                  "\x01\xc3\x83"),
-            'string - long'                  => array($string,                     "\x33\xe8" . $string),
-            'string - whole chunk'           => array($chunkA,                     "S\xff\xff" . $chunkA),
-            'string - part chunk'            => array($chunkC,                     "S\x7f\xff" . $chunkC),
-            'string - multiple chunks'       => array($chunkA . $chunkB . $chunkC, "R\xff\xff" . $chunkA . "R\xff\xff" . $chunkB . "S\x7f\xff" . $chunkC),
+            'string'                         => array("",         "\x00"),
+            'string - hello'                 => array("hello",    "\x05hello"),
+            'string - unicode'               => array("\xc3\x83", "\x01\xc3\x83"),
 
             'double - 1 octet zero'          => array(       0.0, "\x5b"),
             'double - 1 octet one'           => array(       1.0, "\x5c"),
@@ -119,21 +159,16 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
 
     public function getBinaryTestValues()
     {
-        $chunkA = $this->generateData(0xffff);
-        $chunkB = $this->generateData(0xffff);
-        $chunkC = $this->generateData(0x7fff);
-
         return array(
-            'binary - empty'            => array("",                          "\x20"),
-            'binary - 3 octet'          => array("\x01\x02\x03",              "\x23\x01\x02\x03"),
-            'binary - whole chunk'      => array($chunkA,                     "B\xff\xff" . $chunkA),
-            'binary - part chunk'       => array($chunkC,                     "B\x7f\xff" . $chunkC),
-            'binary - multiple chunks'  => array($chunkA . $chunkB . $chunkC, "b\xff\xff" . $chunkA . "b\xff\xff" . $chunkB . "B\x7f\xff" . $chunkC),
+            'binary - empty'            => array("",             "\x20"),
+            'binary - 3 octet'          => array("\x01\x02\x03", "\x23\x01\x02\x03"),
         );
     }
 
     public function getTimestampTestValues()
     {
+        date_default_timezone_set('UTC');
+
         return array(
             'timestamp - milliseconds' => array(strtotime('09:51:31 May 8, 1998 UTC') * 1000, "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),
             'timestamp - minutes'      => array(strtotime('09:51:00 May 8, 1998 UTC') * 1000, "\x4b\x00\xe3\x83\x8f"),
@@ -179,10 +214,4 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
 
         return $result;
     }
-
-    // 'date'                      => array(..., ...),
-    // 'date - minutes'            => array(..., ...),
-    // 'list'                      => array(..., ...),
-    // 'map'                       => array(..., ...),
-    // 'object'                    => array(..., ...),
 }

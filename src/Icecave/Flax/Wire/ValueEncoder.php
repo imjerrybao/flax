@@ -165,7 +165,8 @@ class ValueEncoder
             $buffer .= pack('n', $chunkLength);
             $buffer .= mb_substr($value, 0, $chunkLength, 'utf8');
 
-            $value = mb_substr($value, $chunkLength, null, 'utf8');
+            // can not use default of 'null' for length in php 5.3
+            $value = mb_substr($value, $chunkLength, $length, 'utf8');
             $length -= $chunkLength;
 
         } while ($length);
