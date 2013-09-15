@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>Icecave\Flax\Wire\ValueWriter | Flax API</title>
+        <title>Icecave\Flax\Wire\ValueEncoder | Flax API</title>
                     <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,10 +19,10 @@
         <div id="title">Flax API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../../Icecave/Flax/Wire.html">Icecave\Flax\Wire</a>\ValueWriter</h1>
+    <h1><a href="../../../Icecave/Flax/Wire.html">Icecave\Flax\Wire</a>\ValueEncoder</h1>
     </div>
         <div class="content">
-                <p>class    <strong>ValueWriter</strong></p>
+                <p>class    <strong>ValueEncoder</strong></p>
 
     
     
@@ -30,28 +30,6 @@
             <h2>Methods</h2>
 
             <table>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_write">write</a>(string $buffer, mixed $value)
-                    <p>
-</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_writeBinary">writeBinary</a>(string $buffer, string $value)
-                    <p>
-</p>
-                </td>
-                <td></td>
-            </tr>
                     <tr>
                 <td class="type">
                     
@@ -74,81 +52,24 @@
                 </td>
                 <td></td>
             </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_encodeTimestamp">encodeTimestamp</a>(integer $timestamp)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
             </table>
 
 
         <h2>Details</h2>
 
-                        <h3 id="method_write">
-        <div class="location">at line 13</div>
-        <code>            public            
-    <strong>write</strong>(string $buffer, mixed $value)</code>
-    </h3>
-    <div class="details">
-        <p>
-</p>
-        <p>
-</p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>string</td>
-                <td>$buffer</td>
-                <td>
-</td>
-            </tr>
-                    <tr>
-                <td>mixed</td>
-                <td>$value</td>
-                <td>
-</td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_writeBinary">
-        <div class="location">at line 24</div>
-        <code>            public            
-    <strong>writeBinary</strong>(string $buffer, string $value)</code>
-    </h3>
-    <div class="details">
-        <p>
-</p>
-        <p>
-</p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>string</td>
-                <td>$buffer</td>
-                <td>
-</td>
-            </tr>
-                    <tr>
-                <td>string</td>
-                <td>$value</td>
-                <td>
-</td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_encode">
-        <div class="location">at line 34</div>
+                        <h3 id="method_encode">
+        <div class="location">at line 14</div>
         <code>            public            
     <strong>encode</strong>(mixed $value)</code>
     </h3>
@@ -176,7 +97,7 @@
     </div>
 
                 <h3 id="method_encodeBinary">
-        <div class="location">at line 64</div>
+        <div class="location">at line 44</div>
         <code>            public            
     <strong>encodeBinary</strong>(string $value)</code>
     </h3>
@@ -198,6 +119,43 @@
             </table>
 
             
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_encodeTimestamp">
+        <div class="location">at line 82</div>
+        <code>            public            string
+    <strong>encodeTimestamp</strong>(integer $timestamp)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$timestamp</td>
+                <td>Number of milliseconds since unix epoch.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
             
             
                     </div>
