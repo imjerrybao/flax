@@ -18,6 +18,17 @@ class ValueWriter
     }
 
     /**
+     * @param string &$buffer
+     * @param string $value
+     */
+    public function writeBinary(&$buffer, $value)
+    {
+        TypeCheck::get(__CLASS__)->writeBinary(func_get_args());
+
+        $buffer .= $this->encodeBinary($value);
+    }
+
+    /**
      * @param mixed $value
      */
     public function encode($value)
@@ -44,6 +55,43 @@ class ValueWriter
         }
 
         throw new InvalidArgumentException;
+    }
+
+
+    /**
+     * @param string $value
+     */
+    public function encodeBinary($value)
+    {
+        TypeCheck::get(__CLASS__)->encodeBinary(func_get_args());
+
+        $length = strlen($value);
+
+        if ($length < 15) {
+            return pack('c', $length + 0x20) . $value;
+        }
+
+        $maxChunkLength = 0xffff;
+        $buffer = '';
+
+        do {
+            if ($length > $maxChunkLength) {
+                $chunkLength = $maxChunkLength;
+                $buffer .= 'b';
+            } else {
+                $chunkLength = $length;
+                $buffer .= 'B';
+            }
+
+            $buffer .= pack('n', $chunkLength);
+            $buffer .= substr($value, 0, $chunkLength);
+
+            $value = substr($value, $chunkLength);
+            $length -= $chunkLength;
+
+        } while ($length);
+
+        return $buffer;
     }
 
     /**
@@ -98,13 +146,33 @@ class ValueWriter
             return pack('c', $length) . $value;
         } elseif ($length < 1024) {
             return pack(
-                'CC',
+                'cc',
                 ($length >> 8) + 0x30,
                 ($length & 0xff)
             ) . $value;
         }
 
-        throw new \Exception;
+        $maxChunkLength = 0xffff;
+        $buffer = '';
+
+        do {
+            if ($length > $maxChunkLength) {
+                $chunkLength = $maxChunkLength;
+                $buffer .= 'R';
+            } else {
+                $chunkLength = $length;
+                $buffer .= 'S';
+            }
+
+            $buffer .= pack('n', $chunkLength);
+            $buffer .= mb_substr($value, 0, $chunkLength, 'utf8');
+
+            $value = mb_substr($value, $chunkLength, null, 'utf8');
+            $length -= $chunkLength;
+
+        } while ($length);
+
+        return $buffer;
     }
 
     /**
@@ -131,7 +199,7 @@ class ValueWriter
         $bytes = pack('f', $value);
         $unpacked = current(unpack('f', $bytes));
 
-        if ($value == $unpacked) {
+        if ($value === $unpacked) {
             return "\x5f" . Utility::convertEndianness($bytes);
         }
 

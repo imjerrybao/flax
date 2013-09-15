@@ -21,13 +21,20 @@ abstract class Utility
         return $isBigEndian;
     }
 
-    public static function convertEndianness($string)
+    /**
+     * @param string $buffer
+     *
+     * @return string
+     */
+    public static function convertEndianness($buffer)
     {
+        TypeCheck::get(__CLASS__)->convertEndianness(func_get_args());
+
         if (self::isBigEndian()) {
-            return $string;
+            return $buffer;
         }
 
-        return strrev($string);
+        return strrev($buffer);
     }
 
     /**

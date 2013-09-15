@@ -25,6 +25,37 @@ class ValueWriterTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
+    public function writeBinary(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 2) {
+            if ($argumentCount < 1) {
+                throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('buffer', 0, 'string');
+            }
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 1, 'string');
+        } elseif ($argumentCount > 2) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
+        }
+        $value = $arguments[0];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'buffer',
+                0,
+                $arguments[0],
+                'string'
+            );
+        }
+        $value = $arguments[1];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                1,
+                $arguments[1],
+                'string'
+            );
+        }
+    }
+
     public function encode(array $arguments)
     {
         $argumentCount = \count($arguments);
@@ -32,6 +63,25 @@ class ValueWriterTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
             throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
         } elseif ($argumentCount > 1) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function encodeBinary(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'string');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                0,
+                $arguments[0],
+                'string'
+            );
         }
     }
 
