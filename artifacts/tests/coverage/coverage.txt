@@ -1,12 +1,12 @@
 
 
 Code Coverage Report 
-  2013-09-11 07:31:55
+  2013-09-15 10:19:17
 
  Summary: 
   Classes: 0.00% (0/4)
-  Methods: 17.65% (3/17)
-  Lines:   53.92% (55/102)
+  Methods: 36.84% (7/19)
+  Lines:   68.61% (94/137)
 
 \Icecave\Flax\Wire::ValueWriter
-  Methods:  66.67% ( 6/ 9)   Lines:  83.33% ( 55/ 66)
+  Methods:  81.82% ( 9/11)   Lines:  94.00% ( 94/100)
