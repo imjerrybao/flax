@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1379246313">
-  <project timestamp="1379246313">
+<coverage generated="1379247374">
+  <project timestamp="1379247374">
     <package name="Icecave\Flax">
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClient.php">
         <class name="HessianClient" namespace="Icecave\Flax">
