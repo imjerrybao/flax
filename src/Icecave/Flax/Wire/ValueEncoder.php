@@ -51,12 +51,11 @@ class ValueEncoder
             return pack('c', $length + 0x20) . $value;
         }
 
-        $maxChunkLength = 0xffff;
         $buffer = '';
 
         do {
-            if ($length > $maxChunkLength) {
-                $chunkLength = $maxChunkLength;
+            if ($length > self::MAX_CHUNK_LENGTH) {
+                $chunkLength = self::MAX_CHUNK_LENGTH;
                 $buffer .= 'b';
             } else {
                 $chunkLength = $length;
@@ -150,12 +149,11 @@ class ValueEncoder
             ) . $value;
         }
 
-        $maxChunkLength = 0xffff;
         $buffer = '';
 
         do {
-            if ($length > $maxChunkLength) {
-                $chunkLength = $maxChunkLength;
+            if ($length > self::MAX_CHUNK_LENGTH) {
+                $chunkLength = self::MAX_CHUNK_LENGTH;
                 $buffer .= 'R';
             } else {
                 $chunkLength = $length;
@@ -231,4 +229,6 @@ class ValueEncoder
     {
         return 'N';
     }
+
+    const MAX_CHUNK_LENGTH = 0xffff;
 }
