@@ -220,7 +220,7 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
             'array - map'                    => array(array(10 => 1, 15 => 2),       "H\x9a\x91\x9f\x92Z"),
 
             'object - empty'                 => array(new stdClass,                                   "C\x08stdClass\x90\x60"),
-            'object - simple'                => array((object)array('foo' => 1, 'bar' => 2),          "C\x08stdClass\x92\x03bar\x03foo\x60\x92\x91"),
+            'object - simple'                => array((object) array('foo' => 1, 'bar' => 2),         "C\x08stdClass\x92\x03bar\x03foo\x60\x92\x91"),
             'object - datetime'              => array(new NativeDateTime('09:51:31 May 8, 1998 UTC'), "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),
             'object - datetime minutes'      => array(new NativeDateTime('09:51:00 May 8, 1998 UTC'), "\x4b\x00\xe3\x83\x8f"),
             'object - chrono'                => array(new DateTime(1998, 5, 8, 9, 51, 31),            "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),

@@ -1,11 +1,7 @@
 <?php
 namespace Icecave\Flax\Wire;
 
-use DateTime as NativeDateTime;
-use Icecave\Chrono\DateTime;
-use Icecave\Collections\Map;
 use PHPUnit_Framework_TestCase;
-use stdClass;
 
 class UtilityTest extends PHPUnit_Framework_TestCase
 {
