@@ -1,12 +1,12 @@
 
 
 Code Coverage Report 
-  2013-09-15 13:45:33
+  2013-09-16 06:46:23
 
  Summary: 
   Classes: 0.00% (0/4)
-  Methods: 45.00% (9/20)
-  Lines:   71.70% (114/159)
+  Methods: 37.04% (10/27)
+  Lines:   57.28% (118/206)
 
 \Icecave\Flax\Wire::ValueEncoder
-  Methods:  91.67% (11/12)   Lines:  93.44% (114/122)
+  Methods:  63.16% (12/19)   Lines:  69.82% (118/169)
