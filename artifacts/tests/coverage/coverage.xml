@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1379320487">
-  <project timestamp="1379320487">
+<coverage generated="1379321502">
+  <project timestamp="1379321502">
     <package name="Icecave\Flax">
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClient.php">
         <class name="HessianClient" namespace="Icecave\Flax">
@@ -38,11 +38,32 @@
     <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClientInterface.php">
       <metrics loc="21" ncloc="9" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
-    <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Reader.php">
-      <line num="1" type="stmt" count="0"/>
-      <metrics loc="1" ncloc="1" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
-    </file>
     <package name="Icecave\Flax\Wire">
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ProtocolEncoder.php">
+        <class name="ProtocolEncoder" namespace="Icecave\Flax\Wire">
+          <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="17" coveredelements="17"/>
+        </class>
+        <line num="0" type="stmt" count="0"/>
+        <line num="8" type="method" name="__construct" crap="1" count="2"/>
+        <line num="10" type="stmt" count="2"/>
+        <line num="12" type="stmt" count="2"/>
+        <line num="13" type="stmt" count="2"/>
+        <line num="18" type="method" name="encodeVersion" crap="1" count="1"/>
+        <line num="20" type="stmt" count="1"/>
+        <line num="22" type="stmt" count="1"/>
+        <line num="31" type="method" name="encodeCall" crap="2" count="1"/>
+        <line num="33" type="stmt" count="1"/>
+        <line num="35" type="stmt" count="1"/>
+        <line num="37" type="stmt" count="1"/>
+        <line num="38" type="stmt" count="1"/>
+        <line num="39" type="stmt" count="1"/>
+        <line num="41" type="stmt" count="1"/>
+        <line num="42" type="stmt" count="1"/>
+        <line num="43" type="stmt" count="1"/>
+        <line num="45" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="0"/>
+        <metrics loc="50" ncloc="41" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="17" coveredelements="17"/>
+      </file>
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Utility.php">
         <class name="Utility" namespace="Icecave\Flax\Wire">
           <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
@@ -268,6 +289,10 @@
         <metrics loc="438" ncloc="336" classes="1" methods="20" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="168" coveredstatements="168" elements="188" coveredelements="188"/>
       </file>
     </package>
-    <metrics files="6" loc="602" ncloc="449" classes="4" methods="28" coveredmethods="24" conditionals="0" coveredconditionals="0" statements="203" coveredstatements="185" elements="231" coveredelements="209"/>
+    <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Reader.php">
+      <line num="1" type="stmt" count="0"/>
+      <metrics loc="1" ncloc="1" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
+    </file>
+    <metrics files="7" loc="652" ncloc="490" classes="5" methods="31" coveredmethods="27" conditionals="0" coveredconditionals="0" statements="217" coveredstatements="199" elements="248" coveredelements="226"/>
   </project>
 </coverage>
