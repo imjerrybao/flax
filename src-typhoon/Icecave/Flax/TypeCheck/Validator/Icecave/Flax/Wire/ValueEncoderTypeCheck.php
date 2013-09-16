@@ -3,6 +3,20 @@ namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Wire;
 
 class ValueEncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
 {
+    public function validateConstruct(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
+    public function reset(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
     public function encode(array $arguments)
     {
         $argumentCount = \count($arguments);
@@ -127,6 +141,13 @@ class ValueEncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
+    public function encodeNull(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
     public function encodeArray(array $arguments)
     {
         $argumentCount = \count($arguments);
@@ -176,10 +197,105 @@ class ValueEncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
-    public function encodeNull(array $arguments)
+    public function encodeStdClass(array $arguments)
     {
-        if (\count($arguments) > 0) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'stdClass');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function encodeClassDefinition(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 2) {
+            if ($argumentCount < 1) {
+                throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('className', 0, 'string');
+            }
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('propertyNames', 1, 'array<string>');
+        } elseif ($argumentCount > 2) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
+        }
+        $value = $arguments[0];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'className',
+                0,
+                $arguments[0],
+                'string'
+            );
+        }
+        $value = $arguments[1];
+        $check = function ($value) {
+            if (!\is_array($value)) {
+                return false;
+            }
+            foreach ($value as $key => $subValue) {
+                if (!\is_string($subValue)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        if (!$check($arguments[1])) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'propertyNames',
+                1,
+                $arguments[1],
+                'array<string>'
+            );
+        }
+    }
+
+    public function encodeReference(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('ref', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'ref',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function findClassDefinition(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'stdClass');
+        } elseif ($argumentCount > 2) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
+        }
+        if ($argumentCount > 1) {
+            $value = $arguments[1];
+            if (!(\is_int($value) || $value === null)) {
+                throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                    'defId',
+                    1,
+                    $arguments[1],
+                    'integer|null'
+                );
+            }
+        }
+    }
+
+    public function classDefinitionKey(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'stdClass');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
         }
     }
 
