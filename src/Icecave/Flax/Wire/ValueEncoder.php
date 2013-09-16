@@ -56,7 +56,7 @@ class ValueEncoder
                 return $this->encodeNull();
         }
 
-        throw new InvalidArgumentException;
+        throw new InvalidArgumentException('Can not encode value of type "' . $type . '".');
     }
 
     /**
@@ -174,7 +174,7 @@ class ValueEncoder
             return pack(
                 'cc',
                 ($length >> 8) + 0x30,
-                ($length & 0xff)
+                ($length)
             ) . $value;
         }
 
@@ -312,7 +312,7 @@ class ValueEncoder
         } elseif ($value instanceof TimePointInterface) {
             return $this->encodeTimestamp($value->unixTime() * 1000);
         } elseif ('stdClass' !== get_class($value)) {
-            throw new InvalidArgumentException('Can not encode object of type ' . get_class($value) . '.');
+            throw new InvalidArgumentException('Can not encode object of type "' . get_class($value) . '".');
         }
 
         $ref = null;
@@ -320,7 +320,7 @@ class ValueEncoder
             return $this->encodeReference($ref);
         }
 
-        $this->encodeStdClass($value);
+        return $this->encodeStdClass($value);
     }
 
     /**
@@ -330,13 +330,13 @@ class ValueEncoder
      */
     private function encodeStdClass(stdClass $value)
     {
-        $sortedProperties = (array)$value;
+        $sortedProperties = (array) $value;
         ksort($sortedProperties);
 
         $buffer = '';
 
         $defId = null;
-        if (!$this->findClassDefinition($value, $ref)) {
+        if (!$this->findClassDefinition($value, $defId)) {
             $buffer .= $this->encodeClassDefinition('stdClass', array_keys($sortedProperties));
         }
 
@@ -354,7 +354,53 @@ class ValueEncoder
     }
 
     /**
-     * @param string $className
+     * @param stdClass     $value
+     * @param integer|null &$ref
+     *
+     * @return boolean
+     */
+    private function findReference(stdClass $value, &$ref = null)
+    {
+        if (!$this->references->tryGet($value, $ref)) {
+            $this->references[$value] = $ref = $this->references->size();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param integer $ref
+     *
+     * @return string
+     */
+    private function encodeReference($ref)
+    {
+        return 'Q' . $this->encodeInteger($ref);
+    }
+
+    /**
+     * @param stdClass     $value
+     * @param integer|null &$defId
+     *
+     * @return boolean
+     */
+    private function findClassDefinition(stdClass $value, &$defId = null)
+    {
+        $key = $this->classDefinitionKey($value);
+
+        if (!$this->classDefinitions->tryGet($key, $defId)) {
+            $this->classDefinitions[$key] = $defId = $this->classDefinitions->size();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string        $className
      * @param array<string> $propertyNames
      *
      * @return string
@@ -372,51 +418,16 @@ class ValueEncoder
     }
 
     /**
-     * @param integer $ref
-     *
-     * @return string
-     */
-    private function encodeReference($ref)
-    {
-        return "\x51" . $this->encodeInteger($ref);
-    }
-
-   /**
-     * @param stdClass $value
-     * @param integer|null &$defId
-     *
-     * @return boolean
-     */
-    private function findClassDefinition(stdClass $value, &$defId = null)
-    {
-        $key = $this->classDefinitionKey($value);
-
-        if (!$this->classDefinitions->tryGet($key, $defId)) {
-            $this->classDefinitions[$key] = $defId = $this->references->size();
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @param stdClass $value
      *
      * @return string
      */
     private function classDefinitionKey(stdClass $value)
     {
-        $className = get_class($value);
-
-        if ('stdClass' !== $className) {
-            return $className;
-        }
-
         $properties = get_object_vars($value);
         ksort($properties);
 
-        return 'stdClass:' . implode(',', array_keys($properties));
+        return implode(',', array_keys($properties));
     }
 
     const MAX_CHUNK_LENGTH = 0xffff;

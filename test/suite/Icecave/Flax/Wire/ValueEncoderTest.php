@@ -1,7 +1,11 @@
 <?php
 namespace Icecave\Flax\Wire;
 
+use DateTime as NativeDateTime;
+use Icecave\Chrono\DateTime;
+use Icecave\Collections\Map;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 class ValueEncoderTest extends PHPUnit_Framework_TestCase
 {
@@ -17,14 +21,7 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
     {
         $buffer = $this->encoder->encode($value);
 
-        if ($buffer !== $expectedResult) {
-            $this->assertSame(
-                $this->formatBinaryData($expectedResult),
-                $this->formatBinaryData($buffer)
-            );
-        } else {
-            $this->assertTrue(true);
-        }
+        $this->assertSameBinary($expectedResult, $buffer);
     }
 
     public function testEncodeMediumLengthString()
@@ -63,14 +60,7 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
     {
         $buffer = $this->encoder->encodeBinary($value);
 
-        if ($buffer !== $expectedResult) {
-            $this->assertSame(
-                $this->formatBinaryData($expectedResult),
-                $this->formatBinaryData($buffer)
-            );
-        } else {
-            $this->assertTrue(true);
-        }
+        $this->assertSameBinary($expectedResult, $buffer);
     }
 
     public function testEncodeBinaryWholeChunk()
@@ -102,14 +92,89 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
     {
         $buffer = $this->encoder->encodeTimestamp($value);
 
-        if ($buffer !== $expectedResult) {
-            $this->assertSame(
-                $this->formatBinaryData($expectedResult),
-                $this->formatBinaryData($buffer)
-            );
-        } else {
-            $this->assertTrue(true);
+        $this->assertSameBinary($expectedResult, $buffer);
+    }
+
+    public function testEncodeMultipleObjects()
+    {
+        $value1 = new stdClass;
+        $value1->foo = 1;
+        $value1->bar = 2;
+
+        $value2 = new stdClass;
+        $value2->baz = 3;
+        $value2->faz = 4;
+
+        $this->assertSameBinary("C\x08stdClass\x92\x03bar\x03foo\x60\x92\x91", $this->encoder->encode($value1));
+        $this->assertSameBinary("C\x08stdClass\x92\x03baz\x03faz\x61\x93\x94", $this->encoder->encode($value2));
+    }
+
+    public function testEncodeMultipleObjectsSingleDefinition()
+    {
+        $value1 = new stdClass;
+        $value1->foo = 1;
+        $value1->bar = 2;
+
+        $value2 = new stdClass;
+        $value2->foo = 3;
+        $value2->bar = 4;
+
+        $this->assertSameBinary("C\x08stdClass\x92\x03bar\x03foo\x60\x92\x91", $this->encoder->encode($value1));
+        $this->assertSameBinary("\x60\x94\x93", $this->encoder->encode($value2));
+    }
+
+    public function testEncodeMultipleObjectsReference()
+    {
+        $value1 = new stdClass;
+        $value1->foo = 1;
+        $value1->bar = 2;
+
+        $value2 = new stdClass;
+        $value2->foo = 3;
+        $value2->bar = 4;
+
+        $this->assertSameBinary("C\x08stdClass\x92\x03bar\x03foo\x60\x92\x91", $this->encoder->encode($value1));
+        $this->assertSameBinary("\x60\x94\x93", $this->encoder->encode($value2));
+        $this->assertSameBinary("Q\x90", $this->encoder->encode($value1));
+        $this->assertSameBinary("Q\x91", $this->encoder->encode($value2));
+    }
+
+    public function testReset()
+    {
+        $this->encoder->encode(new stdClass);
+
+        $this->encoder->reset();
+        $this->assertSameBinary("C\x08stdClass\x90\x60", $this->encoder->encode(new stdClass));
+
+    }
+
+    public function testEncodeUnsupportedType()
+    {
+        $resource = fopen(__FILE__, 'r');
+        $this->setExpectedException('InvalidArgumentException', 'Can not encode value of type "resource".');
+        $this->encoder->encode($resource);
+    }
+
+    public function testEncodeObjectWithLongFormClassDefinitionId()
+    {
+        $buffer = '';
+
+        // Force 16 class defs to be made to be made ...
+        for ($i = 0; $i < 16; ++$i) {
+            $value = new stdClass;
+            $value->{'prop' . $i} = $i;
+
+            $buffer .= $this->encoder->encode($value);
         }
+
+        // This class def should be the 16th (0xa0) ...
+        $this->assertSameBinary("C\x08stdClass\x90O\xa0", $this->encoder->encode(new stdClass));
+    }
+
+    public function testEncodeUnsupportedObject()
+    {
+        $this->setExpectedException('InvalidArgumentException', 'Can not encode object of type "Icecave\Collections\Map".');
+        $this->encoder->encode(new Map);
     }
 
     public function getTestValues()
@@ -153,6 +218,13 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
             'array - small'                  => array(array(1, 2, 3),                "\x7b\x91\x92\x93"),
             'array - longer'                 => array(array(1, 2, 3, 4, 5, 6, 7, 8), "\x58\x98\x91\x92\x93\x94\x95\x96\x97\x98"),
             'array - map'                    => array(array(10 => 1, 15 => 2),       "H\x9a\x91\x9f\x92Z"),
+
+            'object - empty'                 => array(new stdClass,                                   "C\x08stdClass\x90\x60"),
+            'object - simple'                => array((object)array('foo' => 1, 'bar' => 2),          "C\x08stdClass\x92\x03bar\x03foo\x60\x92\x91"),
+            'object - datetime'              => array(new NativeDateTime('09:51:31 May 8, 1998 UTC'), "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),
+            'object - datetime minutes'      => array(new NativeDateTime('09:51:00 May 8, 1998 UTC'), "\x4b\x00\xe3\x83\x8f"),
+            'object - chrono'                => array(new DateTime(1998, 5, 8, 9, 51, 31),            "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),
+            'object - chrono minutes'        => array(new DateTime(1998, 5, 8, 9, 51,  0),            "\x4b\x00\xe3\x83\x8f"),
         );
 
         if (PHP_INT_SIZE > 4) {
@@ -200,6 +272,18 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
         }
 
         return substr($str, 0, $length - 1) . '!';
+    }
+
+    public function assertSameBinary($expectedResult, $buffer)
+    {
+        if ($buffer !== $expectedResult) {
+            $this->assertSame(
+                $this->formatBinaryData($expectedResult),
+                $this->formatBinaryData($buffer)
+            );
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     private function formatBinaryData($buffer)

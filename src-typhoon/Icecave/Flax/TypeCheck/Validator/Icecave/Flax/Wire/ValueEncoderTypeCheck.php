@@ -207,45 +207,24 @@ class ValueEncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
-    public function encodeClassDefinition(array $arguments)
+    public function findReference(array $arguments)
     {
         $argumentCount = \count($arguments);
-        if ($argumentCount < 2) {
-            if ($argumentCount < 1) {
-                throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('className', 0, 'string');
-            }
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('propertyNames', 1, 'array<string>');
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'stdClass');
         } elseif ($argumentCount > 2) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
         }
-        $value = $arguments[0];
-        if (!\is_string($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'className',
-                0,
-                $arguments[0],
-                'string'
-            );
-        }
-        $value = $arguments[1];
-        $check = function ($value) {
-            if (!\is_array($value)) {
-                return false;
+        if ($argumentCount > 1) {
+            $value = $arguments[1];
+            if (!(\is_int($value) || $value === null)) {
+                throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                    'ref',
+                    1,
+                    $arguments[1],
+                    'integer|null'
+                );
             }
-            foreach ($value as $key => $subValue) {
-                if (!\is_string($subValue)) {
-                    return false;
-                }
-            }
-            return true;
-        };
-        if (!$check($arguments[1])) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'propertyNames',
-                1,
-                $arguments[1],
-                'array<string>'
-            );
         }
     }
 
@@ -286,6 +265,48 @@ class ValueEncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
                     'integer|null'
                 );
             }
+        }
+    }
+
+    public function encodeClassDefinition(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 2) {
+            if ($argumentCount < 1) {
+                throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('className', 0, 'string');
+            }
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('propertyNames', 1, 'array<string>');
+        } elseif ($argumentCount > 2) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
+        }
+        $value = $arguments[0];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'className',
+                0,
+                $arguments[0],
+                'string'
+            );
+        }
+        $value = $arguments[1];
+        $check = function ($value) {
+            if (!\is_array($value)) {
+                return false;
+            }
+            foreach ($value as $key => $subValue) {
+                if (!\is_string($subValue)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        if (!$check($arguments[1])) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'propertyNames',
+                1,
+                $arguments[1],
+                'array<string>'
+            );
         }
     }
 
