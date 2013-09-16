@@ -33,16 +33,29 @@ ok 31 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - em
 ok 32 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - small" (array(1, 2, 3), '{ëíì')
 ok 33 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - longer" (array(1, 2, 3, 4, 5, 6, 7, 8), 'Xòëíìîïñóò')
 ok 34 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - map" (array(1, 2), 'HöëüíZ')
-ok 35 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 8 octet" (1161981756646125696, 'L 0@P`pÄ')
-ok 36 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMediumLengthString
-ok 37 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringWholeChunk
-ok 38 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringPartialChunk
-ok 39 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringMultipleChunks
-ok 40 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - empty" ('', ' ')
-ok 41 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - 3 octet" ('', '#')
-ok 42 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryWholeChunk
-ok 43 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryPartialChunk
-ok 44 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryMultipleChunks
-ok 45 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - milliseconds" (894621091000, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
-ok 46 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - minutes" (894621060000, 'K' . "\0" . '„Éè')
-1..46
+ok 35 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - empty" (stdClass, 'CstdClassê`')
+ok 36 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - simple" (stdClass, 'CstdClassíbarfoo`íë')
+ok 37 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - datetime" (DateTime, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
+ok 38 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - datetime minutes" (DateTime, 'K' . "\0" . '„Éè')
+ok 39 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - chrono" (1998-05-08T09:51:31+00:00, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
+ok 40 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - chrono minutes" (1998-05-08T09:51:00+00:00, 'K' . "\0" . '„Éè')
+ok 41 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 8 octet" (1161981756646125696, 'L 0@P`pÄ')
+ok 42 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMediumLengthString
+ok 43 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringWholeChunk
+ok 44 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringPartialChunk
+ok 45 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringMultipleChunks
+ok 46 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - empty" ('', ' ')
+ok 47 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - 3 octet" ('', '#')
+ok 48 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryWholeChunk
+ok 49 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryPartialChunk
+ok 50 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryMultipleChunks
+ok 51 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - milliseconds" (894621091000, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
+ok 52 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - minutes" (894621060000, 'K' . "\0" . '„Éè')
+ok 53 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjects
+ok 54 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsSingleDefinition
+ok 55 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsReference
+ok 56 - Icecave\Flax\Wire\ValueEncoderTest::testReset
+ok 57 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedType
+ok 58 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeObjectWithLongFormClassDefinitionId
+ok 59 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedObject
+1..59
