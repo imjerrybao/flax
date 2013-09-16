@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1379319580">
-  <project timestamp="1379319580">
+<coverage generated="1379320487">
+  <project timestamp="1379320487">
     <package name="Icecave\Flax">
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClient.php">
         <class name="HessianClient" namespace="Icecave\Flax">
@@ -45,33 +45,31 @@
     <package name="Icecave\Flax\Wire">
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Utility.php">
         <class name="Utility" namespace="Icecave\Flax\Wire">
-          <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="0" elements="23" coveredelements="0"/>
+          <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
         </class>
-        <line num="11" type="method" name="isBigEndian" crap="6" count="0"/>
-        <line num="13" type="stmt" count="0"/>
-        <line num="15" type="stmt" count="0"/>
-        <line num="17" type="stmt" count="0"/>
-        <line num="18" type="stmt" count="0"/>
-        <line num="19" type="stmt" count="0"/>
-        <line num="21" type="stmt" count="0"/>
-        <line num="29" type="method" name="convertEndianness" crap="6" count="0"/>
-        <line num="31" type="stmt" count="0"/>
-        <line num="33" type="stmt" count="0"/>
-        <line num="34" type="stmt" count="0"/>
-        <line num="37" type="stmt" count="0"/>
-        <line num="45" type="method" name="packInt64" crap="2" count="0"/>
-        <line num="47" type="stmt" count="0"/>
-        <line num="49" type="stmt" count="0"/>
-        <line num="50" type="stmt" count="0"/>
-        <line num="51" type="stmt" count="0"/>
-        <line num="52" type="stmt" count="0"/>
-        <line num="53" type="stmt" count="0"/>
-        <line num="61" type="method" name="unpackInt64" crap="2" count="0"/>
-        <line num="63" type="stmt" count="0"/>
-        <line num="65" type="stmt" count="0"/>
+        <line num="11" type="method" name="isBigEndian" crap="2" count="2"/>
+        <line num="13" type="stmt" count="2"/>
+        <line num="15" type="stmt" count="2"/>
+        <line num="17" type="stmt" count="2"/>
+        <line num="18" type="stmt" count="1"/>
+        <line num="19" type="stmt" count="1"/>
+        <line num="21" type="stmt" count="2"/>
+        <line num="29" type="method" name="convertEndianness" crap="2" count="1"/>
+        <line num="31" type="stmt" count="1"/>
+        <line num="33" type="stmt" count="1"/>
+        <line num="34" type="stmt" count="1"/>
+        <line num="35" type="stmt" count="1"/>
+        <line num="43" type="method" name="packInt64" crap="1" count="1"/>
+        <line num="45" type="stmt" count="1"/>
+        <line num="47" type="stmt" count="1"/>
+        <line num="48" type="stmt" count="1"/>
+        <line num="50" type="stmt" count="1"/>
+        <line num="58" type="method" name="unpackInt64" crap="1" count="1"/>
+        <line num="60" type="stmt" count="1"/>
+        <line num="62" type="stmt" count="1"/>
+        <line num="64" type="stmt" count="1"/>
         <line num="67" type="stmt" count="0"/>
-        <line num="70" type="stmt" count="0"/>
-        <metrics loc="69" ncloc="51" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="0" elements="23" coveredelements="0"/>
+        <metrics loc="66" ncloc="48" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
       </file>
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ValueEncoder.php">
         <class name="ValueEncoder" namespace="Icecave\Flax\Wire">
@@ -270,6 +268,6 @@
         <metrics loc="438" ncloc="336" classes="1" methods="20" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="168" coveredstatements="168" elements="188" coveredelements="188"/>
       </file>
     </package>
-    <metrics files="6" loc="605" ncloc="452" classes="4" methods="28" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="205" coveredstatements="168" elements="233" coveredelements="188"/>
+    <metrics files="6" loc="602" ncloc="449" classes="4" methods="28" coveredmethods="24" conditionals="0" coveredconditionals="0" statements="203" coveredstatements="185" elements="231" coveredelements="209"/>
   </project>
 </coverage>
