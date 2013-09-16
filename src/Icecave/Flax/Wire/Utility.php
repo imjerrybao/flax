@@ -30,11 +30,9 @@ abstract class Utility
     {
         TypeCheck::get(__CLASS__)->convertEndianness(func_get_args());
 
-        if (self::isBigEndian()) {
-            return $buffer;
-        }
-
-        return strrev($buffer);
+        return self::isBigEndian()
+            ? $buffer
+            : strrev($buffer);
     }
 
     /**
@@ -46,11 +44,10 @@ abstract class Utility
     {
         TypeCheck::get(__CLASS__)->packInt64(func_get_args());
 
-        return pack(
-            'NN',
-            (0xffffffff00000000 & $value) >> 32,
-            (0x00000000ffffffff & $value)
-        );
+        $hi = (0xffffffff00000000 & $value) >> 32;
+        $lo = (0x00000000ffffffff & $value);
+
+        return pack('NN', $hi, $lo);
     }
 
     /**
@@ -62,8 +59,8 @@ abstract class Utility
     {
         TypeCheck::get(__CLASS__)->unpackInt64(func_get_args());
 
-        list($high, $low) = unpack('N2', $bytes);
+        list(, $hi, $lo) = unpack('N2', $bytes);
 
-        return ($high << 32) | $low;
+        return ($hi << 32) | $lo;
     }
 }
