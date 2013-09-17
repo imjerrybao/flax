@@ -70,19 +70,25 @@ class ValueEncoder
 
         $length = strlen($value);
 
-        if ($length < 15) {
-            return pack('c', $length + 0x20) . $value;
+        if ($length <= Constants::BINARY_COMPACT_LIMIT) {
+            return pack('c', $length + Constants::BINARY_COMPACT_START) . $value;
+        } elseif ($length <= Constants::BINARY_LIMIT) {
+            return pack(
+                'cc',
+                ($length >> 8) + Constants::BINARY_START,
+                ($length)
+            ) . $value;
         }
 
         $buffer = '';
 
         do {
-            if ($length > self::MAX_CHUNK_LENGTH) {
-                $chunkLength = self::MAX_CHUNK_LENGTH;
-                $buffer .= 'A';
+            if ($length > Constants::BINARY_CHUNK_SIZE) {
+                $chunkLength = Constants::BINARY_CHUNK_SIZE;
+                $buffer .= pack('c', Constants::BINARY_CHUNK);
             } else {
                 $chunkLength = $length;
-                $buffer .= 'B';
+                $buffer .= pack('c', Constants::BINARY_CHUNK_FINAL);
             }
 
             $buffer .= pack('n', $chunkLength);
@@ -105,12 +111,14 @@ class ValueEncoder
     {
         $this->typeCheck->encodeTimestamp(func_get_args());
 
-        $msPerMinute = 60000;
-
-        if ($timestamp % $msPerMinute) {
-            return "\x4a" . Utility::packInt64($timestamp);
+        if ($timestamp % Constants::TIMESTAMP_MILLISECONDS_PER_MINUTE) {
+            return pack('c', Constants::TIMESTAMP_MILLISECONDS) . Utility::packInt64($timestamp);
         } else {
-            return "\x4b" . pack('N', $timestamp / $msPerMinute);
+            return pack(
+                'cN',
+                Constants::TIMESTAMP_MINUTES,
+                $timestamp / Constants::TIMESTAMP_MILLISECONDS_PER_MINUTE
+            );
         }
     }
 
@@ -122,31 +130,32 @@ class ValueEncoder
     private function encodeInteger($value)
     {
         // 1-byte ...
-        if (-16 <= $value && $value <= 47) {
-            return pack('c', $value + 0x90);
+        if (Constants::INT32_1_MIN <= $value && $value <= Constants::INT32_1_MAX) {
+            return pack('c', $value + Constants::INT32_1_OFFSET);
 
         // 2-bytes ...
-        } elseif (-2048 <= $value && $value <= 2047) {
+        } elseif (Constants::INT32_2_MIN <= $value && $value <= Constants::INT32_2_MAX) {
             return pack(
                 'cc',
-                ($value >> 8) + 0xc8,
+                ($value >> 8) + Constants::INT32_2_OFFSET,
                 ($value)
             );
 
         // 3-bytes ...
-        } elseif (-262144 <= $value && $value <= 262143) {
+        } elseif (Constants::INT32_3_MIN <= $value && $value <= Constants::INT32_3_MAX) {
             return pack(
                 'ccc',
-                ($value >> 16) + 0xd4,
+                ($value >> 16) + Constants::INT32_3_OFFSET,
                 ($value >> 8),
                 ($value)
             );
+
         // 4-bytes ...
-        } elseif (-2147483648 <= $value && $value <= 2147483647) {
-            return 'I' . pack('N', $value);
+        } elseif (!(Constants::INT64_HIGH_MASK & $value)) {
+            return pack('cN', Constants::INT32_4, $value);
         }
 
-        return 'L' . Utility::packInt64($value);
+        return pack('c', Constants::INT64_8) . Utility::packInt64($value);
     }
 
     /**
@@ -156,7 +165,7 @@ class ValueEncoder
      */
     private function encodeBoolean($value)
     {
-        return $value ? 'T' : 'F';
+        return pack('c', $value ? Constants::BOOLEAN_TRUE : Constants::BOOLEAN_FALSE);
     }
 
     /**
@@ -168,12 +177,12 @@ class ValueEncoder
     {
         $length = mb_strlen($value, 'utf8');
 
-        if ($length < 32) {
-            return pack('c', $length) . $value;
-        } elseif ($length < 1024) {
+        if ($length <= Constants::STRING_COMPACT_LIMIT) {
+            return pack('c', $length + Constants::STRING_COMPACT_START) . $value;
+        } elseif ($length <= Constants::STRING_LIMIT) {
             return pack(
                 'cc',
-                ($length >> 8) + 0x30,
+                ($length >> 8) + Constants::STRING_START,
                 ($length)
             ) . $value;
         }
@@ -181,12 +190,12 @@ class ValueEncoder
         $buffer = '';
 
         do {
-            if ($length > self::MAX_CHUNK_LENGTH) {
-                $chunkLength = self::MAX_CHUNK_LENGTH;
-                $buffer .= 'R';
+            if ($length > Constants::STRING_CHUNK_SIZE) {
+                $chunkLength = Constants::STRING_CHUNK_SIZE;
+                $buffer .= pack('c', Constants::STRING_CHUNK);
             } else {
                 $chunkLength = $length;
-                $buffer .= 'S';
+                $buffer .= pack('c', Constants::STRING_CHUNK_FINAL);
             }
 
             $buffer .= pack('n', $chunkLength);
@@ -209,18 +218,18 @@ class ValueEncoder
     private function encodeDouble($value)
     {
         if (0.0 === $value) {
-            return "\x5b";
+            return pack('c', Constants::DOUBLE_ZERO);
         } elseif (1.0 === $value) {
-            return "\x5c";
+            return pack('c', Constants::DOUBLE_ONE);
         }
 
         $fraction = fmod($value, 1);
 
         if (0.0 == $fraction) {
-            if (-128.0 <= $value && $value <= 127.0) {
-                return "\x5d" . pack('c', intval($value));
-            } elseif (-32768.0 <= $value && $value <= 32767.0) {
-                return "\x5e" . pack('n', intval($value));
+            if (Constants::DOUBLE_1_MIN <= $value && $value <= Constants::DOUBLE_1_MAX) {
+                return pack('cc', Constants::DOUBLE_1, $value);
+            } elseif (Constants::DOUBLE_2_MIN <= $value && $value <= Constants::DOUBLE_2_MAX) {
+                return pack('cn', Constants::DOUBLE_2, $value);
             }
         }
 
@@ -228,10 +237,10 @@ class ValueEncoder
         $unpacked = current(unpack('f', $bytes));
 
         if ($value === $unpacked) {
-            return "\x5f" . Utility::convertEndianness($bytes);
+            return pack('c', Constants::DOUBLE_4) . Utility::convertEndianness($bytes);
         }
 
-        return 'D' . Utility::convertEndianness(pack('d', $value));
+        return pack('c', Constants::DOUBLE_8) . Utility::convertEndianness(pack('d', $value));
     }
 
     /**
@@ -239,7 +248,7 @@ class ValueEncoder
      */
     private function encodeNull()
     {
-        return 'N';
+        return pack('c', Constants::NULL_VALUE);
     }
 
     /**
@@ -266,11 +275,11 @@ class ValueEncoder
         $size = count($value);
 
         if (0 === $size) {
-            $buffer = "\x57Z";
-        } elseif ($size <= 7) {
-            $buffer = pack('c', $size + 0x78);
+            $buffer = pack('cc', Constants::VECTOR, Constants::COLLECTION_TERMINATOR);
+        } elseif ($size <= Constants::VECTOR_FIXED_COMPACT_LIMIT) {
+            $buffer = pack('c', $size + Constants::VECTOR_FIXED_COMPACT_START);
         } else {
-            $buffer = "\x58" . $this->encodeInteger($size);
+            $buffer = pack('c', Constants::VECTOR_FIXED) . $this->encodeInteger($size);
         }
 
         foreach ($value as $element) {
@@ -288,14 +297,14 @@ class ValueEncoder
     private function encodeMap(array $value)
     {
         $size = count($value);
-        $buffer = 'H';
+        $buffer = pack('c', Constants::MAP);
 
         foreach ($value as $key => $value) {
             $buffer .= $this->encode($key);
             $buffer .= $this->encode($value);
         }
 
-        $buffer .= 'Z';
+        $buffer .= pack('c', Constants::COLLECTION_TERMINATOR);
 
         return $buffer;
     }
@@ -340,10 +349,10 @@ class ValueEncoder
             $buffer .= $this->encodeClassDefinition('stdClass', array_keys($sortedProperties));
         }
 
-        if ($defId < 16) {
-            $buffer .= pack('c', $defId + 0x60);
+        if ($defId <= Constants::OBJECT_INSTANCE_COMPACT_LIMIT) {
+            $buffer .= pack('c', $defId + Constants::OBJECT_INSTANCE_COMPACT_START);
         } else {
-            $buffer .= 'O' . $this->encodeInteger($defId);
+            $buffer .= pack('c', Constants::OBJECT_INSTANCE) . $this->encodeInteger($defId);
         }
 
         foreach ($sortedProperties as $value) {
@@ -377,7 +386,7 @@ class ValueEncoder
      */
     private function encodeReference($ref)
     {
-        return 'Q' . $this->encodeInteger($ref);
+        return pack('c', Constants::REFERENCE) . $this->encodeInteger($ref);
     }
 
     /**
@@ -407,7 +416,7 @@ class ValueEncoder
      */
     private function encodeClassDefinition($className, array $propertyNames)
     {
-        $buffer  = 'C' . $this->encodeString($className);
+        $buffer  = pack('c', Constants::CLASS_DEFINITION) . $this->encodeString($className);
         $buffer .= $this->encodeInteger(count($propertyNames));
 
         foreach ($propertyNames as $name) {
@@ -429,8 +438,6 @@ class ValueEncoder
 
         return implode(',', array_keys($properties));
     }
-
-    const MAX_CHUNK_LENGTH = 0xffff;
 
     private $typeCheck;
     private $references;

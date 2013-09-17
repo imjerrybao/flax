@@ -26,9 +26,16 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
 
     public function testEncodeMediumLengthString()
     {
-        $value = $this->generateData(1000);
+        $value = $this->generateData(1023);
 
-        $this->testEncode($value, "\x33\xe8" . $value);
+        $this->testEncode($value, "\x33\xff" . $value);
+    }
+
+    public function testEncodeStringSmallestChunk()
+    {
+        $chunk = $this->generateData(1024);
+
+        $this->testEncode($chunk, "S\x04\x00" . $chunk);
     }
 
     public function testEncodeStringWholeChunk()
@@ -61,6 +68,20 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
         $buffer = $this->encoder->encodeBinary($value);
 
         $this->assertSameBinary($expectedResult, $buffer);
+    }
+
+    public function testEncodeMediumLength()
+    {
+        $value = $this->generateData(1023);
+
+        $this->testEncodeBinary($value, "\x37\xff" . $value);
+    }
+
+    public function testEncodeBinarySmallestChunk()
+    {
+        $chunk = $this->generateData(1024);
+
+        $this->testEncodeBinary($chunk, "B\x04\x00" . $chunk);
     }
 
     public function testEncodeBinaryWholeChunk()
