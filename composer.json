@@ -13,8 +13,9 @@
     ],
     "require": {
         "php": ">=5.3",
-        "icecave/collections": "~0.7.0",
+        "eloquent/enumeration": "~3",
         "icecave/chrono": "~0.2.0",
+        "icecave/collections": "~0.7.0",
         "kriswallsmith/buzz": "~0.10.0"
     },
     "require-dev": {

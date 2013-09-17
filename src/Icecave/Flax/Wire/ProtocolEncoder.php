@@ -12,6 +12,13 @@ class ProtocolEncoder
         $this->valueEncoder = new ValueEncoder;
     }
 
+    public function reset()
+    {
+        $this->typeCheck->reset(func_get_args());
+
+        $this->valueEncoder->reset();
+    }
+
     /**
      * @return string
      */
@@ -31,8 +38,6 @@ class ProtocolEncoder
     public function encodeCall($methodName, array $arguments)
     {
         $this->typeCheck->encodeCall(func_get_args());
-
-        $this->valueEncoder->reset();
 
         $buffer  = 'C';
         $buffer .= $this->valueEncoder->encode($methodName);

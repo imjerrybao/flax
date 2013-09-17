@@ -10,6 +10,13 @@ class ProtocolEncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
+    public function reset(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
     public function encodeVersion(array $arguments)
     {
         if (\count($arguments) > 0) {

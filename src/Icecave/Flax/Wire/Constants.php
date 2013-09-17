@@ -1,9 +1,7 @@
 <?php
 namespace Icecave\Flax\Wire;
 
-use Eloquent\Enumeration\Enumeration;
-
-class Constants extends Enumeration
+class Constants
 {
     // x00 - x1f : utf-8 string length 0-32
     const STRING_COMPACT_START = 0x00;
@@ -62,18 +60,30 @@ class Constants extends Enumeration
     const INT32_4 = 0x49;
 
     // xd8 - xef : one-octet compact long (-x8 to xf, xe0 is 0)
+    const INT64_1_START  = 0xd8;
+    const INT64_1_END    = 0xef;
+    const INT64_1_OFFSET = 'unknown';
+    const INT64_1_MIN    = 'unknown';
+    const INT64_1_MAX    = 'unknown';
+
     // xf0 - xff : two-octet compact long (-x800 to x7ff, xf8 is 0)
+    const INT64_2_START = 0xf0;
+    const INT64_2_END   = 0xff;
+    const INT64_2_OFFSET = 'unknown';
+    const INT64_2_MIN    = 'unknown';
+    const INT64_2_MAX    = 'unknown';
+
     // x38 - x3f : three-octet compact long (-x40000 to x3ffff)
+    const INT64_3_START = 0x38;
+    const INT64_3_END   = 0x3f;
+    const INT64_3_OFFSET = 'unknown';
+    const INT64_3_MIN    = 'unknown';
+    const INT64_3_MAX    = 'unknown';
+
     // x59       : long encoded as 32-bit int ('Y')
     // x4c       : 64-bit signed long integer ('L')
-    const INT64_1_START = 0xd8;
-    const INT64_1_END = 0xef;
-    const INT64_2_START = 0xf0;
-    const INT64_2_END = 0xff;
-    const INT64_3_START = 0x38;
-    const INT64_3_END = 0x3f;
-    const INT64_4 = 0x59;
-    const INT64_8 = 0x4c;
+    const INT64_4       = 0x59;
+    const INT64_8       = 0x4c;
 
     const INT64_HIGH_MASK = 0xffffffff00000000;
     const INT64_LOW_MASK  = 0x00000000ffffffff;

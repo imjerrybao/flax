@@ -9,15 +9,17 @@ class HessianClientFactory
 {
     /**
      * @param string $url
-     * @param string $username
+     * @param string|null $username
      * @param string $password
      */
-    public function connect($url, $username, $password)
+    public function connect($url, $username = null, $password = '')
     {
         TypeCheck::get(__CLASS__)->connect(func_get_args());
 
-        $httpClient = new Curl;
-        $httpClient->setOption(CURLOPT_USERPWD, $username . ':' . $password);
+        if ($username) {
+            $httpClient = new Curl;
+            $httpClient->setOption(CURLOPT_USERPWD, $username . ':' . $password);
+        }
 
         $httpBrowser = new Browser($httpClient);
 

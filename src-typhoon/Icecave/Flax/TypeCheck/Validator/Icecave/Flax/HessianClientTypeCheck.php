@@ -11,8 +11,8 @@ class HessianClientTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
                 throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('url', 0, 'string');
             }
             throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('httpBrowser', 1, 'Buzz\\Browser');
-        } elseif ($argumentCount > 2) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
+        } elseif ($argumentCount > 4) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(4, $arguments[4]);
         }
         $value = $arguments[0];
         if (!\is_string($value)) {
