@@ -47,21 +47,24 @@ ok 45 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - c
 ok 46 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - chrono minutes" (1998-05-08T09:51:00+00:00, 'K' . "\0" . '„Éè')
 ok 47 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 8 octet" (1161981756646125696, 'L 0@P`pÄ')
 ok 48 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMediumLengthString
-ok 49 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringWholeChunk
-ok 50 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringPartialChunk
-ok 51 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringMultipleChunks
-ok 52 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - empty" ('', ' ')
-ok 53 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - 3 octet" ('', '#')
-ok 54 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryWholeChunk
-ok 55 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryPartialChunk
-ok 56 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryMultipleChunks
-ok 57 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - milliseconds" (894621091000, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
-ok 58 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - minutes" (894621060000, 'K' . "\0" . '„Éè')
-ok 59 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjects
-ok 60 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsSingleDefinition
-ok 61 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsReference
-ok 62 - Icecave\Flax\Wire\ValueEncoderTest::testReset
-ok 63 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedType
-ok 64 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeObjectWithLongFormClassDefinitionId
-ok 65 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedObject
-1..65
+ok 49 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringSmallestChunk
+ok 50 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringWholeChunk
+ok 51 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringPartialChunk
+ok 52 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringMultipleChunks
+ok 53 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - empty" ('', ' ')
+ok 54 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - 3 octet" ('', '#')
+ok 55 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMediumLength
+ok 56 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinarySmallestChunk
+ok 57 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryWholeChunk
+ok 58 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryPartialChunk
+ok 59 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryMultipleChunks
+ok 60 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - milliseconds" (894621091000, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
+ok 61 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - minutes" (894621060000, 'K' . "\0" . '„Éè')
+ok 62 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjects
+ok 63 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsSingleDefinition
+ok 64 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsReference
+ok 65 - Icecave\Flax\Wire\ValueEncoderTest::testReset
+ok 66 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedType
+ok 67 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeObjectWithLongFormClassDefinitionId
+ok 68 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedObject
+1..68
