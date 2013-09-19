@@ -62,23 +62,23 @@ class Constants
     // xd8 - xef : one-octet compact long (-x8 to xf, xe0 is 0)
     const INT64_1_START  = 0xd8;
     const INT64_1_END    = 0xef;
-    const INT64_1_OFFSET = 'unknown';
-    const INT64_1_MIN    = 'unknown';
-    const INT64_1_MAX    = 'unknown';
+    const INT64_1_OFFSET = 0xe0;
+    const INT64_1_MIN    = -0x08;
+    const INT64_1_MAX    = +0x0f;
 
     // xf0 - xff : two-octet compact long (-x800 to x7ff, xf8 is 0)
-    const INT64_2_START = 0xf0;
-    const INT64_2_END   = 0xff;
-    const INT64_2_OFFSET = 'unknown';
-    const INT64_2_MIN    = 'unknown';
-    const INT64_2_MAX    = 'unknown';
+    const INT64_2_START  = 0xf0;
+    const INT64_2_END    = 0xff;
+    const INT64_2_OFFSET = 0xf8;
+    const INT64_2_MIN    = -0x0800;
+    const INT64_2_MAX    = +0x07ff;
 
     // x38 - x3f : three-octet compact long (-x40000 to x3ffff)
-    const INT64_3_START = 0x38;
-    const INT64_3_END   = 0x3f;
-    const INT64_3_OFFSET = 'unknown';
-    const INT64_3_MIN    = 'unknown';
-    const INT64_3_MAX    = 'unknown';
+    const INT64_3_START  = 0x38;
+    const INT64_3_END    = 0x3f;
+    const INT64_3_OFFSET = 0x3c;
+    const INT64_3_MIN    = -0x040000;
+    const INT64_3_MAX    = +0x03ffff;
 
     // x59       : long encoded as 32-bit int ('Y')
     // x4c       : 64-bit signed long integer ('L')

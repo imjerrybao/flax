@@ -63,4 +63,18 @@ abstract class Utility
 
         return ($hi << 32) | $lo;
     }
+
+    public static function byteToUnsigned($byte)
+    {
+        list(, $value) = unpack('C', pack('c', $byte));
+
+        return $value;
+    }
+
+    public static function byteToSigned($byte)
+    {
+        list(, $value) = unpack('c', pack('C', $byte));
+
+        return $value;
+    }
 }

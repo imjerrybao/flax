@@ -9,8 +9,8 @@ use Icecave\Flax\Wire\ProtocolDecoder;
 class HessianClient implements HessianClientInterface
 {
     /**
-     * @param string  $url
-     * @param Browser $httpBrowser
+     * @param string               $url
+     * @param Browser              $httpBrowser
      * @param ProtocolEncoder|null $encoder
      * @param ProtocolDecoder|null $decoder
      */

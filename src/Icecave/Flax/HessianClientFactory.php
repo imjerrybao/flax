@@ -8,9 +8,9 @@ use Icecave\Flax\TypeCheck\TypeCheck;
 class HessianClientFactory
 {
     /**
-     * @param string $url
+     * @param string      $url
      * @param string|null $username
-     * @param string $password
+     * @param string      $password
      */
     public function connect($url, $username = null, $password = '')
     {

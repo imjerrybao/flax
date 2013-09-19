@@ -1,33 +1,31 @@
 <?php
 namespace Icecave\Flax\Wire;
 
-use DateTime;
-use Icecave\Chrono\TimePointInterface;
-use Icecave\Collections\Collection;
 use Icecave\Collections\Map;
+use Icecave\Collections\Stack;
+use Icecave\Chrono\DateTime;
 use Icecave\Flax\TypeCheck\TypeCheck;
-use InvalidArgumentException;
 use stdClass;
 
 class ValueDecoder
 {
     public function __construct()
     {
-        $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
+        // $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
 
         $this->reset();
     }
 
     public function reset()
     {
-        $this->typeCheck->reset(func_get_args());
+        // $this->typeCheck->reset(func_get_args());
 
         $this->stack = new Stack;
     }
 
     public function feed($buffer)
     {
-        $this->typeCheck->feed(func_get_args());
+        // $this->typeCheck->feed(func_get_args());
 
         $length = strlen($buffer);
 
@@ -40,333 +38,441 @@ class ValueDecoder
     {
         if (!$this->stack->isEmpty()) {
             switch ($this->stack->next()->state) {
+                case ValueDecoderState::STRING_COMPACT_DATA():
+                    return $this->handleStringCompactData($byte);
+                // case ValueDecoderState::STRING_CHUNK_SIZE():
+                //     return $this->handleStringChunkSize($byte, false);
+                // case ValueDecoderState::STRING_CHUNK_DATA():
+                //     return $this->handleStringChunkData($byte, false);
+                // case ValueDecoderState::STRING_CHUNK_FINAL_SIZE():
+                //     return $this->handleStringChunkSize($byte, true);
+                // case ValueDecoderState::STRING_CHUNK_FINAL_DATA():
+                //     return $this->handleStringChunkData($byte, true);
+                case ValueDecoderState::DOUBLE_1():
+                    return $this->handleDouble1($byte);
+                case ValueDecoderState::DOUBLE_2():
+                    return $this->handleDouble2($byte);
+                case ValueDecoderState::DOUBLE_4():
+                    return $this->handleDouble4($byte);
+                case ValueDecoderState::DOUBLE_8():
+                    return $this->handleDouble8($byte);
+                case ValueDecoderState::INT32():
+                    return $this->handleInt32($byte);
+                case ValueDecoderState::INT64():
+                    return $this->handleInt64($byte);
+                case ValueDecoderState::TIMESTAMP_MILLISECONDS():
+                    return $this->handleTimestampMilliseconds($byte);
+                case ValueDecoderState::TIMESTAMP_MINUTES():
+                    return $this->handleTimestampMinutes($byte);
             }
         }
 
-        return $this->doBegin($byte);
+        return $this->handleBegin($byte);
     }
 
     public function finalize()
     {
-        $this->typeCheck->finalize(func_get_args());
+        return $this->value;
     }
 
     public function values()
     {
-        $this->typeCheck->values(func_get_args());
+        // $this->typeCheck->values(func_get_args());
 
     }
 
-    private function doBegin($byte)
+    private function handleBegin($byte)
     {
         switch ($byte) {
-            case Constants::STRING_CHUNK:
-                return $this->push(ValueDecoderState::STRING_CHUNK())
-            case Constants::STRING_CHUNK_FINAL:
-                return $this->push(ValueDecoderState::STRING_CHUNK_FINAL())
-            case Constants::BINARY_CHUNK:
-                return $this->push(ValueDecoderState::BINARY_CHUNK())
-            case Constants::BINARY_CHUNK_FINAL:
-                return $this->push(ValueDecoderState::BINARY_CHUNK_FINAL())
+            case Constants::NULL_VALUE:
+                return $this->emitValue(null);
+            case Constants::BOOLEAN_TRUE:
+                return $this->emitValue(true);
+            case Constants::BOOLEAN_FALSE:
+                return $this->emitValue(false);
+            // case Constants::STRING_CHUNK:
+            //     return $this->push(ValueDecoderState::STRING_CHUNK_SIZE());
+            // case Constants::STRING_CHUNK_FINAL:
+            //     return $this->push(ValueDecoderState::STRING_CHUNK_FINAL_SIZE());
+            // case Constants::BINARY_CHUNK:
+            //     return $this->push(ValueDecoderState::BINARY_CHUNK_SIZE());
+            // case Constants::BINARY_CHUNK_FINAL:
+            //     return $this->push(ValueDecoderState::BINARY_CHUNK_FINAL_SIZE());
             case Constants::INT32_4:
-                return $this->push(ValueDecoderState::INT32_4())
+                return $this->push(ValueDecoderState::INT32());
             case Constants::INT64_4:
-                return $this->push(ValueDecoderState::INT64_4())
+                return $this->push(ValueDecoderState::INT32());
             case Constants::INT64_8:
-                return $this->push(ValueDecoderState::INT64_8())
+                return $this->push(ValueDecoderState::INT64());
             case Constants::DOUBLE_ZERO:
                 return $this->emitValue(0.0);
             case Constants::DOUBLE_ONE:
                 return $this->emitValue(1.0);
             case Constants::DOUBLE_1:
-                return $this->push(ValueDecoderState::DOUBLE_1())
+                return $this->push(ValueDecoderState::DOUBLE_1());
             case Constants::DOUBLE_2:
-                return $this->push(ValueDecoderState::DOUBLE_2())
+                return $this->push(ValueDecoderState::DOUBLE_2());
             case Constants::DOUBLE_4:
-                return $this->push(ValueDecoderState::DOUBLE_4())
+                return $this->push(ValueDecoderState::DOUBLE_4());
             case Constants::DOUBLE_8:
-                return $this->push(ValueDecoderState::DOUBLE_8())
-            case Constants::BOOLEAN_TRUE:
-                return $this->emitValue(true);
-            case Constants::BOOLEAN_FALSE:
-                return $this->emitValue(false);
-            case Constants::NULL_VALUE:
-                return $this->emitValue(null);
+                return $this->push(ValueDecoderState::DOUBLE_8());
             case Constants::TIMESTAMP_MILLISECONDS:
                 return $this->push(ValueDecoderState::TIMESTAMP_MILLISECONDS());
             case Constants::TIMESTAMP_MINUTES:
                 return $this->push(ValueDecoderState::TIMESTAMP_MINUTES());
-            case Constants::CLASS_DEFINITION:
-                return $this->push(ValueDecoderState::CLASS_DEFINITION());
-            case Constants::OBJECT_INSTANCE:
-                return $this->push(ValueDecoderState::OBJECT_INSTANCE());
-            case Constants::REFERENCE:
-                return $this->push(ValueDecoderState::REFERENCE());
-            case Constants::VECTOR_TYPED:
-                return $this->push(ValueDecoderState::VECTOR_TYPED());
-            case Constants::VECTOR_TYPED_FIXED:
-                return $this->push(ValueDecoderState::VECTOR_TYPED_FIXED());
-            case Constants::VECTOR:
-                return $this->push(ValueDecoderState::VECTOR());
-            case Constants::VECTOR_FIXED:
-                return $this->push(ValueDecoderState::VECTOR_FIXED());
-            case Constants::MAP_TYPED:
-                return $this->push(ValueDecoderState::MAP_TYPED());
-            case Constants::MAP:
-                return $this->push(ValueDecoderState::MAP());
+            // case Constants::CLASS_DEFINITION:
+            //     return $this->push(ValueDecoderState::CLASS_DEFINITION());
+            // case Constants::OBJECT_INSTANCE:
+            //     return $this->push(ValueDecoderState::OBJECT_INSTANCE());
+            // case Constants::REFERENCE:
+            //     return $this->push(ValueDecoderState::REFERENCE());
+            // case Constants::VECTOR_TYPED:
+            //     return $this->push(ValueDecoderState::VECTOR_TYPED());
+            // case Constants::VECTOR_TYPED_FIXED:
+            //     return $this->push(ValueDecoderState::VECTOR_TYPED_FIXED());
+            // case Constants::VECTOR:
+            //     return $this->push(ValueDecoderState::VECTOR());
+            // case Constants::VECTOR_FIXED:
+            //     return $this->push(ValueDecoderState::VECTOR_FIXED());
+            // case Constants::MAP_TYPED:
+            //     return $this->push(ValueDecoderState::MAP_TYPED());
+            // case Constants::MAP:
+            //     return $this->push(ValueDecoderState::MAP());
         }
 
         if (Constants::STRING_COMPACT_START <= $byte && $byte <= Constants::STRING_COMPACT_END) {
-            return $this->doBeginCompactString($byte);
-        } elseif (Constants::STRING_START <= $byte && $byte <= Constants::STRING_END) {
-            return $this->doBeginString($byte);
-        } elseif (Constants::BINARY_COMPACT_START <= $byte && $byte <= Constants::BINARY_COMPACT_END) {
-            return $this->doBeginCompactBinary($byte);
-        } elseif (Constants::BINARY_START <= $byte && $byte <= Constants::BINARY_END) {
-            return $this->doBeginBinary($byte);
+            return $this->beginCompactString($byte);
+        // } elseif (Constants::STRING_START <= $byte && $byte <= Constants::STRING_END) {
+        //     return $this->beginString($byte);
+        // } elseif (Constants::BINARY_COMPACT_START <= $byte && $byte <= Constants::BINARY_COMPACT_END) {
+        //     return $this->beginCompactBinary($byte);
+        // } elseif (Constants::BINARY_START <= $byte && $byte <= Constants::BINARY_END) {
+        //     return $this->beginBinary($byte);
         } elseif (Constants::INT32_1_START <= $byte && $byte <= Constants::INT32_1_END) {
-            return $this->doBeginInt32Compact1($byte);
+            return $this->emitValue($byte - Constants::INT32_1_OFFSET);
         } elseif (Constants::INT32_2_START <= $byte && $byte <= Constants::INT32_2_END) {
-            return $this->doBeginInt32Compact2($byte);
+            return $this->beginInt32Compact2($byte);
         } elseif (Constants::INT32_3_START <= $byte && $byte <= Constants::INT32_3_END) {
-            return $this->doBeginInt32Compact3($byte);
+            return $this->beginInt32Compact3($byte);
         } elseif (Constants::INT64_1_START <= $byte && $byte <= Constants::INT64_1_END) {
-            return $this->doBeginInt64Compact1($byte);
+            return $this->emitValue($byte - Constants::INT64_1_OFFSET);
         } elseif (Constants::INT64_2_START <= $byte && $byte <= Constants::INT64_2_END) {
-            return $this->doBeginInt64Compact2($byte);
+            return $this->beginInt64Compact2($byte);
         } elseif (Constants::INT64_3_START <= $byte && $byte <= Constants::INT64_3_END) {
-            return $this->doBeginInt64Compact3($byte);
-        } elseif (Constants::OBJECT_INSTANCE_COMPACT_START <= $byte && $byte <= Constants::OBJECT_INSTANCE_COMPACT_END) {
-            return $this->doBeginCompactObjectInstance($byte);
-        } elseif (Constants::VECTOR_TYPED_FIXED_COMPACT_START <= $byte && $byte <= Constants::VECTOR_TYPED_FIXED_COMPACT_END) {
-            return $this->doBeginCompactTypedFixedLengthVector($byte);
-        } elseif (Constants::VECTOR_FIXED_COMPACT_START <= $byte && $byte <= Constants::VECTOR_FIXED_COMPACT_END) {
-            return $this->doBeginCompactFixedLengthVector($byte);
+            return $this->beginInt64Compact3($byte);
+        // } elseif (Constants::OBJECT_INSTANCE_COMPACT_START <= $byte && $byte <= Constants::OBJECT_INSTANCE_COMPACT_END) {
+        //     return $this->beginCompactObjectInstance($byte);
+        // } elseif (Constants::VECTOR_TYPED_FIXED_COMPACT_START <= $byte && $byte <= Constants::VECTOR_TYPED_FIXED_COMPACT_END) {
+        //     return $this->beginCompactTypedFixedLengthVector($byte);
+        // } elseif (Constants::VECTOR_FIXED_COMPACT_START <= $byte && $byte <= Constants::VECTOR_FIXED_COMPACT_END) {
+        //     return $this->beginCompactFixedLengthVector($byte);
         }
 
         throw new Exception\DecodeException('Invalid byte at start of value: 0x' . dechex($byte) . '.');
     }
 
-    private function doBeginChunkedString($isFinal = false)
+    private function emitValue($value)
     {
-
+        $this->value = $value;
     }
 
-    private function doBeginChunkedBinary($isFinal = false)
+    // private function beginChunkedString($isFinal = false)
+    // {
+
+    // }
+
+    // private function beginChunkedBinary($isFinal = false)
+    // {
+
+    // }
+
+    // private function beginClassDefinition()
+    // {
+
+    // }
+
+    // private function beginObjectInstance()
+    // {
+
+    // }
+
+    // private function beginReference()
+    // {
+
+    // }
+
+    // private function beginTypedVector()
+    // {
+
+    // }
+
+    // private function beginTypedFixedLengthFector()
+    // {
+
+    // }
+
+    // private function beginVector()
+    // {
+
+    // }
+
+    // private function beginFixedLengthVector()
+    // {
+
+    // }
+
+    // private function beginTypedMap()
+    // {
+
+    // }
+
+    // private function beginMap()
+    // {
+
+    // }
+
+    private function beginCompactString($byte)
     {
-
-    }
-
-    private function doBeginInt32()
-    {
-        $this->push(ValueDecoderState::INT32())
-    }
-
-    private function doInt32($byte)
-    {
-        $this->buffer .= $byte;
-
-        if (4 === strlen($this->buffer)) {
-            $this->emitValue(
-                unpack('N', $this->buffer)
-            );
+        if (0x00 === $byte) {
+            $this->emitValue('');
+        } else {
+            $context = $this->push(ValueDecoderState::STRING_COMPACT_DATA());
+            $context->expectedSize = $byte;
         }
     }
 
-    private function doBeginInt64Compact4()
+    // private function beginString($byte)
+    // {
+
+    // }
+
+    // private function beginCompactBinary($byte)
+    // {
+
+    // }
+
+    // private function beginBinary($byte)
+    // {
+
+    // }
+
+    private function beginInt32Compact2($byte)
     {
-        $this->push(ValueDecoderState::INT64_2())
+        $context = $this->push(ValueDecoderState::INT32());
+        $value = $byte - Constants::INT32_2_OFFSET;
+        $context->buffer = pack('ccc', $value >> 16, $value >> 8, $value);
     }
 
-    private function
-
-    private function doBeginInt64()
+    private function beginInt32Compact3($byte)
     {
-
+        $context = $this->push(ValueDecoderState::INT32());
+        $value = $byte - Constants::INT32_3_OFFSET;
+        $context->buffer = pack('cc', $value >> 8, $value);
     }
 
-    private function doBeginDoubleCompact1()
+    private function beginInt64Compact2($byte)
     {
-
+        $context = $this->push(ValueDecoderState::INT32());
+        $value = $byte - Constants::INT64_2_OFFSET;
+        $context->buffer = pack('ccc', $value >> 16, $value >> 8, $value);
     }
 
-    private function doBeginDoubleCompact2()
+    private function beginInt64Compact3($byte)
     {
-
+        $context = $this->push(ValueDecoderState::INT32());
+        $value = $byte - Constants::INT64_3_OFFSET;
+        $context->buffer = pack('cc', $value >> 8, $value);
     }
 
-    private function doBeginDoubleCompact4()
-    {
+    // private function beginCompactObjectInstance($byte)
+    // {
 
+    // }
+
+    // private function beginCompactTypedFixedLengthVector($byte)
+    // {
+
+    // }
+
+    // private function beginCompactFixedLengthVector($byte)
+    // {
+
+    // }
+
+    private function handleStringCompactData($byte)
+    {
+        if ($this->appendStringData($byte)) {
+            $context = $this->pop();
+            $this->emitValue($context->buffer);
+        }
     }
 
-    private function doBeginDouble()
+    private function handleDouble1($byte)
     {
-
+        $this->emitValue(
+            floatval(Utility::byteToSigned($byte))
+        );
     }
 
-    private function doBeginValue($value)
+    private function handleDouble2($byte)
     {
+        $context = $this->context();
+        $context->buffer .= pack('c', $byte);
 
+        if (2 === strlen($context->buffer)) {
+            list(, $value) = unpack(
+                's',
+                Utility::convertEndianness($context->buffer)
+            );
+            $this->emitValue(floatval($value));
+            $this->pop();
+        }
     }
 
-    private function doBeginTimestampMilliseconds()
+    private function handleDouble4($byte)
     {
+        $context = $this->context();
+        $context->buffer .= pack('c', $byte);
 
+        if (4 === strlen($context->buffer)) {
+            list(, $value) = unpack(
+                'f',
+                Utility::convertEndianness($context->buffer)
+            );
+            $this->emitValue($value);
+            $this->pop();
+        }
     }
 
-    private function doBeginTimestampMinutes()
+    private function handleDouble8($byte)
     {
+        $context = $this->context();
+        $context->buffer .= pack('c', $byte);
 
+        if (8 === strlen($context->buffer)) {
+            list(, $value) = unpack(
+                'd',
+                Utility::convertEndianness($context->buffer)
+            );
+            $this->emitValue($value);
+        }
     }
 
-    private function doBeginClassDefinition()
+    public function handleInt32($byte)
     {
+        $value = $this->appendInt32Data($byte);
 
+        if (null !== $value) {
+            $this->emitValue($value);
+            $this->pop();
+        }
     }
 
-    private function doBeginObjectInstance()
+    public function handleInt64($byte)
     {
+        $value = $this->appendInt64Data($byte);
 
+        if (null !== $value) {
+            $this->emitValue($value);
+            $this->pop();
+        }
     }
 
-    private function doBeginReference()
+    public function handleTimestampMilliseconds($byte)
     {
+        $value = $this->appendInt64Data($byte);
 
+        if (null !== $value) {
+            $this->emitValue(DateTime::fromUnixTime($value / 1000));
+            $this->pop();
+        }
     }
 
-    private function doBeginTypedVector()
+    public function handleTimestampMinutes($byte)
     {
+        $value = $this->appendInt32Data($byte);
 
-    }
-
-    private function doBeginTypedFixedLengthFector()
-    {
-
-    }
-
-    private function doBeginVector()
-    {
-
-    }
-
-    private function doBeginFixedLengthVector()
-    {
-
-    }
-
-    private function doBeginTypedMap()
-    {
-
-    }
-
-    private function doBeginMap()
-    {
-
-    }
-
-    private function doBeginCompactString($byte)
-    {
-
-    }
-
-    private function doBeginString($byte)
-    {
-
-    }
-
-    private function doBeginCompactBinary($byte)
-    {
-
-    }
-
-    private function doBeginBinary($byte)
-    {
-
-    }
-
-    private function doBeginInt32Compact1($byte)
-    {
-
-    }
-
-    private function doBeginInt32Compact2($byte)
-    {
-
-    }
-
-    private function doBeginInt32Compact3($byte)
-    {
-
-    }
-
-    private function doBeginInt64Compact1($byte)
-    {
-
-    }
-
-    private function doBeginInt64Compact2($byte)
-    {
-
-    }
-
-    private function doBeginInt64Compact3($byte)
-    {
-
-    }
-
-    private function doBeginCompactObjectInstance($byte)
-    {
-
-    }
-
-    private function doBeginCompactTypedFixedLengthVector($byte)
-    {
-
-    }
-
-    private function doBeginCompactFixedLengthVector($byte)
-    {
-
+        if (null !== $value) {
+            $this->emitValue(DateTime::fromUnixTime($value * 60));
+            $this->pop();
+        }
     }
 
     /**
      * @param mixed       $value
      * @param ParserState $state
      */
-    private function push($value, ValueDecoderState $state)
+    private function push(ValueDecoderState $state)
     {
-        $entry = new stdClass;
-        // $entry->value = $value;
-        // $entry->key = null;
-        $entry->state = $state;
-        $this->stack->push($entry);
+        $context = new stdClass;
+        $context->state = $state;
+        $context->buffer = '';
+        $context->expectedSize = 0;
 
-        // if (is_array($value)) {
-        //     $this->emit('array-open');
-        // } elseif (is_object($value)) {
-        //     $this->emit('object-open');
-        // }
+        $this->stack->push($context);
+
+        return $context;
     }
 
-    /**
-     * @return stdClass
-     */
     private function pop()
     {
-        $value = $this->stack->pop()->value;
+        return $this->stack->pop();
+    }
 
-        // if (is_array($value)) {
-        //     $this->emit('array-close');
-        // } elseif (is_object($value)) {
-        //     $this->emit('object-close');
-        // }
+    private function context()
+    {
+        return $this->stack->next();
+    }
 
-        return $value;
+    private function appendStringData($byte)
+    {
+        $context = $this->context();
+        $context->buffer .= pack('c', $byte);
+
+        // Check if we've even read enough bytes to possibly be complete ...
+        if (strlen($context->buffer) < $context->expectedSize) {
+            return false;
+        // Check if we have a valid utf8 string ...
+        } elseif (!mb_check_encoding($context->buffer, 'utf8')) {
+            return false;
+        // Check if we've read the right number of multibyte characters ...
+        } elseif (mb_strlen($context->buffer, 'utf8') !== $context->expectedSize) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function appendInt32Data($byte)
+    {
+        $context = $this->context();
+        $context->buffer .= pack('c', $byte);
+
+        if (4 === strlen($context->buffer)) {
+            list(, $value) = unpack(
+                'l',
+                Utility::convertEndianness($context->buffer)
+            );
+
+            return $value;
+        }
+
+        return null;
+    }
+
+    public function appendInt64Data($byte)
+    {
+        $context = $this->context();
+        $context->buffer .= pack('c', $byte);
+
+        if (8 === strlen($context->buffer)) {
+            return Utility::unpackInt64($context->buffer);
+        }
+
+        return null;
     }
 
     private $typeCheck;
-    private $state;
-    private $expectedLength;
-    private $buffer;
+    private $stack;
+    private $value;
 }
