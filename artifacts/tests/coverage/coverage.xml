@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1379460681">
-  <project timestamp="1379460681">
+<coverage generated="1379599975">
+  <project timestamp="1379599975">
     <package name="Icecave\Flax">
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClient.php">
         <class name="HessianClient" namespace="Icecave\Flax">
@@ -108,7 +108,7 @@
       </file>
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Utility.php">
         <class name="Utility" namespace="Icecave\Flax\Wire">
-          <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+          <metrics methods="6" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="17" elements="27" coveredelements="21"/>
         </class>
         <line num="11" type="method" name="isBigEndian" crap="2" count="2"/>
         <line num="13" type="stmt" count="2"/>
@@ -131,266 +131,254 @@
         <line num="60" type="stmt" count="1"/>
         <line num="62" type="stmt" count="1"/>
         <line num="64" type="stmt" count="1"/>
-        <line num="67" type="stmt" count="0"/>
-        <metrics loc="66" ncloc="48" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+        <line num="67" type="method" name="byteToUnsigned" crap="2" count="0"/>
+        <line num="69" type="stmt" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="74" type="method" name="byteToSigned" crap="2" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
+        <metrics loc="80" ncloc="62" classes="1" methods="6" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="17" elements="27" coveredelements="21"/>
       </file>
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ValueDecoder.php">
         <class name="ValueDecoder" namespace="Icecave\Flax\Wire">
-          <metrics methods="45" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="249" coveredstatements="0" elements="294" coveredelements="0"/>
+          <metrics methods="28" coveredmethods="27" conditionals="0" coveredconditionals="0" statements="197" coveredstatements="192" elements="225" coveredelements="219"/>
         </class>
-        <line num="14" type="method" name="__construct" crap="2" count="0"/>
-        <line num="15" type="stmt" count="0"/>
-        <line num="16" type="stmt" count="0"/>
-        <line num="18" type="stmt" count="0"/>
-        <line num="19" type="stmt" count="0"/>
-        <line num="21" type="method" name="reset" crap="2" count="0"/>
-        <line num="22" type="stmt" count="0"/>
-        <line num="23" type="stmt" count="0"/>
-        <line num="25" type="stmt" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="28" type="method" name="feed" crap="6" count="0"/>
-        <line num="29" type="stmt" count="0"/>
-        <line num="30" type="stmt" count="0"/>
-        <line num="32" type="stmt" count="0"/>
-        <line num="34" type="stmt" count="0"/>
-        <line num="35" type="stmt" count="0"/>
-        <line num="36" type="stmt" count="0"/>
-        <line num="37" type="stmt" count="0"/>
-        <line num="39" type="method" name="feedByte" crap="6" count="0"/>
-        <line num="40" type="stmt" count="0"/>
-        <line num="41" type="stmt" count="0"/>
-        <line num="42" type="stmt" count="0"/>
-        <line num="43" type="stmt" count="0"/>
-        <line num="44" type="stmt" count="0"/>
-        <line num="46" type="stmt" count="0"/>
-        <line num="47" type="stmt" count="0"/>
-        <line num="49" type="method" name="finalize" crap="2" count="0"/>
-        <line num="50" type="stmt" count="0"/>
-        <line num="51" type="stmt" count="0"/>
-        <line num="52" type="stmt" count="0"/>
-        <line num="54" type="method" name="values" crap="2" count="0"/>
-        <line num="55" type="stmt" count="0"/>
-        <line num="56" type="stmt" count="0"/>
-        <line num="58" type="stmt" count="0"/>
-        <line num="60" type="method" name="doBegin" crap="2970" count="0"/>
-        <line num="61" type="stmt" count="0"/>
-        <line num="62" type="stmt" count="0"/>
-        <line num="63" type="stmt" count="0"/>
-        <line num="64" type="stmt" count="0"/>
-        <line num="65" type="stmt" count="0"/>
-        <line num="66" type="stmt" count="0"/>
+        <line num="0" type="stmt" count="0"/>
+        <line num="12" type="method" name="__construct" crap="1" count="43"/>
+        <line num="16" type="stmt" count="43"/>
+        <line num="17" type="stmt" count="43"/>
+        <line num="19" type="method" name="reset" crap="1" count="43"/>
+        <line num="23" type="stmt" count="43"/>
+        <line num="24" type="stmt" count="43"/>
+        <line num="26" type="method" name="feed" crap="2" count="43"/>
+        <line num="30" type="stmt" count="43"/>
+        <line num="32" type="stmt" count="43"/>
+        <line num="33" type="stmt" count="43"/>
+        <line num="34" type="stmt" count="43"/>
+        <line num="35" type="stmt" count="43"/>
+        <line num="37" type="method" name="feedByte" crap="11.08" count="43"/>
+        <line num="39" type="stmt" count="43"/>
+        <line num="40" type="stmt" count="29"/>
+        <line num="41" type="stmt" count="29"/>
+        <line num="42" type="stmt" count="2"/>
+        <line num="51" type="stmt" count="27"/>
+        <line num="52" type="stmt" count="4"/>
+        <line num="53" type="stmt" count="23"/>
+        <line num="54" type="stmt" count="3"/>
+        <line num="55" type="stmt" count="20"/>
+        <line num="56" type="stmt" count="2"/>
+        <line num="57" type="stmt" count="18"/>
+        <line num="58" type="stmt" count="1"/>
+        <line num="59" type="stmt" count="17"/>
+        <line num="60" type="stmt" count="14"/>
+        <line num="61" type="stmt" count="3"/>
+        <line num="62" type="stmt" count="1"/>
+        <line num="63" type="stmt" count="2"/>
+        <line num="64" type="stmt" count="1"/>
+        <line num="65" type="stmt" count="1"/>
+        <line num="66" type="stmt" count="1"/>
         <line num="67" type="stmt" count="0"/>
         <line num="68" type="stmt" count="0"/>
-        <line num="69" type="stmt" count="0"/>
-        <line num="70" type="stmt" count="0"/>
-        <line num="71" type="stmt" count="0"/>
-        <line num="72" type="stmt" count="0"/>
-        <line num="73" type="stmt" count="0"/>
-        <line num="74" type="stmt" count="0"/>
-        <line num="75" type="stmt" count="0"/>
-        <line num="76" type="stmt" count="0"/>
-        <line num="77" type="stmt" count="0"/>
-        <line num="78" type="stmt" count="0"/>
-        <line num="79" type="stmt" count="0"/>
-        <line num="80" type="stmt" count="0"/>
-        <line num="81" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="43"/>
+        <line num="73" type="method" name="finalize" crap="1" count="43"/>
+        <line num="75" type="stmt" count="43"/>
+        <line num="78" type="method" name="values" crap="2" count="0"/>
         <line num="82" type="stmt" count="0"/>
-        <line num="83" type="stmt" count="0"/>
-        <line num="84" type="stmt" count="0"/>
-        <line num="85" type="stmt" count="0"/>
-        <line num="86" type="stmt" count="0"/>
-        <line num="87" type="stmt" count="0"/>
-        <line num="88" type="stmt" count="0"/>
-        <line num="89" type="stmt" count="0"/>
-        <line num="90" type="stmt" count="0"/>
-        <line num="91" type="stmt" count="0"/>
-        <line num="92" type="stmt" count="0"/>
-        <line num="93" type="stmt" count="0"/>
-        <line num="94" type="stmt" count="0"/>
-        <line num="95" type="stmt" count="0"/>
-        <line num="96" type="stmt" count="0"/>
-        <line num="97" type="stmt" count="0"/>
-        <line num="98" type="stmt" count="0"/>
-        <line num="99" type="stmt" count="0"/>
-        <line num="100" type="stmt" count="0"/>
-        <line num="101" type="stmt" count="0"/>
-        <line num="102" type="stmt" count="0"/>
-        <line num="103" type="stmt" count="0"/>
-        <line num="104" type="stmt" count="0"/>
-        <line num="105" type="stmt" count="0"/>
-        <line num="106" type="stmt" count="0"/>
-        <line num="107" type="stmt" count="0"/>
-        <line num="108" type="stmt" count="0"/>
-        <line num="109" type="stmt" count="0"/>
-        <line num="110" type="stmt" count="0"/>
-        <line num="111" type="stmt" count="0"/>
-        <line num="112" type="stmt" count="0"/>
-        <line num="113" type="stmt" count="0"/>
-        <line num="114" type="stmt" count="0"/>
-        <line num="115" type="stmt" count="0"/>
-        <line num="116" type="stmt" count="0"/>
-        <line num="117" type="stmt" count="0"/>
-        <line num="119" type="stmt" count="0"/>
-        <line num="120" type="stmt" count="0"/>
-        <line num="121" type="stmt" count="0"/>
-        <line num="122" type="stmt" count="0"/>
-        <line num="123" type="stmt" count="0"/>
-        <line num="124" type="stmt" count="0"/>
-        <line num="125" type="stmt" count="0"/>
-        <line num="126" type="stmt" count="0"/>
-        <line num="127" type="stmt" count="0"/>
-        <line num="128" type="stmt" count="0"/>
-        <line num="129" type="stmt" count="0"/>
-        <line num="130" type="stmt" count="0"/>
-        <line num="131" type="stmt" count="0"/>
-        <line num="132" type="stmt" count="0"/>
-        <line num="133" type="stmt" count="0"/>
-        <line num="134" type="stmt" count="0"/>
-        <line num="135" type="stmt" count="0"/>
-        <line num="136" type="stmt" count="0"/>
-        <line num="137" type="stmt" count="0"/>
-        <line num="138" type="stmt" count="0"/>
-        <line num="139" type="stmt" count="0"/>
-        <line num="140" type="stmt" count="0"/>
-        <line num="141" type="stmt" count="0"/>
-        <line num="142" type="stmt" count="0"/>
-        <line num="143" type="stmt" count="0"/>
-        <line num="144" type="stmt" count="0"/>
-        <line num="145" type="stmt" count="0"/>
-        <line num="147" type="stmt" count="0"/>
-        <line num="148" type="stmt" count="0"/>
-        <line num="150" type="method" name="doBeginChunkedString" crap="2" count="0"/>
-        <line num="151" type="stmt" count="0"/>
-        <line num="153" type="stmt" count="0"/>
-        <line num="155" type="method" name="doBeginChunkedBinary" crap="2" count="0"/>
-        <line num="156" type="stmt" count="0"/>
-        <line num="158" type="stmt" count="0"/>
-        <line num="160" type="method" name="doBeginInt32" crap="2" count="0"/>
-        <line num="161" type="stmt" count="0"/>
-        <line num="162" type="stmt" count="0"/>
-        <line num="163" type="stmt" count="0"/>
-        <line num="165" type="method" name="doInt32" crap="6" count="0"/>
-        <line num="166" type="stmt" count="0"/>
-        <line num="167" type="stmt" count="0"/>
-        <line num="169" type="stmt" count="0"/>
-        <line num="170" type="stmt" count="0"/>
+        <line num="84" type="method" name="handleBegin" crap="29" count="43"/>
+        <line num="87" type="stmt" count="43"/>
+        <line num="88" type="stmt" count="1"/>
+        <line num="89" type="stmt" count="42"/>
+        <line num="90" type="stmt" count="1"/>
+        <line num="91" type="stmt" count="41"/>
+        <line num="92" type="stmt" count="1"/>
+        <line num="101" type="stmt" count="40"/>
+        <line num="102" type="stmt" count="1"/>
+        <line num="103" type="stmt" count="39"/>
+        <line num="104" type="stmt" count="1"/>
+        <line num="105" type="stmt" count="38"/>
+        <line num="106" type="stmt" count="1"/>
+        <line num="107" type="stmt" count="37"/>
+        <line num="108" type="stmt" count="1"/>
+        <line num="109" type="stmt" count="36"/>
+        <line num="110" type="stmt" count="1"/>
+        <line num="111" type="stmt" count="35"/>
+        <line num="112" type="stmt" count="4"/>
+        <line num="113" type="stmt" count="31"/>
+        <line num="114" type="stmt" count="3"/>
+        <line num="115" type="stmt" count="28"/>
+        <line num="116" type="stmt" count="2"/>
+        <line num="117" type="stmt" count="26"/>
+        <line num="118" type="stmt" count="1"/>
+        <line num="119" type="stmt" count="25"/>
+        <line num="120" type="stmt" count="1"/>
+        <line num="121" type="stmt" count="24"/>
+        <line num="122" type="stmt" count="1"/>
+        <line num="143" type="stmt" count="23"/>
+        <line num="144" type="stmt" count="3"/>
+        <line num="151" type="stmt" count="20"/>
+        <line num="152" type="stmt" count="4"/>
+        <line num="153" type="stmt" count="16"/>
+        <line num="154" type="stmt" count="3"/>
+        <line num="155" type="stmt" count="13"/>
+        <line num="156" type="stmt" count="3"/>
+        <line num="157" type="stmt" count="10"/>
+        <line num="158" type="stmt" count="4"/>
+        <line num="159" type="stmt" count="6"/>
+        <line num="160" type="stmt" count="3"/>
+        <line num="161" type="stmt" count="3"/>
+        <line num="162" type="stmt" count="3"/>
         <line num="171" type="stmt" count="0"/>
-        <line num="172" type="stmt" count="0"/>
-        <line num="173" type="stmt" count="0"/>
-        <line num="174" type="stmt" count="0"/>
-        <line num="176" type="method" name="doBeginInt64Compact4" crap="2" count="0"/>
-        <line num="177" type="stmt" count="0"/>
-        <line num="178" type="stmt" count="0"/>
-        <line num="179" type="stmt" count="0"/>
-        <line num="181" type="method" name="anonymous function" crap="2" count="0"/>
-        <line num="183" type="method" name="doBeginInt64" crap="2" count="0"/>
-        <line num="184" type="stmt" count="0"/>
-        <line num="186" type="stmt" count="0"/>
-        <line num="188" type="method" name="doBeginDoubleCompact1" crap="2" count="0"/>
-        <line num="189" type="stmt" count="0"/>
-        <line num="191" type="stmt" count="0"/>
-        <line num="193" type="method" name="doBeginDoubleCompact2" crap="2" count="0"/>
-        <line num="194" type="stmt" count="0"/>
-        <line num="196" type="stmt" count="0"/>
-        <line num="198" type="method" name="doBeginDoubleCompact4" crap="2" count="0"/>
-        <line num="199" type="stmt" count="0"/>
-        <line num="201" type="stmt" count="0"/>
-        <line num="203" type="method" name="doBeginDouble" crap="2" count="0"/>
-        <line num="204" type="stmt" count="0"/>
-        <line num="206" type="stmt" count="0"/>
-        <line num="208" type="method" name="doBeginValue" crap="2" count="0"/>
-        <line num="209" type="stmt" count="0"/>
-        <line num="211" type="stmt" count="0"/>
-        <line num="213" type="method" name="doBeginTimestampMilliseconds" crap="2" count="0"/>
-        <line num="214" type="stmt" count="0"/>
-        <line num="216" type="stmt" count="0"/>
-        <line num="218" type="method" name="doBeginTimestampMinutes" crap="2" count="0"/>
-        <line num="219" type="stmt" count="0"/>
-        <line num="221" type="stmt" count="0"/>
-        <line num="223" type="method" name="doBeginClassDefinition" crap="2" count="0"/>
-        <line num="224" type="stmt" count="0"/>
-        <line num="226" type="stmt" count="0"/>
-        <line num="228" type="method" name="doBeginObjectInstance" crap="2" count="0"/>
-        <line num="229" type="stmt" count="0"/>
-        <line num="231" type="stmt" count="0"/>
-        <line num="233" type="method" name="doBeginReference" crap="2" count="0"/>
-        <line num="234" type="stmt" count="0"/>
-        <line num="236" type="stmt" count="0"/>
-        <line num="238" type="method" name="doBeginTypedVector" crap="2" count="0"/>
-        <line num="239" type="stmt" count="0"/>
-        <line num="241" type="stmt" count="0"/>
-        <line num="243" type="method" name="doBeginTypedFixedLengthFector" crap="2" count="0"/>
-        <line num="244" type="stmt" count="0"/>
-        <line num="246" type="stmt" count="0"/>
-        <line num="248" type="method" name="doBeginVector" crap="2" count="0"/>
-        <line num="249" type="stmt" count="0"/>
-        <line num="251" type="stmt" count="0"/>
-        <line num="253" type="method" name="doBeginFixedLengthVector" crap="2" count="0"/>
-        <line num="254" type="stmt" count="0"/>
-        <line num="256" type="stmt" count="0"/>
-        <line num="258" type="method" name="doBeginTypedMap" crap="2" count="0"/>
-        <line num="259" type="stmt" count="0"/>
-        <line num="261" type="stmt" count="0"/>
-        <line num="263" type="method" name="doBeginMap" crap="2" count="0"/>
-        <line num="264" type="stmt" count="0"/>
-        <line num="266" type="stmt" count="0"/>
-        <line num="268" type="method" name="doBeginCompactString" crap="2" count="0"/>
-        <line num="269" type="stmt" count="0"/>
-        <line num="271" type="stmt" count="0"/>
-        <line num="273" type="method" name="doBeginString" crap="2" count="0"/>
-        <line num="274" type="stmt" count="0"/>
-        <line num="276" type="stmt" count="0"/>
-        <line num="278" type="method" name="doBeginCompactBinary" crap="2" count="0"/>
-        <line num="279" type="stmt" count="0"/>
-        <line num="281" type="stmt" count="0"/>
-        <line num="283" type="method" name="doBeginBinary" crap="2" count="0"/>
-        <line num="284" type="stmt" count="0"/>
-        <line num="286" type="stmt" count="0"/>
-        <line num="288" type="method" name="doBeginInt32Compact1" crap="2" count="0"/>
-        <line num="289" type="stmt" count="0"/>
-        <line num="291" type="stmt" count="0"/>
-        <line num="293" type="method" name="doBeginInt32Compact2" crap="2" count="0"/>
-        <line num="294" type="stmt" count="0"/>
-        <line num="296" type="stmt" count="0"/>
-        <line num="298" type="method" name="doBeginInt32Compact3" crap="2" count="0"/>
-        <line num="299" type="stmt" count="0"/>
-        <line num="301" type="stmt" count="0"/>
-        <line num="303" type="method" name="doBeginInt64Compact1" crap="2" count="0"/>
-        <line num="304" type="stmt" count="0"/>
-        <line num="306" type="stmt" count="0"/>
-        <line num="308" type="method" name="doBeginInt64Compact2" crap="2" count="0"/>
-        <line num="309" type="stmt" count="0"/>
-        <line num="311" type="stmt" count="0"/>
-        <line num="313" type="method" name="doBeginInt64Compact3" crap="2" count="0"/>
-        <line num="314" type="stmt" count="0"/>
-        <line num="316" type="stmt" count="0"/>
-        <line num="318" type="method" name="doBeginCompactObjectInstance" crap="2" count="0"/>
-        <line num="319" type="stmt" count="0"/>
-        <line num="321" type="stmt" count="0"/>
-        <line num="323" type="method" name="doBeginCompactTypedFixedLengthVector" crap="2" count="0"/>
-        <line num="324" type="stmt" count="0"/>
-        <line num="326" type="stmt" count="0"/>
-        <line num="328" type="method" name="doBeginCompactFixedLengthVector" crap="2" count="0"/>
-        <line num="329" type="stmt" count="0"/>
-        <line num="331" type="stmt" count="0"/>
-        <line num="337" type="method" name="push" crap="2" count="0"/>
-        <line num="338" type="stmt" count="0"/>
-        <line num="339" type="stmt" count="0"/>
-        <line num="342" type="stmt" count="0"/>
-        <line num="343" type="stmt" count="0"/>
-        <line num="350" type="stmt" count="0"/>
-        <line num="355" type="method" name="pop" crap="2" count="0"/>
-        <line num="356" type="stmt" count="0"/>
-        <line num="357" type="stmt" count="0"/>
-        <line num="365" type="stmt" count="0"/>
-        <line num="366" type="stmt" count="0"/>
-        <metrics loc="372" ncloc="341" classes="1" methods="45" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="246" coveredstatements="0" elements="291" coveredelements="0"/>
+        <line num="174" type="method" name="emitValue" crap="1" count="43"/>
+        <line num="176" type="stmt" count="43"/>
+        <line num="177" type="stmt" count="43"/>
+        <line num="234" type="method" name="beginCompactString" crap="2" count="3"/>
+        <line num="236" type="stmt" count="3"/>
+        <line num="237" type="stmt" count="1"/>
+        <line num="238" type="stmt" count="1"/>
+        <line num="239" type="stmt" count="2"/>
+        <line num="240" type="stmt" count="2"/>
+        <line num="242" type="stmt" count="3"/>
+        <line num="259" type="method" name="beginInt32Compact2" crap="1" count="3"/>
+        <line num="261" type="stmt" count="3"/>
+        <line num="262" type="stmt" count="3"/>
+        <line num="263" type="stmt" count="3"/>
+        <line num="264" type="stmt" count="3"/>
+        <line num="266" type="method" name="beginInt32Compact3" crap="1" count="3"/>
+        <line num="268" type="stmt" count="3"/>
+        <line num="269" type="stmt" count="3"/>
+        <line num="270" type="stmt" count="3"/>
+        <line num="271" type="stmt" count="3"/>
+        <line num="273" type="method" name="beginInt64Compact2" crap="1" count="3"/>
+        <line num="275" type="stmt" count="3"/>
+        <line num="276" type="stmt" count="3"/>
+        <line num="277" type="stmt" count="3"/>
+        <line num="278" type="stmt" count="3"/>
+        <line num="280" type="method" name="beginInt64Compact3" crap="1" count="3"/>
+        <line num="282" type="stmt" count="3"/>
+        <line num="283" type="stmt" count="3"/>
+        <line num="284" type="stmt" count="3"/>
+        <line num="285" type="stmt" count="3"/>
+        <line num="302" type="method" name="handleStringCompactData" crap="2" count="2"/>
+        <line num="304" type="stmt" count="2"/>
+        <line num="305" type="stmt" count="2"/>
+        <line num="306" type="stmt" count="2"/>
+        <line num="307" type="stmt" count="2"/>
+        <line num="308" type="stmt" count="2"/>
+        <line num="310" type="method" name="handleDouble1" crap="1" count="4"/>
+        <line num="312" type="stmt" count="4"/>
+        <line num="313" type="stmt" count="4"/>
+        <line num="314" type="stmt" count="4"/>
+        <line num="315" type="stmt" count="4"/>
+        <line num="317" type="method" name="handleDouble2" crap="2" count="3"/>
+        <line num="319" type="stmt" count="3"/>
+        <line num="320" type="stmt" count="3"/>
+        <line num="322" type="stmt" count="3"/>
+        <line num="323" type="stmt" count="3"/>
+        <line num="324" type="stmt" count="3"/>
+        <line num="325" type="stmt" count="3"/>
+        <line num="326" type="stmt" count="3"/>
+        <line num="327" type="stmt" count="3"/>
+        <line num="328" type="stmt" count="3"/>
+        <line num="329" type="stmt" count="3"/>
+        <line num="330" type="stmt" count="3"/>
+        <line num="332" type="method" name="handleDouble4" crap="2" count="2"/>
+        <line num="334" type="stmt" count="2"/>
+        <line num="335" type="stmt" count="2"/>
+        <line num="337" type="stmt" count="2"/>
+        <line num="338" type="stmt" count="2"/>
+        <line num="339" type="stmt" count="2"/>
+        <line num="340" type="stmt" count="2"/>
+        <line num="341" type="stmt" count="2"/>
+        <line num="342" type="stmt" count="2"/>
+        <line num="343" type="stmt" count="2"/>
+        <line num="344" type="stmt" count="2"/>
+        <line num="345" type="stmt" count="2"/>
+        <line num="347" type="method" name="handleDouble8" crap="2" count="1"/>
+        <line num="349" type="stmt" count="1"/>
+        <line num="350" type="stmt" count="1"/>
+        <line num="352" type="stmt" count="1"/>
+        <line num="353" type="stmt" count="1"/>
+        <line num="354" type="stmt" count="1"/>
+        <line num="355" type="stmt" count="1"/>
+        <line num="356" type="stmt" count="1"/>
+        <line num="357" type="stmt" count="1"/>
+        <line num="358" type="stmt" count="1"/>
+        <line num="359" type="stmt" count="1"/>
+        <line num="361" type="method" name="handleInt32" crap="2" count="14"/>
+        <line num="363" type="stmt" count="14"/>
+        <line num="365" type="stmt" count="14"/>
+        <line num="366" type="stmt" count="14"/>
+        <line num="367" type="stmt" count="14"/>
+        <line num="368" type="stmt" count="14"/>
+        <line num="369" type="stmt" count="14"/>
+        <line num="371" type="method" name="handleInt64" crap="2" count="1"/>
+        <line num="373" type="stmt" count="1"/>
+        <line num="375" type="stmt" count="1"/>
+        <line num="376" type="stmt" count="1"/>
+        <line num="377" type="stmt" count="1"/>
+        <line num="378" type="stmt" count="1"/>
+        <line num="379" type="stmt" count="1"/>
+        <line num="381" type="method" name="handleTimestampMilliseconds" crap="2" count="1"/>
+        <line num="383" type="stmt" count="1"/>
+        <line num="385" type="stmt" count="1"/>
+        <line num="386" type="stmt" count="1"/>
+        <line num="387" type="stmt" count="1"/>
+        <line num="388" type="stmt" count="1"/>
+        <line num="389" type="stmt" count="1"/>
+        <line num="391" type="method" name="handleTimestampMinutes" crap="2" count="1"/>
+        <line num="393" type="stmt" count="1"/>
+        <line num="395" type="stmt" count="1"/>
+        <line num="396" type="stmt" count="1"/>
+        <line num="397" type="stmt" count="1"/>
+        <line num="398" type="stmt" count="1"/>
+        <line num="399" type="stmt" count="1"/>
+        <line num="405" type="method" name="push" crap="1" count="29"/>
+        <line num="407" type="stmt" count="29"/>
+        <line num="408" type="stmt" count="29"/>
+        <line num="409" type="stmt" count="29"/>
+        <line num="410" type="stmt" count="29"/>
+        <line num="412" type="stmt" count="29"/>
+        <line num="414" type="stmt" count="29"/>
+        <line num="417" type="method" name="pop" crap="1" count="24"/>
+        <line num="419" type="stmt" count="24"/>
+        <line num="422" type="method" name="context" crap="1" count="25"/>
+        <line num="424" type="stmt" count="25"/>
+        <line num="427" type="method" name="appendStringData" crap="4.02" count="2"/>
+        <line num="429" type="stmt" count="2"/>
+        <line num="430" type="stmt" count="2"/>
+        <line num="433" type="stmt" count="2"/>
+        <line num="434" type="stmt" count="1"/>
+        <line num="436" type="stmt" count="2"/>
+        <line num="437" type="stmt" count="1"/>
+        <line num="439" type="stmt" count="2"/>
+        <line num="440" type="stmt" count="0"/>
+        <line num="443" type="stmt" count="2"/>
+        <line num="446" type="method" name="appendInt32Data" crap="2" count="15"/>
+        <line num="448" type="stmt" count="15"/>
+        <line num="449" type="stmt" count="15"/>
+        <line num="451" type="stmt" count="15"/>
+        <line num="452" type="stmt" count="15"/>
+        <line num="453" type="stmt" count="15"/>
+        <line num="454" type="stmt" count="15"/>
+        <line num="455" type="stmt" count="15"/>
+        <line num="457" type="stmt" count="15"/>
+        <line num="460" type="stmt" count="9"/>
+        <line num="463" type="method" name="appendInt64Data" crap="2" count="2"/>
+        <line num="465" type="stmt" count="2"/>
+        <line num="466" type="stmt" count="2"/>
+        <line num="468" type="stmt" count="2"/>
+        <line num="469" type="stmt" count="2"/>
+        <line num="472" type="stmt" count="2"/>
+        <line num="479" type="stmt" count="0"/>
+        <metrics loc="478" ncloc="266" classes="1" methods="28" coveredmethods="24" conditionals="0" coveredconditionals="0" statements="197" coveredstatements="192" elements="225" coveredelements="216"/>
       </file>
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ValueDecoderState.php">
         <class name="ValueDecoderState" namespace="Icecave\Flax\Wire">
           <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
         </class>
-        <metrics loc="13" ncloc="13" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <metrics loc="26" ncloc="26" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </file>
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ValueEncoder.php">
         <class name="ValueEncoder" namespace="Icecave\Flax\Wire">
@@ -600,6 +588,6 @@
       <line num="1" type="stmt" count="0"/>
       <metrics loc="1" ncloc="1" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
     </file>
-    <metrics files="12" loc="1410" ncloc="931" classes="10" methods="77" coveredmethods="27" conditionals="0" coveredconditionals="0" statements="492" coveredstatements="205" elements="569" coveredelements="232"/>
+    <metrics files="12" loc="1543" ncloc="883" classes="10" methods="62" coveredmethods="51" conditionals="0" coveredconditionals="0" statements="447" coveredstatements="397" elements="509" coveredelements="448"/>
   </project>
 </coverage>
