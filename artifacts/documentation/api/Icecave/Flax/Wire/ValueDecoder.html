@@ -68,7 +68,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_feedByte">feedByte</a>($byte)
+                    <a href="#method_feedCharacter">feedCharacter</a>($character)
                     <p>
 </p>
                 </td>
@@ -90,7 +90,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_values">values</a>()
+                    <a href="#method_handleStringChunkSize">handleStringChunkSize</a>($character, $signedByte, $unsignedByte, $isFinal)
                     <p>
 </p>
                 </td>
@@ -101,7 +101,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_handleInt32">handleInt32</a>($byte)
+                    <a href="#method_handleStringChunkData">handleStringChunkData</a>($character, $signedByte, $unsignedByte, $isFinal)
                     <p>
 </p>
                 </td>
@@ -112,7 +112,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_handleInt64">handleInt64</a>($byte)
+                    <a href="#method_handleStringChunkContinuation">handleStringChunkContinuation</a>($character, $signedByte, $unsignedByte)
                     <p>
 </p>
                 </td>
@@ -123,7 +123,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_handleTimestampMilliseconds">handleTimestampMilliseconds</a>($byte)
+                    <a href="#method_handleBinaryChunkSize">handleBinaryChunkSize</a>($character, $signedByte, $unsignedByte, $isFinal)
                     <p>
 </p>
                 </td>
@@ -134,7 +134,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_handleTimestampMinutes">handleTimestampMinutes</a>($byte)
+                    <a href="#method_handleBinaryChunkData">handleBinaryChunkData</a>($character, $signedByte, $unsignedByte, $isFinal)
                     <p>
 </p>
                 </td>
@@ -145,7 +145,62 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_appendInt64Data">appendInt64Data</a>($byte)
+                    <a href="#method_handleBinaryChunkContinuation">handleBinaryChunkContinuation</a>($character, $signedByte, $unsignedByte)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_handleInt32">handleInt32</a>($character, $signedByte, $unsignedByte)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_handleInt64">handleInt64</a>($character, $signedByte, $unsignedByte)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_handleTimestampMilliseconds">handleTimestampMilliseconds</a>($character, $signedByte, $unsignedByte)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_handleTimestampMinutes">handleTimestampMinutes</a>($character, $signedByte, $unsignedByte)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_appendInt64Data">appendInt64Data</a>($character)
                     <p>
 </p>
                 </td>
@@ -218,10 +273,10 @@
                     </div>
     </div>
 
-                <h3 id="method_feedByte">
+                <h3 id="method_feedCharacter">
         <div class="location">at line 37</div>
         <code>            public            
-    <strong>feedByte</strong>($byte)</code>
+    <strong>feedCharacter</strong>($character)</code>
     </h3>
     <div class="details">
         <p>
@@ -234,7 +289,7 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$byte</td>
+                <td>$character</td>
                 <td>
 </td>
             </tr>
@@ -247,7 +302,7 @@
     </div>
 
                 <h3 id="method_finalize">
-        <div class="location">at line 73</div>
+        <div class="location">at line 96</div>
         <code>            public            
     <strong>finalize</strong>()</code>
     </h3>
@@ -263,27 +318,10 @@
                     </div>
     </div>
 
-                <h3 id="method_values">
-        <div class="location">at line 78</div>
+                <h3 id="method_handleStringChunkSize">
+        <div class="location">at line 335</div>
         <code>            public            
-    <strong>values</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>
-</p>
-        <p>
-</p>
-        <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_handleInt32">
-        <div class="location">at line 361</div>
-        <code>            public            
-    <strong>handleInt32</strong>($byte)</code>
+    <strong>handleStringChunkSize</strong>($character, $signedByte, $unsignedByte, $isFinal)</code>
     </h3>
     <div class="details">
         <p>
@@ -296,7 +334,283 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$byte</td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$isFinal</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_handleStringChunkData">
+        <div class="location">at line 352</div>
+        <code>            public            
+    <strong>handleStringChunkData</strong>($character, $signedByte, $unsignedByte, $isFinal)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$isFinal</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_handleStringChunkContinuation">
+        <div class="location">at line 368</div>
+        <code>            public            
+    <strong>handleStringChunkContinuation</strong>($character, $signedByte, $unsignedByte)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_handleBinaryChunkSize">
+        <div class="location">at line 399</div>
+        <code>            public            
+    <strong>handleBinaryChunkSize</strong>($character, $signedByte, $unsignedByte, $isFinal)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$isFinal</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_handleBinaryChunkData">
+        <div class="location">at line 416</div>
+        <code>            public            
+    <strong>handleBinaryChunkData</strong>($character, $signedByte, $unsignedByte, $isFinal)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$isFinal</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_handleBinaryChunkContinuation">
+        <div class="location">at line 432</div>
+        <code>            public            
+    <strong>handleBinaryChunkContinuation</strong>($character, $signedByte, $unsignedByte)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_handleInt32">
+        <div class="location">at line 484</div>
+        <code>            public            
+    <strong>handleInt32</strong>($character, $signedByte, $unsignedByte)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
                 <td>
 </td>
             </tr>
@@ -309,9 +623,9 @@
     </div>
 
                 <h3 id="method_handleInt64">
-        <div class="location">at line 371</div>
+        <div class="location">at line 493</div>
         <code>            public            
-    <strong>handleInt64</strong>($byte)</code>
+    <strong>handleInt64</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
     <div class="details">
         <p>
@@ -324,7 +638,19 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$byte</td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
                 <td>
 </td>
             </tr>
@@ -337,9 +663,9 @@
     </div>
 
                 <h3 id="method_handleTimestampMilliseconds">
-        <div class="location">at line 381</div>
+        <div class="location">at line 502</div>
         <code>            public            
-    <strong>handleTimestampMilliseconds</strong>($byte)</code>
+    <strong>handleTimestampMilliseconds</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
     <div class="details">
         <p>
@@ -352,7 +678,19 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$byte</td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
                 <td>
 </td>
             </tr>
@@ -365,9 +703,9 @@
     </div>
 
                 <h3 id="method_handleTimestampMinutes">
-        <div class="location">at line 391</div>
+        <div class="location">at line 511</div>
         <code>            public            
-    <strong>handleTimestampMinutes</strong>($byte)</code>
+    <strong>handleTimestampMinutes</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
     <div class="details">
         <p>
@@ -380,7 +718,19 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$byte</td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
                 <td>
 </td>
             </tr>
@@ -393,9 +743,9 @@
     </div>
 
                 <h3 id="method_appendInt64Data">
-        <div class="location">at line 463</div>
+        <div class="location">at line 634</div>
         <code>            public            
-    <strong>appendInt64Data</strong>($byte)</code>
+    <strong>appendInt64Data</strong>($character)</code>
     </h3>
     <div class="details">
         <p>
@@ -408,7 +758,7 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$byte</td>
+                <td>$character</td>
                 <td>
 </td>
             </tr>

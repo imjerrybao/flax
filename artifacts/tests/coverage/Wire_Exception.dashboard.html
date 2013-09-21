@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire</title>
+  <title>Dashboard for /home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Exception</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -18,7 +18,8 @@
      <div class="span12">
       <ul class="breadcrumb">
         <li><a href="index.html">/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax</a> <span class="divider">/</span></li>
-        <li><a href="Wire.html">Wire</a></li>
+        <li><a href="Wire.html">Wire</a> <span class="divider">/</span></li>
+        <li><a href="Wire_Exception.html">Exception</a></li>
         <li class="active">(Dashboard)</li>
 
       </ul>
@@ -41,9 +42,6 @@
     <div class="span6">
      <h2>Top Project Risks</h2>
      <ul>
-              <li><a href="Wire_ValueDecoder.php.html#10">ValueDecoder</a> (140)</li>
-              <li><a href="Wire_Utility.php.html#6">Utility</a> (8)</li>
-              <li><a href="Wire_ProtocolEncoder.php.html#6">ProtocolEncoder</a> (5)</li>
 
      </ul>
     </div>
@@ -51,13 +49,6 @@
      <h2>Least Tested Methods</h2>
      <ul>
               <li><a href="Wire_Exception_DecodeException.php.html#9">DecodeException::__construct</a> (0%)</li>
-              <li><a href="Wire_Utility.php.html#67">Utility::byteToUnsigned</a> (0%)</li>
-              <li><a href="Wire_Utility.php.html#74">Utility::byteToSigned</a> (0%)</li>
-              <li><a href="Wire_ProtocolEncoder.php.html#15">ProtocolEncoder::reset</a> (0%)</li>
-              <li><a href="Wire_ValueDecoder.php.html#432">ValueDecoder::handleBinaryChunkContinuation</a> (80%)</li>
-              <li><a href="Wire_ValueDecoder.php.html#368">ValueDecoder::handleStringChunkContinuation</a> (80%)</li>
-              <li><a href="Wire_ValueDecoder.php.html#551">ValueDecoder::popState</a> (83%)</li>
-              <li><a href="Wire_ValueDecoder.php.html#101">ValueDecoder::handleBegin</a> (98%)</li>
 
      </ul>
     </div>
@@ -93,7 +84,7 @@ $(document).ready(function() {
    labels: {style: {fontSize: '8px'}},
   },
   series: [{
-   data: [1,0,0,0,0,0,0,0,0,2,1,5]
+   data: [1,0,0,0,0,0,0,0,0,0,0,0]
   }],
  });
 
@@ -119,7 +110,7 @@ $(document).ready(function() {
    }
   },
   series: [{
-   data: [[100,0,"<a href=\"Wire_Constants.php.html#4\">Constants<\/a>"],[0,1,"<a href=\"Wire_Exception_DecodeException.php.html#7\">DecodeException<\/a>"],[100,0,"<a href=\"Wire_ProtocolDecoder.php.html#6\">ProtocolDecoder<\/a>"],[100,0,"<a href=\"Wire_ProtocolDecoderState.php.html#6\">ProtocolDecoderState<\/a>"],[81.25,5,"<a href=\"Wire_ProtocolEncoder.php.html#6\">ProtocolEncoder<\/a>"],[80.952380952381,8,"<a href=\"Wire_Utility.php.html#6\">Utility<\/a>"],[98.753894080997,140,"<a href=\"Wire_ValueDecoder.php.html#10\">ValueDecoder<\/a>"],[100,0,"<a href=\"Wire_ValueDecoderState.php.html#6\">ValueDecoderState<\/a>"],[100,67,"<a href=\"Wire_ValueEncoder.php.html#12\">ValueEncoder<\/a>"]],
+   data: [[0,1,"<a href=\"Wire_Exception_DecodeException.php.html#7\">DecodeException<\/a>"]],
    marker: {
     symbol: 'diamond'
    }
