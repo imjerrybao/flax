@@ -24,6 +24,11 @@
         <div class="content">
                 <p>class    <strong>ValueDecoder</strong></p>
 
+            <div class="description">
+            <p>Streaming Hessian decoder.</p>
+            <p>
+</p>
+        </div>
     
     
     
@@ -47,8 +52,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_reset">reset</a>()
-                    <p>
-</p>
+                    <p>Reset the decoder.</p>
                 </td>
                 <td></td>
             </tr>
@@ -58,8 +62,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_feed">feed</a>(string $buffer)
-                    <p>
-</p>
+                    <p>Feed Hessian data to the decoder.</p>
                 </td>
                 <td></td>
             </tr>
@@ -69,8 +72,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_finalize">finalize</a>()
-                    <p>
-</p>
+                    <p>Finalize decoding and return the decoded value.</p>
                 </td>
                 <td></td>
             </tr>
@@ -234,7 +236,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 13</div>
+        <div class="location">at line 16</div>
         <code>            public            
     <strong>__construct</strong>()</code>
     </h3>
@@ -251,15 +253,13 @@
     </div>
 
                 <h3 id="method_reset">
-        <div class="location">at line 20</div>
+        <div class="location">at line 28</div>
         <code>            public            
     <strong>reset</strong>()</code>
     </h3>
     <div class="details">
-        <p>
-</p>
-        <p>
-</p>
+        <p>Reset the decoder.</p>
+        <p>Clears all internal state and allows the decoder to decode a new value.</p>
         <div class="tags">
             
             
@@ -268,15 +268,13 @@
     </div>
 
                 <h3 id="method_feed">
-        <div class="location">at line 34</div>
+        <div class="location">at line 46</div>
         <code>            public            
     <strong>feed</strong>(string $buffer)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
-        <p>
-</p>
+        <p>Feed Hessian data to the decoder.</p>
+        <p>The buffer may contain an incomplete Hessian value.</p>
         <div class="tags">
                             <h4>Parameters</h4>
 
@@ -284,8 +282,7 @@
                     <tr>
                 <td>string</td>
                 <td>$buffer</td>
-                <td>
-</td>
+                <td>The hessian data to decode.</td>
             </tr>
             </table>
 
@@ -296,13 +293,12 @@
     </div>
 
                 <h3 id="method_finalize">
-        <div class="location">at line 50</div>
+        <div class="location">at line 64</div>
         <code>            public            mixed
     <strong>finalize</strong>()</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Finalize decoding and return the decoded value.</p>
         <p>
 </p>
         <div class="tags">
@@ -312,8 +308,7 @@
                     <table>
         <tr>
             <td>mixed</td>
-            <td>
-</td>
+            <td>The decoded value.</td>
         </tr>
     </table>
 
@@ -323,8 +318,7 @@
                     <table>
                     <tr>
                 <td><abbr title="Exception\DecodeException">DecodeException</abbr></td>
-                <td>
-</td>
+                <td>If the decoder has not yet received a full Hessian value.</td>
             </tr>
             </table>
 
@@ -333,7 +327,7 @@
     </div>
 
                 <h3 id="method_handleStringChunkSize">
-        <div class="location">at line 748</div>
+        <div class="location">at line 856</div>
         <code>            public            
     <strong>handleStringChunkSize</strong>(integer $byte, boolean $isFinal)</code>
     </h3>
@@ -367,7 +361,7 @@
     </div>
 
                 <h3 id="method_handleStringChunkData">
-        <div class="location">at line 769</div>
+        <div class="location">at line 877</div>
         <code>            public            
     <strong>handleStringChunkData</strong>(integer $byte, boolean $isFinal)</code>
     </h3>
@@ -401,7 +395,7 @@
     </div>
 
                 <h3 id="method_handleStringChunkContinuation">
-        <div class="location">at line 788</div>
+        <div class="location">at line 896</div>
         <code>            public            
     <strong>handleStringChunkContinuation</strong>(integer $byte)</code>
     </h3>
@@ -429,7 +423,7 @@
     </div>
 
                 <h3 id="method_handleBinaryChunkSize">
-        <div class="location">at line 829</div>
+        <div class="location">at line 937</div>
         <code>            public            
     <strong>handleBinaryChunkSize</strong>(integer $byte, boolean $isFinal)</code>
     </h3>
@@ -463,7 +457,7 @@
     </div>
 
                 <h3 id="method_handleBinaryChunkData">
-        <div class="location">at line 850</div>
+        <div class="location">at line 958</div>
         <code>            public            
     <strong>handleBinaryChunkData</strong>(integer $byte, boolean $isFinal)</code>
     </h3>
@@ -497,7 +491,7 @@
     </div>
 
                 <h3 id="method_handleBinaryChunkContinuation">
-        <div class="location">at line 869</div>
+        <div class="location">at line 977</div>
         <code>            public            
     <strong>handleBinaryChunkContinuation</strong>(integer $byte)</code>
     </h3>
@@ -525,7 +519,7 @@
     </div>
 
                 <h3 id="method_handleInt32">
-        <div class="location">at line 938</div>
+        <div class="location">at line 1046</div>
         <code>            public            
     <strong>handleInt32</strong>(integer $byte)</code>
     </h3>
@@ -553,7 +547,7 @@
     </div>
 
                 <h3 id="method_handleInt64">
-        <div class="location">at line 950</div>
+        <div class="location">at line 1058</div>
         <code>            public            
     <strong>handleInt64</strong>(integer $byte)</code>
     </h3>
@@ -581,7 +575,7 @@
     </div>
 
                 <h3 id="method_handleTimestampMilliseconds">
-        <div class="location">at line 962</div>
+        <div class="location">at line 1070</div>
         <code>            public            
     <strong>handleTimestampMilliseconds</strong>(integer $byte)</code>
     </h3>
@@ -609,7 +603,7 @@
     </div>
 
                 <h3 id="method_handleTimestampMinutes">
-        <div class="location">at line 974</div>
+        <div class="location">at line 1082</div>
         <code>            public            
     <strong>handleTimestampMinutes</strong>(integer $byte)</code>
     </h3>
@@ -637,7 +631,7 @@
     </div>
 
                 <h3 id="method_handleNextCollectionElement">
-        <div class="location">at line 986</div>
+        <div class="location">at line 1094</div>
         <code>            public            
     <strong>handleNextCollectionElement</strong>(integer $byte)</code>
     </h3>
@@ -665,7 +659,7 @@
     </div>
 
                 <h3 id="method_handleCollectionType">
-        <div class="location">at line 998</div>
+        <div class="location">at line 1106</div>
         <code>            public            
     <strong>handleCollectionType</strong>(integer $byte)</code>
     </h3>
@@ -693,7 +687,7 @@
     </div>
 
                 <h3 id="method_appendInt64Data">
-        <div class="location">at line 1174</div>
+        <div class="location">at line 1282</div>
         <code>            public            boolean
     <strong>appendInt64Data</strong>(integer $byte)</code>
     </h3>
@@ -731,7 +725,7 @@
     </div>
 
                 <h3 id="method_trace">
-        <div class="location">at line 1188</div>
+        <div class="location">at line 1296</div>
         <code>            public            
     <strong>trace</strong>(string $str)</code>
     </h3>
