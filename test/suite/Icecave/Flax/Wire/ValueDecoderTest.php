@@ -40,17 +40,62 @@ class ValueDecoderTest extends PHPUnit_Framework_TestCase
                 false
             ),
 
-            'string - empty' => array(
+            'string - compact - empty' => array(
                 "\x00",
                 "",
             ),
-            'string - hello' => array(
+            'string - compact - hello' => array(
                 "\x05hello",
                 "hello",
             ),
-            'string - unicode' => array(
+            'string - compact - unicode' => array(
                 "\x01\xc3\x83",
                 "\xc3\x83",
+            ),
+            'string - empty' => array(
+                "\x30\x00",
+                "",
+            ),
+            'string - hello' => array(
+                "\x30\x05hello",
+                "hello",
+            ),
+            'string - unicode' => array(
+                "\x30\x01\xc3\x83",
+                "\xc3\x83",
+            ),
+            'string - chunked - single' => array(
+                "\x53\x00\x05hello",
+                "hello",
+            ),
+            'string - chunked - multiple' => array(
+                "\x52\x00\x06he\xcc\x88llo\x52\x00\x07, world\x53\x00\x01!",
+                "he\xcc\x88llo, world!",
+            ),
+
+            'binary - compact - empty' => array(
+                "\x20",
+                "",
+            ),
+            'binary - compact - hello' => array(
+                "\x25hello",
+                "hello",
+            ),
+            'binary - empty' => array(
+                "\x34\x00",
+                "",
+            ),
+            'binary - hello' => array(
+                "\x34\x05hello",
+                "hello",
+            ),
+            'binary - chunked - single' => array(
+                "\x42\x00\x05hello",
+                "hello",
+            ),
+            'binary - chunked - multiple' => array(
+                "\x41\x00\x05hello\x41\x00\x07, world\x42\x00\x01!",
+                "hello, world!",
             ),
 
             'double - 1 octet zero' => array(
