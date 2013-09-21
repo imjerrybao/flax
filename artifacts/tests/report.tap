@@ -62,94 +62,107 @@ ok 60 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "timestamp 
 ok 61 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "timestamp - minutes" ('K' . "\0" . '„Éè', 1998-05-08T09:51:00+00:00)
 ok 62 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - fixed size - compact - empty" ('x', <Vector 0>)
 ok 63 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - fixed size - compact" ('{ëíì', <Vector 3 [1, 2, 3]>)
-ok 64 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - fixed size - compact - nested" ('z{ëíì{îïñ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000021445def00000000271f442a>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000021445de100000000271f442a>]>)
+ok 64 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - fixed size - compact - nested" ('z{ëíì{îïñ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000002dbf6670000000067a9027b>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000002dbf6650000000067a9027b>]>)
 ok 65 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - fixed size - empty" ('Xê', <Vector 0>)
 ok 66 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - fixed size" ('Xìëíì', <Vector 3 [1, 2, 3]>)
-ok 67 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - fixed size - nested" ('XíXìëíìXìîïñ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000021445e1900000000271f442a>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000021445e1b00000000271f442a>]>)
+ok 67 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - fixed size - nested" ('XíXìëíìXìîïñ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000002dbf66d0000000067a9027b>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000002dbf66b0000000067a9027b>]>)
 ok 68 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - empty" ('WZ', <Vector 0>)
 ok 69 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector" ('WëíìZ', <Vector 3 [1, 2, 3]>)
-ok 70 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - nested" ('WWëíìZWîïñZZ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000021445e1300000000271f442a>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000021445e1500000000271f442a>]>)
+ok 70 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - nested" ('WWëíìZWîïñZZ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000002dbf6730000000067a9027b>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000002dbf6710000000067a9027b>]>)
 ok 71 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed + fixed size - compact - empty" ('p???', <Vector 0>)
 ok 72 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed + fixed size - compact" ('s???ëíì', <Vector 3 [1, 2, 3]>)
-ok 73 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed + fixed size - compact - nested" ('r???s???ëíìs???îïñ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000021445e0d00000000271f442a>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000021445e0f00000000271f442a>]>)
+ok 73 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed + fixed size - compact - nested" ('r???s???ëíìs???îïñ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000002dbf6790000000067a9027b>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000002dbf6470000000067a9027b>]>)
 ok 74 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed + fixed size - empty" ('V???ê', <Vector 0>)
 ok 75 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed + fixed size" ('V???ìëíì', <Vector 3 [1, 2, 3]>)
-ok 76 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed + fixed size - nested" ('V???íV???ìëíìV???ìîïñ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000021445e0700000000271f442a>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000021445e3900000000271f442a>]>)
+ok 76 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed + fixed size - nested" ('V???íV???ìëíìV???ìîïñ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000002dbf64f0000000067a9027b>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000002dbf64d0000000067a9027b>]>)
 ok 77 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed - empty" ('U???Z', <Vector 0>)
 ok 78 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed" ('U???ëíìZ', <Vector 3 [1, 2, 3]>)
-ok 79 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed - nested" ('U???U???ëíìZU???îïñZZ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000021445e3100000000271f442a>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000021445e3300000000271f442a>]>)
-ok 80 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - empty" ('HZ', <Map 0>)
-ok 81 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map" ('HöëüíZ', <Map 2 [10 => 1, 15 => 2]>)
-ok 82 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - nested" ('HëHíìZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 0000000021445e2500000000271f442a>]>)
-ok 83 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - typed - empty" ('M???Z', <Map 0>)
-ok 84 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - typed" ('M???öëüíZ', <Map 2 [10 => 1, 15 => 2]>)
-ok 85 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - typed - nested" ('M???ëM???íëZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 0000000021445e4b00000000271f442a>]>)
-ok 86 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - compact - empty" ('CstdClassê`', stdClass)
-ok 87 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - compact" ('CstdClassíbarfoo`íë', stdClass)
-ok 88 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - compact - nested" ('CstdClassëchild`CstdClassêa', stdClass)
-ok 89 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - empty" ('CstdClassêOê', stdClass)
-ok 90 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object" ('CstdClassíbarfooOêíë', stdClass)
-ok 91 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - nested" ('CstdClassëchildOêCstdClassêOë', stdClass)
-ok 92 - Icecave\Flax\Wire\ValueDecoderTest::testDecodeWithReference
-ok 93 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "null" (NULL, 'N')
-ok 94 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "boolean - true" (true, 'T')
-ok 95 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "boolean - false" (false, 'F')
-ok 96 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "string" ('', '' . "\0" . '')
-ok 97 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "string - hello" ('hello', 'hello')
-ok 98 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "string - unicode" ('√É', '√É')
-ok 99 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 1 octet zero" (0, '[')
-ok 100 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 1 octet one" (1, '\\')
-ok 101 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 2 octet min" (-128, ']Ä')
-ok 102 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 2 octet max" (127, ']')
-ok 103 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 2 octet midway 1" (-10, ']ˆ')
-ok 104 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 2 octet midway 2" (12, ']')
-ok 105 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 3 octet min" (-32768, '^Ä' . "\0" . '')
-ok 106 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 3 octet max" (32767, '^ˇ')
-ok 107 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 3 octet midway" (-1000, '^¸')
-ok 108 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 4 octet float" (12.25, '_AD' . "\0" . '' . "\0" . '')
-ok 109 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 4 octet float (whole)" (45000, '_G/»' . "\0" . '')
-ok 110 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 8 octet" (12.251234, 'D@(Ä°æ+IZ')
-ok 111 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 1 octet zero" (0, 'ê')
-ok 112 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 1 octet min" (-16, 'Ä')
-ok 113 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 1 octet max" (47, 'ø')
-ok 114 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 1 octet midway" (-8, 'à')
-ok 115 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 2 octet min" (-2048, '¿' . "\0" . '')
-ok 116 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 2 octet max" (2047, 'œˇ')
-ok 117 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 2 octet midway" (-256, '«' . "\0" . '')
-ok 118 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 3 octet min" (-262144, '–' . "\0" . '' . "\0" . '')
-ok 119 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 3 octet max" (262143, '◊ˇˇ')
-ok 120 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 3 octet midway" (-4000, '”`')
-ok 121 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 4 octet" (270544960, 'I 0@')
-ok 122 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - empty" (array(), 'WZ')
-ok 123 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - small" (array(1, 2, 3), '{ëíì')
-ok 124 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - longer" (array(1, 2, 3, 4, 5, 6, 7, 8), 'Xòëíìîïñóò')
-ok 125 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - map" (array(1, 2), 'HöëüíZ')
-ok 126 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - empty" (stdClass, 'CstdClassê`')
-ok 127 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - simple" (stdClass, 'CstdClassíbarfoo`íë')
-ok 128 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - datetime" (DateTime, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
-ok 129 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - datetime minutes" (DateTime, 'K' . "\0" . '„Éè')
-ok 130 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - chrono" (1998-05-08T09:51:31+00:00, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
-ok 131 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - chrono minutes" (1998-05-08T09:51:00+00:00, 'K' . "\0" . '„Éè')
-ok 132 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 8 octet" (1161981756646125696, 'L 0@P`pÄ')
-ok 133 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMediumLengthString
-ok 134 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringSmallestChunk
-ok 135 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringWholeChunk
-ok 136 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringPartialChunk
-ok 137 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringMultipleChunks
-ok 138 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - empty" ('', ' ')
-ok 139 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - 3 octet" ('', '#')
-ok 140 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMediumLength
-ok 141 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinarySmallestChunk
-ok 142 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryWholeChunk
-ok 143 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryPartialChunk
-ok 144 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryMultipleChunks
-ok 145 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - milliseconds" (894621091000, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
-ok 146 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - minutes" (894621060000, 'K' . "\0" . '„Éè')
-ok 147 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjects
-ok 148 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsSingleDefinition
-ok 149 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsReference
-ok 150 - Icecave\Flax\Wire\ValueEncoderTest::testReset
-ok 151 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedType
-ok 152 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeObjectWithLongFormClassDefinitionId
-ok 153 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedObject
-1..153
+ok 79 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed - integer type" ('UêëíìZ', <Vector 3 [1, 2, 3]>)
+ok 80 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "vector - typed - nested" ('U???U???ëíìZU???îïñZZ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 0000000002dbf6530000000067a9027b>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 0000000002dbf6510000000067a9027b>]>)
+ok 81 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - empty" ('HZ', <Map 0>)
+ok 82 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map" ('HöëüíZ', <Map 2 [10 => 1, 15 => 2]>)
+ok 83 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - nested" ('HëHíìZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 0000000002dbf62f0000000067a9027b>]>)
+ok 84 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - typed - empty" ('M???Z', <Map 0>)
+ok 85 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - typed" ('M???öëüíZ', <Map 2 [10 => 1, 15 => 2]>)
+ok 86 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - typed - integer type" ('MëöëüíZ', <Map 2 [10 => 1, 15 => 2]>)
+ok 87 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "map - typed - nested" ('M???ëM???íëZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 0000000002dbf6050000000067a9027b>]>)
+ok 88 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - compact - empty" ('CstdClassê`', stdClass)
+ok 89 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - compact" ('CstdClassíbarfoo`íë', stdClass)
+ok 90 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - compact - nested" ('CstdClassëchild`CstdClassêa', stdClass)
+ok 91 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - empty" ('CstdClassêOê', stdClass)
+ok 92 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object" ('CstdClassíbarfooOêíë', stdClass)
+ok 93 - Icecave\Flax\Wire\ValueDecoderTest::testDecode with data set "object - nested" ('CstdClassëchildOêCstdClassêOë', stdClass)
+ok 94 - Icecave\Flax\Wire\ValueDecoderTest::testDecodeWithReference
+ok 95 - Icecave\Flax\Wire\ValueDecoderTest::testFinalizedFailure
+ok 96 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureReservedByte
+ok 97 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidCollectionType
+ok 98 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidStringContinuation
+ok 99 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidBinaryContinuation
+ok 100 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidVectorSize
+ok 101 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidReference
+ok 102 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidClassDefinitionName
+ok 103 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidClassDefinitionSize
+ok 104 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidClassDefinitionField
+ok 105 - Icecave\Flax\Wire\ValueDecoderTest::testFeedFailureWithInvalidObjectInstanceType
+ok 106 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "null" (NULL, 'N')
+ok 107 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "boolean - true" (true, 'T')
+ok 108 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "boolean - false" (false, 'F')
+ok 109 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "string" ('', '' . "\0" . '')
+ok 110 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "string - hello" ('hello', 'hello')
+ok 111 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "string - unicode" ('√É', '√É')
+ok 112 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 1 octet zero" (0, '[')
+ok 113 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 1 octet one" (1, '\\')
+ok 114 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 2 octet min" (-128, ']Ä')
+ok 115 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 2 octet max" (127, ']')
+ok 116 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 2 octet midway 1" (-10, ']ˆ')
+ok 117 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 2 octet midway 2" (12, ']')
+ok 118 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 3 octet min" (-32768, '^Ä' . "\0" . '')
+ok 119 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 3 octet max" (32767, '^ˇ')
+ok 120 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 3 octet midway" (-1000, '^¸')
+ok 121 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 4 octet float" (12.25, '_AD' . "\0" . '' . "\0" . '')
+ok 122 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 4 octet float (whole)" (45000, '_G/»' . "\0" . '')
+ok 123 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "double - 8 octet" (12.251234, 'D@(Ä°æ+IZ')
+ok 124 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 1 octet zero" (0, 'ê')
+ok 125 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 1 octet min" (-16, 'Ä')
+ok 126 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 1 octet max" (47, 'ø')
+ok 127 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 1 octet midway" (-8, 'à')
+ok 128 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 2 octet min" (-2048, '¿' . "\0" . '')
+ok 129 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 2 octet max" (2047, 'œˇ')
+ok 130 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 2 octet midway" (-256, '«' . "\0" . '')
+ok 131 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 3 octet min" (-262144, '–' . "\0" . '' . "\0" . '')
+ok 132 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 3 octet max" (262143, '◊ˇˇ')
+ok 133 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 3 octet midway" (-4000, '”`')
+ok 134 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 4 octet" (270544960, 'I 0@')
+ok 135 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - empty" (array(), 'WZ')
+ok 136 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - small" (array(1, 2, 3), '{ëíì')
+ok 137 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - longer" (array(1, 2, 3, 4, 5, 6, 7, 8), 'Xòëíìîïñóò')
+ok 138 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "array - map" (array(1, 2), 'HöëüíZ')
+ok 139 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - empty" (stdClass, 'CstdClassê`')
+ok 140 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - simple" (stdClass, 'CstdClassíbarfoo`íë')
+ok 141 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - datetime" (DateTime, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
+ok 142 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - datetime minutes" (DateTime, 'K' . "\0" . '„Éè')
+ok 143 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - chrono" (1998-05-08T09:51:31+00:00, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
+ok 144 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "object - chrono minutes" (1998-05-08T09:51:00+00:00, 'K' . "\0" . '„Éè')
+ok 145 - Icecave\Flax\Wire\ValueEncoderTest::testEncode with data set "integer - 8 octet" (1161981756646125696, 'L 0@P`pÄ')
+ok 146 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMediumLengthString
+ok 147 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringSmallestChunk
+ok 148 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringWholeChunk
+ok 149 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringPartialChunk
+ok 150 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeStringMultipleChunks
+ok 151 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - empty" ('', ' ')
+ok 152 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary with data set "binary - 3 octet" ('', '#')
+ok 153 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMediumLength
+ok 154 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinarySmallestChunk
+ok 155 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryWholeChunk
+ok 156 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryPartialChunk
+ok 157 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinaryMultipleChunks
+ok 158 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - milliseconds" (894621091000, 'J' . "\0" . '' . "\0" . '' . "\0" . '–KíÑ∏')
+ok 159 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - minutes" (894621060000, 'K' . "\0" . '„Éè')
+ok 160 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjects
+ok 161 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsSingleDefinition
+ok 162 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeMultipleObjectsReference
+ok 163 - Icecave\Flax\Wire\ValueEncoderTest::testReset
+ok 164 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedType
+ok 165 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeObjectWithLongFormClassDefinitionId
+ok 166 - Icecave\Flax\Wire\ValueEncoderTest::testEncodeUnsupportedObject
+1..166
