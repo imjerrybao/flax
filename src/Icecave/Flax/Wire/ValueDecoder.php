@@ -167,8 +167,8 @@ class ValueDecoder
                 return $this->pushState(ValueDecoderState::VECTOR(), new Vector);
             case HessianConstants::VECTOR_FIXED:
                 return $this->beginFixedLengthVector();
-            // case HessianConstants::MAP_TYPED:
-            //     return $this->pushState(ValueDecoderState::MAP_TYPED());
+            case HessianConstants::MAP_TYPED:
+                return $this->beginTypedMap();
             case HessianConstants::MAP:
                 return $this->pushState(ValueDecoderState::MAP_KEY(), new Map);
         }
@@ -430,10 +430,11 @@ class ValueDecoder
         }
     }
 
-    // private function beginTypedMap()
-    // {
-
-    // }
+    private function beginTypedMap()
+    {
+        $this->pushState(ValueDecoderState::MAP_KEY(), new Map);
+        $this->pushState(ValueDecoderState::COLLECTION_TYPE());
+    }
 
     private function handleStringSize($character, $signedByte, $unsignedByte)
     {

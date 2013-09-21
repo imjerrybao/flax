@@ -365,6 +365,24 @@ class ValueDecoderTest extends PHPUnit_Framework_TestCase
                     )
                 ),
             ),
+            'map - typed - empty' => array(
+                "\x4d\x03???\x5a",
+                Map::create(),
+            ),
+            'map - typed' => array(
+                "\x4d\x03???\x9a\x91\x9f\x92\x5a",
+                Map::create(array(10, 1), array(15, 2)),
+            ),
+            'map - typed - nested' => array(
+                "\x4d\x03???\x91\x4d\x03???\x92\x91\x5a\x5a",
+                Map::create(
+                    array(
+                        1,
+                        Map::create(array(2, 3))
+                    )
+                ),
+            ),
+
         );
     }
 }
