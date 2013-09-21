@@ -298,6 +298,43 @@ class ValueDecoderTest extends PHPUnit_Framework_TestCase
                 Vector::create(Vector::create(1, 2, 3), Vector::create(4, 5, 6)),
             ),
 
+            'vector - typed + fixed size - compact - empty' => array(
+                "\x70\x03???",
+                Vector::create(),
+            ),
+            'vector - typed + fixed size - compact' => array(
+                "\x73\x03???\x91\x92\x93",
+                Vector::create(1, 2, 3),
+            ),
+            'vector - typed + fixed size - compact - nested' => array(
+                "\x72\x03???\x73\x03???\x91\x92\x93\x73\x03???\x94\x95\x96",
+                Vector::create(Vector::create(1, 2, 3), Vector::create(4, 5, 6)),
+            ),
+            'vector - typed + fixed size - empty' => array(
+                "\x56\x03???\x90",
+                Vector::create(),
+            ),
+            'vector - typed + fixed size' => array(
+                "\x56\x03???\x93\x91\x92\x93",
+                Vector::create(1, 2, 3),
+            ),
+            'vector - typed + fixed size - nested' => array(
+                "\x56\x03???\x92\x56\x03???\x93\x91\x92\x93\x56\x03???\x93\x94\x95\x96",
+                Vector::create(Vector::create(1, 2, 3), Vector::create(4, 5, 6)),
+            ),
+            'vector - typed - empty' => array(
+                "\x55\x03???\x5a",
+                Vector::create(),
+            ),
+            'vector - typed' => array(
+                "\x55\x03???\x91\x92\x93\x5a",
+                Vector::create(1, 2, 3),
+            ),
+            'vector - typed - nested' => array(
+                "\x55\x03???\x55\x03???\x91\x92\x93\x5a\x55\x03???\x94\x95\x96\x5a\x5a",
+                Vector::create(Vector::create(1, 2, 3), Vector::create(4, 5, 6)),
+            ),
+
             'map - empty' => array(
                 "\x48\x5a",
                 Map::create(),

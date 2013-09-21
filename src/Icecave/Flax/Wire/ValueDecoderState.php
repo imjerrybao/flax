@@ -34,10 +34,12 @@ class ValueDecoderState extends Enumeration
     const TIMESTAMP_MILLISECONDS = 50;
     const TIMESTAMP_MINUTES      = 51;
 
-    const VECTOR       = 60;
-    const VECTOR_SIZE  = 61;
-    const VECTOR_FIXED = 62;
+    const COLLECTION_TYPE = 60;
 
-    const MAP_KEY      = 70;
-    const MAP_VALUE    = 70;
+    const VECTOR       = 70;
+    const VECTOR_SIZE  = 71;
+    const VECTOR_FIXED = 72;
+
+    const MAP_KEY      = 80;
+    const MAP_VALUE    = 81;
 }
