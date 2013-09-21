@@ -1,176 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="153" assertions="164" failures="0" errors="0" time="3.012753">
-    <testsuite name="Icecave\Flax\HessianClientTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/HessianClientTest.php" namespace="Icecave\Flax" fullPackage="Icecave.Flax" tests="1" assertions="1" failures="0" errors="0" time="0.006192">
-      <testcase name="testPlaceHolder" class="Icecave\Flax\HessianClientTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/HessianClientTest.php" line="13" assertions="1" time="0.006192"/>
+  <testsuite name="" tests="153" assertions="164" failures="0" errors="0" time="2.728768">
+    <testsuite name="Icecave\Flax\HessianClientTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/HessianClientTest.php" namespace="Icecave\Flax" fullPackage="Icecave.Flax" tests="1" assertions="1" failures="0" errors="0" time="0.005466">
+      <testcase name="testPlaceHolder" class="Icecave\Flax\HessianClientTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/HessianClientTest.php" line="13" assertions="1" time="0.005466"/>
     </testsuite>
-    <testsuite name="Icecave\Flax\Wire\ProtocolEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ProtocolEncoderTest.php" namespace="Icecave\Flax\Wire" fullPackage="Icecave.Flax.Wire" tests="2" assertions="2" failures="0" errors="0" time="0.015296">
-      <testcase name="testEncodeVersion" class="Icecave\Flax\Wire\ProtocolEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ProtocolEncoderTest.php" line="13" assertions="1" time="0.009340"/>
-      <testcase name="testEncodeCall" class="Icecave\Flax\Wire\ProtocolEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ProtocolEncoderTest.php" line="18" assertions="1" time="0.005956"/>
+    <testsuite name="Icecave\Flax\Wire\ProtocolEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ProtocolEncoderTest.php" namespace="Icecave\Flax\Wire" fullPackage="Icecave.Flax.Wire" tests="2" assertions="2" failures="0" errors="0" time="0.011959">
+      <testcase name="testEncodeVersion" class="Icecave\Flax\Wire\ProtocolEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ProtocolEncoderTest.php" line="13" assertions="1" time="0.007222"/>
+      <testcase name="testEncodeCall" class="Icecave\Flax\Wire\ProtocolEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ProtocolEncoderTest.php" line="18" assertions="1" time="0.004737"/>
     </testsuite>
-    <testsuite name="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" namespace="Icecave\Flax\Wire" fullPackage="Icecave.Flax.Wire" tests="4" assertions="5" failures="0" errors="0" time="0.027143">
-      <testcase name="testIsBigEndian" class="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" line="8" assertions="2" time="0.015515"/>
-      <testcase name="testConvertEndianess" class="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" line="17" assertions="1" time="0.004736"/>
-      <testcase name="testPackInt64" class="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" line="28" assertions="1" time="0.003459"/>
-      <testcase name="testUnpackInt64" class="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" line="37" assertions="1" time="0.003433"/>
+    <testsuite name="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" namespace="Icecave\Flax\Wire" fullPackage="Icecave.Flax.Wire" tests="4" assertions="5" failures="0" errors="0" time="0.024922">
+      <testcase name="testIsBigEndian" class="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" line="8" assertions="2" time="0.014171"/>
+      <testcase name="testConvertEndianess" class="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" line="17" assertions="1" time="0.004252"/>
+      <testcase name="testPackInt64" class="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" line="28" assertions="1" time="0.003241"/>
+      <testcase name="testUnpackInt64" class="Icecave\Flax\Wire\UtilityTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/UtilityTest.php" line="37" assertions="1" time="0.003258"/>
     </testsuite>
-    <testsuite name="Icecave\Flax\Wire\ValueDecoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueDecoderTest.php" namespace="Icecave\Flax\Wire" fullPackage="Icecave.Flax.Wire" tests="85" assertions="88" failures="0" errors="0" time="2.368559">
-      <testsuite name="Icecave\Flax\Wire\ValueDecoderTest::testDecode" tests="84" assertions="84" failures="0" errors="0" time="2.333975">
-        <testcase name="testDecode with data set &quot;null&quot;" assertions="1" time="0.021931"/>
-        <testcase name="testDecode with data set &quot;boolean - true&quot;" assertions="1" time="0.010558"/>
-        <testcase name="testDecode with data set &quot;boolean - false&quot;" assertions="1" time="0.010553"/>
-        <testcase name="testDecode with data set &quot;string - compact - empty&quot;" assertions="1" time="0.010669"/>
-        <testcase name="testDecode with data set &quot;string - compact - hello&quot;" assertions="1" time="0.013748"/>
-        <testcase name="testDecode with data set &quot;string - compact - unicode&quot;" assertions="1" time="0.012668"/>
-        <testcase name="testDecode with data set &quot;string - empty&quot;" assertions="1" time="0.012282"/>
-        <testcase name="testDecode with data set &quot;string - hello&quot;" assertions="1" time="0.014691"/>
-        <testcase name="testDecode with data set &quot;string - unicode&quot;" assertions="1" time="0.013527"/>
-        <testcase name="testDecode with data set &quot;string - chunked - single&quot;" assertions="1" time="0.017589"/>
-        <testcase name="testDecode with data set &quot;string - chunked - multiple&quot;" assertions="1" time="0.028016"/>
-        <testcase name="testDecode with data set &quot;binary - compact - empty&quot;" assertions="1" time="0.010756"/>
-        <testcase name="testDecode with data set &quot;binary - compact - hello&quot;" assertions="1" time="0.017223"/>
-        <testcase name="testDecode with data set &quot;binary - empty&quot;" assertions="1" time="0.013021"/>
-        <testcase name="testDecode with data set &quot;binary - hello&quot;" assertions="1" time="0.018616"/>
-        <testcase name="testDecode with data set &quot;binary - chunked - single&quot;" assertions="1" time="0.022379"/>
-        <testcase name="testDecode with data set &quot;binary - chunked - multiple&quot;" assertions="1" time="0.040687"/>
-        <testcase name="testDecode with data set &quot;double - 1 octet zero&quot;" assertions="1" time="0.010613"/>
-        <testcase name="testDecode with data set &quot;double - 1 octet one&quot;" assertions="1" time="0.010674"/>
-        <testcase name="testDecode with data set &quot;double - 2 octet min&quot;" assertions="1" time="0.013460"/>
-        <testcase name="testDecode with data set &quot;double - 2 octet max&quot;" assertions="1" time="0.013660"/>
-        <testcase name="testDecode with data set &quot;double - 2 octet midway 1&quot;" assertions="1" time="0.013367"/>
-        <testcase name="testDecode with data set &quot;double - 2 octet midway 2&quot;" assertions="1" time="0.013470"/>
-        <testcase name="testDecode with data set &quot;double - 3 octet min&quot;" assertions="1" time="0.015970"/>
-        <testcase name="testDecode with data set &quot;double - 3 octet max&quot;" assertions="1" time="0.015851"/>
-        <testcase name="testDecode with data set &quot;double - 3 octet midway&quot;" assertions="1" time="0.015819"/>
-        <testcase name="testDecode with data set &quot;double - 4 octet float&quot;" assertions="1" time="0.019876"/>
-        <testcase name="testDecode with data set &quot;double - 4 octet float (whole)&quot;" assertions="1" time="0.019895"/>
-        <testcase name="testDecode with data set &quot;double - 8 octet&quot;" assertions="1" time="0.028728"/>
-        <testcase name="testDecode with data set &quot;integer - 1 octet zero&quot;" assertions="1" time="0.010681"/>
-        <testcase name="testDecode with data set &quot;integer - 1 octet min&quot;" assertions="1" time="0.010860"/>
-        <testcase name="testDecode with data set &quot;integer - 1 octet max&quot;" assertions="1" time="0.010657"/>
-        <testcase name="testDecode with data set &quot;integer - 1 octet midway&quot;" assertions="1" time="0.010862"/>
-        <testcase name="testDecode with data set &quot;integer - 2 octet min&quot;" assertions="1" time="0.013818"/>
-        <testcase name="testDecode with data set &quot;integer - 2 octet max&quot;" assertions="1" time="0.013532"/>
-        <testcase name="testDecode with data set &quot;integer - 2 octet midway&quot;" assertions="1" time="0.013542"/>
-        <testcase name="testDecode with data set &quot;integer - 3 octet min&quot;" assertions="1" time="0.015527"/>
-        <testcase name="testDecode with data set &quot;integer - 3 octet max&quot;" assertions="1" time="0.015427"/>
-        <testcase name="testDecode with data set &quot;integer - 3 octet midway&quot;" assertions="1" time="0.015353"/>
-        <testcase name="testDecode with data set &quot;integer - 4 octet&quot;" assertions="1" time="0.018736"/>
-        <testcase name="testDecode with data set &quot;long - 1 octet zero&quot;" assertions="1" time="0.010678"/>
-        <testcase name="testDecode with data set &quot;long - 1 octet min&quot;" assertions="1" time="0.010808"/>
-        <testcase name="testDecode with data set &quot;long - 1 octet max&quot;" assertions="1" time="0.010682"/>
-        <testcase name="testDecode with data set &quot;long - 1 octet midway&quot;" assertions="1" time="0.010701"/>
-        <testcase name="testDecode with data set &quot;long - 2 octet min&quot;" assertions="1" time="0.013804"/>
-        <testcase name="testDecode with data set &quot;long - 2 octet max&quot;" assertions="1" time="0.013780"/>
-        <testcase name="testDecode with data set &quot;long - 2 octet midway&quot;" assertions="1" time="0.013799"/>
-        <testcase name="testDecode with data set &quot;long - 3 octet min&quot;" assertions="1" time="0.015401"/>
-        <testcase name="testDecode with data set &quot;long - 3 octet max&quot;" assertions="1" time="0.015392"/>
-        <testcase name="testDecode with data set &quot;long - 3 octet midway&quot;" assertions="1" time="0.015435"/>
-        <testcase name="testDecode with data set &quot;long - 4 octet&quot;" assertions="1" time="0.018298"/>
-        <testcase name="testDecode with data set &quot;long - 8 octet&quot;" assertions="1" time="0.025036"/>
-        <testcase name="testDecode with data set &quot;timestamp - milliseconds&quot;" assertions="1" time="0.040250"/>
-        <testcase name="testDecode with data set &quot;timestamp - minutes&quot;" assertions="1" time="0.030918"/>
-        <testcase name="testDecode with data set &quot;vector - fixed size - compact - empty&quot;" assertions="1" time="0.014624"/>
-        <testcase name="testDecode with data set &quot;vector - fixed size - compact&quot;" assertions="1" time="0.037690"/>
-        <testcase name="testDecode with data set &quot;vector - fixed size - compact - nested&quot;" assertions="1" time="0.086159"/>
-        <testcase name="testDecode with data set &quot;vector - fixed size - empty&quot;" assertions="1" time="0.018437"/>
-        <testcase name="testDecode with data set &quot;vector - fixed size&quot;" assertions="1" time="0.040395"/>
-        <testcase name="testDecode with data set &quot;vector - fixed size - nested&quot;" assertions="1" time="0.097038"/>
-        <testcase name="testDecode with data set &quot;vector - empty&quot;" assertions="1" time="0.016519"/>
-        <testcase name="testDecode with data set &quot;vector&quot;" assertions="1" time="0.035991"/>
-        <testcase name="testDecode with data set &quot;vector - nested&quot;" assertions="1" time="0.085187"/>
-        <testcase name="testDecode with data set &quot;vector - typed + fixed size - compact - empty&quot;" assertions="1" time="0.020012"/>
-        <testcase name="testDecode with data set &quot;vector - typed + fixed size - compact&quot;" assertions="1" time="0.041901"/>
-        <testcase name="testDecode with data set &quot;vector - typed + fixed size - compact - nested&quot;" assertions="1" time="0.098504"/>
-        <testcase name="testDecode with data set &quot;vector - typed + fixed size - empty&quot;" assertions="1" time="0.023771"/>
-        <testcase name="testDecode with data set &quot;vector - typed + fixed size&quot;" assertions="1" time="0.043887"/>
-        <testcase name="testDecode with data set &quot;vector - typed + fixed size - nested&quot;" assertions="1" time="0.106006"/>
-        <testcase name="testDecode with data set &quot;vector - typed - empty&quot;" assertions="1" time="0.020348"/>
-        <testcase name="testDecode with data set &quot;vector - typed&quot;" assertions="1" time="0.038422"/>
-        <testcase name="testDecode with data set &quot;vector - typed - nested&quot;" assertions="1" time="0.096635"/>
-        <testcase name="testDecode with data set &quot;map - empty&quot;" assertions="1" time="0.016407"/>
-        <testcase name="testDecode with data set &quot;map&quot;" assertions="1" time="0.041738"/>
-        <testcase name="testDecode with data set &quot;map - nested&quot;" assertions="1" time="0.050171"/>
-        <testcase name="testDecode with data set &quot;map - typed - empty&quot;" assertions="1" time="0.021881"/>
-        <testcase name="testDecode with data set &quot;map - typed&quot;" assertions="1" time="0.047350"/>
-        <testcase name="testDecode with data set &quot;map - typed - nested&quot;" assertions="1" time="0.063079"/>
-        <testcase name="testDecode with data set &quot;object - compact - empty&quot;" assertions="1" time="0.027514"/>
-        <testcase name="testDecode with data set &quot;object - compact&quot;" assertions="1" time="0.053186"/>
-        <testcase name="testDecode with data set &quot;object - compact - nested&quot;" assertions="1" time="0.058473"/>
-        <testcase name="testDecode with data set &quot;object - empty&quot;" assertions="1" time="0.032368"/>
-        <testcase name="testDecode with data set &quot;object&quot;" assertions="1" time="0.057896"/>
-        <testcase name="testDecode with data set &quot;object - nested&quot;" assertions="1" time="0.068112"/>
+    <testsuite name="Icecave\Flax\Wire\ValueDecoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueDecoderTest.php" namespace="Icecave\Flax\Wire" fullPackage="Icecave.Flax.Wire" tests="85" assertions="88" failures="0" errors="0" time="2.170243">
+      <testsuite name="Icecave\Flax\Wire\ValueDecoderTest::testDecode" tests="84" assertions="84" failures="0" errors="0" time="2.138812">
+        <testcase name="testDecode with data set &quot;null&quot;" assertions="1" time="0.025374"/>
+        <testcase name="testDecode with data set &quot;boolean - true&quot;" assertions="1" time="0.009798"/>
+        <testcase name="testDecode with data set &quot;boolean - false&quot;" assertions="1" time="0.010405"/>
+        <testcase name="testDecode with data set &quot;string - compact - empty&quot;" assertions="1" time="0.010556"/>
+        <testcase name="testDecode with data set &quot;string - compact - hello&quot;" assertions="1" time="0.013535"/>
+        <testcase name="testDecode with data set &quot;string - compact - unicode&quot;" assertions="1" time="0.011015"/>
+        <testcase name="testDecode with data set &quot;string - empty&quot;" assertions="1" time="0.011470"/>
+        <testcase name="testDecode with data set &quot;string - hello&quot;" assertions="1" time="0.013321"/>
+        <testcase name="testDecode with data set &quot;string - unicode&quot;" assertions="1" time="0.011660"/>
+        <testcase name="testDecode with data set &quot;string - chunked - single&quot;" assertions="1" time="0.015160"/>
+        <testcase name="testDecode with data set &quot;string - chunked - multiple&quot;" assertions="1" time="0.024327"/>
+        <testcase name="testDecode with data set &quot;binary - compact - empty&quot;" assertions="1" time="0.009364"/>
+        <testcase name="testDecode with data set &quot;binary - compact - hello&quot;" assertions="1" time="0.014797"/>
+        <testcase name="testDecode with data set &quot;binary - empty&quot;" assertions="1" time="0.011272"/>
+        <testcase name="testDecode with data set &quot;binary - hello&quot;" assertions="1" time="0.016477"/>
+        <testcase name="testDecode with data set &quot;binary - chunked - single&quot;" assertions="1" time="0.019617"/>
+        <testcase name="testDecode with data set &quot;binary - chunked - multiple&quot;" assertions="1" time="0.037336"/>
+        <testcase name="testDecode with data set &quot;double - 1 octet zero&quot;" assertions="1" time="0.010526"/>
+        <testcase name="testDecode with data set &quot;double - 1 octet one&quot;" assertions="1" time="0.010501"/>
+        <testcase name="testDecode with data set &quot;double - 2 octet min&quot;" assertions="1" time="0.013637"/>
+        <testcase name="testDecode with data set &quot;double - 2 octet max&quot;" assertions="1" time="0.012995"/>
+        <testcase name="testDecode with data set &quot;double - 2 octet midway 1&quot;" assertions="1" time="0.011978"/>
+        <testcase name="testDecode with data set &quot;double - 2 octet midway 2&quot;" assertions="1" time="0.012022"/>
+        <testcase name="testDecode with data set &quot;double - 3 octet min&quot;" assertions="1" time="0.014036"/>
+        <testcase name="testDecode with data set &quot;double - 3 octet max&quot;" assertions="1" time="0.013900"/>
+        <testcase name="testDecode with data set &quot;double - 3 octet midway&quot;" assertions="1" time="0.014004"/>
+        <testcase name="testDecode with data set &quot;double - 4 octet float&quot;" assertions="1" time="0.017833"/>
+        <testcase name="testDecode with data set &quot;double - 4 octet float (whole)&quot;" assertions="1" time="0.017238"/>
+        <testcase name="testDecode with data set &quot;double - 8 octet&quot;" assertions="1" time="0.025235"/>
+        <testcase name="testDecode with data set &quot;integer - 1 octet zero&quot;" assertions="1" time="0.009545"/>
+        <testcase name="testDecode with data set &quot;integer - 1 octet min&quot;" assertions="1" time="0.009264"/>
+        <testcase name="testDecode with data set &quot;integer - 1 octet max&quot;" assertions="1" time="0.009085"/>
+        <testcase name="testDecode with data set &quot;integer - 1 octet midway&quot;" assertions="1" time="0.009145"/>
+        <testcase name="testDecode with data set &quot;integer - 2 octet min&quot;" assertions="1" time="0.012772"/>
+        <testcase name="testDecode with data set &quot;integer - 2 octet max&quot;" assertions="1" time="0.012615"/>
+        <testcase name="testDecode with data set &quot;integer - 2 octet midway&quot;" assertions="1" time="0.011922"/>
+        <testcase name="testDecode with data set &quot;integer - 3 octet min&quot;" assertions="1" time="0.013096"/>
+        <testcase name="testDecode with data set &quot;integer - 3 octet max&quot;" assertions="1" time="0.013211"/>
+        <testcase name="testDecode with data set &quot;integer - 3 octet midway&quot;" assertions="1" time="0.013227"/>
+        <testcase name="testDecode with data set &quot;integer - 4 octet&quot;" assertions="1" time="0.016041"/>
+        <testcase name="testDecode with data set &quot;long - 1 octet zero&quot;" assertions="1" time="0.009389"/>
+        <testcase name="testDecode with data set &quot;long - 1 octet min&quot;" assertions="1" time="0.009389"/>
+        <testcase name="testDecode with data set &quot;long - 1 octet max&quot;" assertions="1" time="0.009313"/>
+        <testcase name="testDecode with data set &quot;long - 1 octet midway&quot;" assertions="1" time="0.009389"/>
+        <testcase name="testDecode with data set &quot;long - 2 octet min&quot;" assertions="1" time="0.011730"/>
+        <testcase name="testDecode with data set &quot;long - 2 octet max&quot;" assertions="1" time="0.011677"/>
+        <testcase name="testDecode with data set &quot;long - 2 octet midway&quot;" assertions="1" time="0.011708"/>
+        <testcase name="testDecode with data set &quot;long - 3 octet min&quot;" assertions="1" time="0.013307"/>
+        <testcase name="testDecode with data set &quot;long - 3 octet max&quot;" assertions="1" time="0.013299"/>
+        <testcase name="testDecode with data set &quot;long - 3 octet midway&quot;" assertions="1" time="0.013487"/>
+        <testcase name="testDecode with data set &quot;long - 4 octet&quot;" assertions="1" time="0.015837"/>
+        <testcase name="testDecode with data set &quot;long - 8 octet&quot;" assertions="1" time="0.022112"/>
+        <testcase name="testDecode with data set &quot;timestamp - milliseconds&quot;" assertions="1" time="0.035732"/>
+        <testcase name="testDecode with data set &quot;timestamp - minutes&quot;" assertions="1" time="0.027559"/>
+        <testcase name="testDecode with data set &quot;vector - fixed size - compact - empty&quot;" assertions="1" time="0.013174"/>
+        <testcase name="testDecode with data set &quot;vector - fixed size - compact&quot;" assertions="1" time="0.033344"/>
+        <testcase name="testDecode with data set &quot;vector - fixed size - compact - nested&quot;" assertions="1" time="0.076149"/>
+        <testcase name="testDecode with data set &quot;vector - fixed size - empty&quot;" assertions="1" time="0.016359"/>
+        <testcase name="testDecode with data set &quot;vector - fixed size&quot;" assertions="1" time="0.036558"/>
+        <testcase name="testDecode with data set &quot;vector - fixed size - nested&quot;" assertions="1" time="0.087416"/>
+        <testcase name="testDecode with data set &quot;vector - empty&quot;" assertions="1" time="0.014849"/>
+        <testcase name="testDecode with data set &quot;vector&quot;" assertions="1" time="0.032068"/>
+        <testcase name="testDecode with data set &quot;vector - nested&quot;" assertions="1" time="0.076793"/>
+        <testcase name="testDecode with data set &quot;vector - typed + fixed size - compact - empty&quot;" assertions="1" time="0.018055"/>
+        <testcase name="testDecode with data set &quot;vector - typed + fixed size - compact&quot;" assertions="1" time="0.038513"/>
+        <testcase name="testDecode with data set &quot;vector - typed + fixed size - compact - nested&quot;" assertions="1" time="0.096248"/>
+        <testcase name="testDecode with data set &quot;vector - typed + fixed size - empty&quot;" assertions="1" time="0.022866"/>
+        <testcase name="testDecode with data set &quot;vector - typed + fixed size&quot;" assertions="1" time="0.043137"/>
+        <testcase name="testDecode with data set &quot;vector - typed + fixed size - nested&quot;" assertions="1" time="0.107978"/>
+        <testcase name="testDecode with data set &quot;vector - typed - empty&quot;" assertions="1" time="0.020301"/>
+        <testcase name="testDecode with data set &quot;vector - typed&quot;" assertions="1" time="0.037096"/>
+        <testcase name="testDecode with data set &quot;vector - typed - nested&quot;" assertions="1" time="0.091364"/>
+        <testcase name="testDecode with data set &quot;map - empty&quot;" assertions="1" time="0.015310"/>
+        <testcase name="testDecode with data set &quot;map&quot;" assertions="1" time="0.039613"/>
+        <testcase name="testDecode with data set &quot;map - nested&quot;" assertions="1" time="0.046958"/>
+        <testcase name="testDecode with data set &quot;map - typed - empty&quot;" assertions="1" time="0.020636"/>
+        <testcase name="testDecode with data set &quot;map - typed&quot;" assertions="1" time="0.044711"/>
+        <testcase name="testDecode with data set &quot;map - typed - nested&quot;" assertions="1" time="0.057681"/>
+        <testcase name="testDecode with data set &quot;object - compact - empty&quot;" assertions="1" time="0.024943"/>
+        <testcase name="testDecode with data set &quot;object - compact&quot;" assertions="1" time="0.047385"/>
+        <testcase name="testDecode with data set &quot;object - compact - nested&quot;" assertions="1" time="0.053083"/>
+        <testcase name="testDecode with data set &quot;object - empty&quot;" assertions="1" time="0.029062"/>
+        <testcase name="testDecode with data set &quot;object&quot;" assertions="1" time="0.051952"/>
+        <testcase name="testDecode with data set &quot;object - nested&quot;" assertions="1" time="0.061970"/>
       </testsuite>
-      <testcase name="testDecodeWithReference" class="Icecave\Flax\Wire\ValueDecoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueDecoderTest.php" line="38" assertions="4" time="0.034584"/>
+      <testcase name="testDecodeWithReference" class="Icecave\Flax\Wire\ValueDecoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueDecoderTest.php" line="38" assertions="4" time="0.031431"/>
     </testsuite>
-    <testsuite name="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" namespace="Icecave\Flax\Wire" fullPackage="Icecave.Flax.Wire" tests="61" assertions="68" failures="0" errors="0" time="0.595564">
-      <testsuite name="Icecave\Flax\Wire\ValueEncoderTest::testEncode" tests="40" assertions="40" failures="0" errors="0" time="0.203845">
-        <testcase name="testEncode with data set &quot;null&quot;" assertions="1" time="0.004790"/>
-        <testcase name="testEncode with data set &quot;boolean - true&quot;" assertions="1" time="0.004684"/>
-        <testcase name="testEncode with data set &quot;boolean - false&quot;" assertions="1" time="0.004694"/>
-        <testcase name="testEncode with data set &quot;string&quot;" assertions="1" time="0.004721"/>
-        <testcase name="testEncode with data set &quot;string - hello&quot;" assertions="1" time="0.004719"/>
-        <testcase name="testEncode with data set &quot;string - unicode&quot;" assertions="1" time="0.004741"/>
-        <testcase name="testEncode with data set &quot;double - 1 octet zero&quot;" assertions="1" time="0.004699"/>
-        <testcase name="testEncode with data set &quot;double - 1 octet one&quot;" assertions="1" time="0.004691"/>
-        <testcase name="testEncode with data set &quot;double - 2 octet min&quot;" assertions="1" time="0.004718"/>
-        <testcase name="testEncode with data set &quot;double - 2 octet max&quot;" assertions="1" time="0.004701"/>
-        <testcase name="testEncode with data set &quot;double - 2 octet midway 1&quot;" assertions="1" time="0.004695"/>
-        <testcase name="testEncode with data set &quot;double - 2 octet midway 2&quot;" assertions="1" time="0.004703"/>
-        <testcase name="testEncode with data set &quot;double - 3 octet min&quot;" assertions="1" time="0.004716"/>
-        <testcase name="testEncode with data set &quot;double - 3 octet max&quot;" assertions="1" time="0.004702"/>
-        <testcase name="testEncode with data set &quot;double - 3 octet midway&quot;" assertions="1" time="0.004703"/>
-        <testcase name="testEncode with data set &quot;double - 4 octet float&quot;" assertions="1" time="0.004949"/>
-        <testcase name="testEncode with data set &quot;double - 4 octet float (whole)&quot;" assertions="1" time="0.004953"/>
-        <testcase name="testEncode with data set &quot;double - 8 octet&quot;" assertions="1" time="0.004960"/>
-        <testcase name="testEncode with data set &quot;integer - 1 octet zero&quot;" assertions="1" time="0.004717"/>
-        <testcase name="testEncode with data set &quot;integer - 1 octet min&quot;" assertions="1" time="0.004718"/>
-        <testcase name="testEncode with data set &quot;integer - 1 octet max&quot;" assertions="1" time="0.004701"/>
-        <testcase name="testEncode with data set &quot;integer - 1 octet midway&quot;" assertions="1" time="0.004740"/>
-        <testcase name="testEncode with data set &quot;integer - 2 octet min&quot;" assertions="1" time="0.004716"/>
-        <testcase name="testEncode with data set &quot;integer - 2 octet max&quot;" assertions="1" time="0.004718"/>
-        <testcase name="testEncode with data set &quot;integer - 2 octet midway&quot;" assertions="1" time="0.004699"/>
-        <testcase name="testEncode with data set &quot;integer - 3 octet min&quot;" assertions="1" time="0.004773"/>
-        <testcase name="testEncode with data set &quot;integer - 3 octet max&quot;" assertions="1" time="0.004712"/>
-        <testcase name="testEncode with data set &quot;integer - 3 octet midway&quot;" assertions="1" time="0.004694"/>
-        <testcase name="testEncode with data set &quot;integer - 4 octet&quot;" assertions="1" time="0.004713"/>
-        <testcase name="testEncode with data set &quot;array - empty&quot;" assertions="1" time="0.005033"/>
-        <testcase name="testEncode with data set &quot;array - small&quot;" assertions="1" time="0.005430"/>
-        <testcase name="testEncode with data set &quot;array - longer&quot;" assertions="1" time="0.006118"/>
-        <testcase name="testEncode with data set &quot;array - map&quot;" assertions="1" time="0.005446"/>
-        <testcase name="testEncode with data set &quot;object - empty&quot;" assertions="1" time="0.009226"/>
-        <testcase name="testEncode with data set &quot;object - simple&quot;" assertions="1" time="0.009467"/>
-        <testcase name="testEncode with data set &quot;object - datetime&quot;" assertions="1" time="0.004965"/>
-        <testcase name="testEncode with data set &quot;object - datetime minutes&quot;" assertions="1" time="0.004842"/>
-        <testcase name="testEncode with data set &quot;object - chrono&quot;" assertions="1" time="0.005535"/>
-        <testcase name="testEncode with data set &quot;object - chrono minutes&quot;" assertions="1" time="0.005444"/>
-        <testcase name="testEncode with data set &quot;integer - 8 octet&quot;" assertions="1" time="0.004898"/>
+    <testsuite name="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" namespace="Icecave\Flax\Wire" fullPackage="Icecave.Flax.Wire" tests="61" assertions="68" failures="0" errors="0" time="0.516179">
+      <testsuite name="Icecave\Flax\Wire\ValueEncoderTest::testEncode" tests="40" assertions="40" failures="0" errors="0" time="0.180233">
+        <testcase name="testEncode with data set &quot;null&quot;" assertions="1" time="0.004091"/>
+        <testcase name="testEncode with data set &quot;boolean - true&quot;" assertions="1" time="0.004057"/>
+        <testcase name="testEncode with data set &quot;boolean - false&quot;" assertions="1" time="0.004129"/>
+        <testcase name="testEncode with data set &quot;string&quot;" assertions="1" time="0.004222"/>
+        <testcase name="testEncode with data set &quot;string - hello&quot;" assertions="1" time="0.004206"/>
+        <testcase name="testEncode with data set &quot;string - unicode&quot;" assertions="1" time="0.004229"/>
+        <testcase name="testEncode with data set &quot;double - 1 octet zero&quot;" assertions="1" time="0.004182"/>
+        <testcase name="testEncode with data set &quot;double - 1 octet one&quot;" assertions="1" time="0.004124"/>
+        <testcase name="testEncode with data set &quot;double - 2 octet min&quot;" assertions="1" time="0.004053"/>
+        <testcase name="testEncode with data set &quot;double - 2 octet max&quot;" assertions="1" time="0.004042"/>
+        <testcase name="testEncode with data set &quot;double - 2 octet midway 1&quot;" assertions="1" time="0.004139"/>
+        <testcase name="testEncode with data set &quot;double - 2 octet midway 2&quot;" assertions="1" time="0.004130"/>
+        <testcase name="testEncode with data set &quot;double - 3 octet min&quot;" assertions="1" time="0.004192"/>
+        <testcase name="testEncode with data set &quot;double - 3 octet max&quot;" assertions="1" time="0.004213"/>
+        <testcase name="testEncode with data set &quot;double - 3 octet midway&quot;" assertions="1" time="0.004083"/>
+        <testcase name="testEncode with data set &quot;double - 4 octet float&quot;" assertions="1" time="0.004278"/>
+        <testcase name="testEncode with data set &quot;double - 4 octet float (whole)&quot;" assertions="1" time="0.004239"/>
+        <testcase name="testEncode with data set &quot;double - 8 octet&quot;" assertions="1" time="0.004254"/>
+        <testcase name="testEncode with data set &quot;integer - 1 octet zero&quot;" assertions="1" time="0.004071"/>
+        <testcase name="testEncode with data set &quot;integer - 1 octet min&quot;" assertions="1" time="0.004059"/>
+        <testcase name="testEncode with data set &quot;integer - 1 octet max&quot;" assertions="1" time="0.004043"/>
+        <testcase name="testEncode with data set &quot;integer - 1 octet midway&quot;" assertions="1" time="0.004143"/>
+        <testcase name="testEncode with data set &quot;integer - 2 octet min&quot;" assertions="1" time="0.004188"/>
+        <testcase name="testEncode with data set &quot;integer - 2 octet max&quot;" assertions="1" time="0.004196"/>
+        <testcase name="testEncode with data set &quot;integer - 2 octet midway&quot;" assertions="1" time="0.004178"/>
+        <testcase name="testEncode with data set &quot;integer - 3 octet min&quot;" assertions="1" time="0.004133"/>
+        <testcase name="testEncode with data set &quot;integer - 3 octet max&quot;" assertions="1" time="0.004059"/>
+        <testcase name="testEncode with data set &quot;integer - 3 octet midway&quot;" assertions="1" time="0.004161"/>
+        <testcase name="testEncode with data set &quot;integer - 4 octet&quot;" assertions="1" time="0.004099"/>
+        <testcase name="testEncode with data set &quot;array - empty&quot;" assertions="1" time="0.004387"/>
+        <testcase name="testEncode with data set &quot;array - small&quot;" assertions="1" time="0.004890"/>
+        <testcase name="testEncode with data set &quot;array - longer&quot;" assertions="1" time="0.005326"/>
+        <testcase name="testEncode with data set &quot;array - map&quot;" assertions="1" time="0.004657"/>
+        <testcase name="testEncode with data set &quot;object - empty&quot;" assertions="1" time="0.008028"/>
+        <testcase name="testEncode with data set &quot;object - simple&quot;" assertions="1" time="0.008741"/>
+        <testcase name="testEncode with data set &quot;object - datetime&quot;" assertions="1" time="0.004713"/>
+        <testcase name="testEncode with data set &quot;object - datetime minutes&quot;" assertions="1" time="0.004637"/>
+        <testcase name="testEncode with data set &quot;object - chrono&quot;" assertions="1" time="0.005356"/>
+        <testcase name="testEncode with data set &quot;object - chrono minutes&quot;" assertions="1" time="0.004894"/>
+        <testcase name="testEncode with data set &quot;integer - 8 octet&quot;" assertions="1" time="0.004411"/>
       </testsuite>
-      <testcase name="testEncodeMediumLengthString" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="27" assertions="1" time="0.004924"/>
-      <testcase name="testEncodeStringSmallestChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="34" assertions="1" time="0.004965"/>
-      <testcase name="testEncodeStringWholeChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="41" assertions="1" time="0.006569"/>
-      <testcase name="testEncodeStringPartialChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="48" assertions="1" time="0.005743"/>
-      <testcase name="testEncodeStringMultipleChunks" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="55" assertions="1" time="0.006648"/>
-      <testsuite name="Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary" tests="2" assertions="2" failures="0" errors="0" time="0.009508">
-        <testcase name="testEncodeBinary with data set &quot;binary - empty&quot;" assertions="1" time="0.004754"/>
-        <testcase name="testEncodeBinary with data set &quot;binary - 3 octet&quot;" assertions="1" time="0.004754"/>
+      <testcase name="testEncodeMediumLengthString" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="27" assertions="1" time="0.004435"/>
+      <testcase name="testEncodeStringSmallestChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="34" assertions="1" time="0.004413"/>
+      <testcase name="testEncodeStringWholeChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="41" assertions="1" time="0.005676"/>
+      <testcase name="testEncodeStringPartialChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="48" assertions="1" time="0.005062"/>
+      <testcase name="testEncodeStringMultipleChunks" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="55" assertions="1" time="0.005697"/>
+      <testsuite name="Icecave\Flax\Wire\ValueEncoderTest::testEncodeBinary" tests="2" assertions="2" failures="0" errors="0" time="0.008120">
+        <testcase name="testEncodeBinary with data set &quot;binary - empty&quot;" assertions="1" time="0.004056"/>
+        <testcase name="testEncodeBinary with data set &quot;binary - 3 octet&quot;" assertions="1" time="0.004064"/>
       </testsuite>
-      <testcase name="testEncodeMediumLength" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="73" assertions="1" time="0.004929"/>
-      <testcase name="testEncodeBinarySmallestChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="80" assertions="1" time="0.004958"/>
-      <testcase name="testEncodeBinaryWholeChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="87" assertions="1" time="0.005384"/>
-      <testcase name="testEncodeBinaryPartialChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="94" assertions="1" time="0.005136"/>
-      <testcase name="testEncodeBinaryMultipleChunks" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="101" assertions="1" time="0.005605"/>
-      <testsuite name="Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp" tests="2" assertions="2" failures="0" errors="0" time="0.009654">
-        <testcase name="testEncodeTimestamp with data set &quot;timestamp - milliseconds&quot;" assertions="1" time="0.004901"/>
-        <testcase name="testEncodeTimestamp with data set &quot;timestamp - minutes&quot;" assertions="1" time="0.004753"/>
+      <testcase name="testEncodeMediumLength" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="73" assertions="1" time="0.004153"/>
+      <testcase name="testEncodeBinarySmallestChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="80" assertions="1" time="0.004173"/>
+      <testcase name="testEncodeBinaryWholeChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="87" assertions="1" time="0.004584"/>
+      <testcase name="testEncodeBinaryPartialChunk" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="94" assertions="1" time="0.004358"/>
+      <testcase name="testEncodeBinaryMultipleChunks" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="101" assertions="1" time="0.004680"/>
+      <testsuite name="Icecave\Flax\Wire\ValueEncoderTest::testEncodeTimestamp" tests="2" assertions="2" failures="0" errors="0" time="0.008222">
+        <testcase name="testEncodeTimestamp with data set &quot;timestamp - milliseconds&quot;" assertions="1" time="0.004158"/>
+        <testcase name="testEncodeTimestamp with data set &quot;timestamp - minutes&quot;" assertions="1" time="0.004064"/>
       </testsuite>
-      <testcase name="testEncodeMultipleObjects" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="119" assertions="2" time="0.017234"/>
-      <testcase name="testEncodeMultipleObjectsSingleDefinition" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="133" assertions="2" time="0.017182"/>
-      <testcase name="testEncodeMultipleObjectsReference" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="147" assertions="4" time="0.022298"/>
-      <testcase name="testReset" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="163" assertions="1" time="0.014054"/>
-      <testcase name="testEncodeUnsupportedType" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="172" assertions="2" time="0.007186"/>
-      <testcase name="testEncodeObjectWithLongFormClassDefinitionId" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="179" assertions="1" time="0.233952"/>
-      <testcase name="testEncodeUnsupportedObject" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="195" assertions="2" time="0.005790"/>
+      <testcase name="testEncodeMultipleObjects" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="119" assertions="2" time="0.014956"/>
+      <testcase name="testEncodeMultipleObjectsSingleDefinition" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="133" assertions="2" time="0.014854"/>
+      <testcase name="testEncodeMultipleObjectsReference" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="147" assertions="4" time="0.019533"/>
+      <testcase name="testReset" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="163" assertions="1" time="0.012035"/>
+      <testcase name="testEncodeUnsupportedType" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="172" assertions="2" time="0.006093"/>
+      <testcase name="testEncodeObjectWithLongFormClassDefinitionId" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="179" assertions="1" time="0.200104"/>
+      <testcase name="testEncodeUnsupportedObject" class="Icecave\Flax\Wire\ValueEncoderTest" file="/home/travis/build/IcecaveLabs/flax/test/suite/Icecave/Flax/Wire/ValueEncoderTest.php" line="195" assertions="2" time="0.004797"/>
     </testsuite>
   </testsuite>
 </testsuites>
