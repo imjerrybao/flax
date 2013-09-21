@@ -34,6 +34,19 @@ class ValueDecoderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, $output);
     }
 
+    public function testDecodeWithReference()
+    {
+        $this->decoder->reset();
+        $this->decoder->feed("WHZQ\x91Z"); // a vector containing the same map twice
+        $result = $this->decoder->finalize();
+
+        $this->assertInstanceOf('Icecave\Collections\Vector', $result);
+        $this->assertSame(2, $result->size());
+
+        $this->assertInstanceOf('Icecave\Collections\Map', $result[0]);
+        $this->assertSame($result[0], $result[1]);
+    }
+
     public function decodeTestVectors()
     {
         return array(

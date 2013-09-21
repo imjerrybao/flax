@@ -22,7 +22,7 @@ class ValueDecoder
         // $this->typeCheck->reset(func_get_args());
 
         $this->stack = new Stack;
-        $this->typeMap = new Map;
+        $this->referenceMap = new Map;
         $this->currentContext = null;
         $this->value = null;
     }
@@ -95,13 +95,14 @@ class ValueDecoder
 
             case ValueDecoderState::COLLECTION_TYPE():
                 return $this->handleCollectionType($character, $signedByte, $unsignedByte);
-            case ValueDecoderState::VECTOR():
-                return $this->handleNextCollectionElement($character, $signedByte, $unsignedByte);
-            case ValueDecoderState::VECTOR_SIZE():
-                return $this->handleBeginInt32($character, $signedByte, $unsignedByte);
 
+            case ValueDecoderState::VECTOR():
             case ValueDecoderState::MAP_KEY():
                 return $this->handleNextCollectionElement($character, $signedByte, $unsignedByte);
+
+            case ValueDecoderState::VECTOR_SIZE():
+            case ValueDecoderState::REFERENCE():
+                return $this->handleBeginInt32($character, $signedByte, $unsignedByte);
         }
 
         return $this->handleBegin($character, $signedByte, $unsignedByte);
@@ -109,11 +110,14 @@ class ValueDecoder
 
     public function finalize()
     {
-        if ($this->stack->isEmpty()) {
-            return $this->value;
+        if (!$this->stack->isEmpty()) {
+            throw new Exception\DecodeException('Unexpected end of stream (state: ' . $this->state() . ').');
         }
 
-        throw new Exception\DecodeException('Unexpected end of stream (state: ' . $this->state() . ').');
+        $value = $this->value;
+        $this->reset();
+
+        return $value;
     }
 
     private function handleBegin($character, $signedByte, $unsignedByte)
@@ -153,8 +157,8 @@ class ValueDecoder
             //     return $this->pushState(ValueDecoderState::CLASS_DEFINITION());
             // case HessianConstants::OBJECT_INSTANCE:
             //     return $this->pushState(ValueDecoderState::OBJECT_INSTANCE());
-            // case HessianConstants::REFERENCE:
-            //     return $this->pushState(ValueDecoderState::REFERENCE());
+            case HessianConstants::REFERENCE:
+                return $this->pushState(ValueDecoderState::REFERENCE());
             case HessianConstants::VECTOR_TYPED:
                 return $this->beginTypedVector();
             case HessianConstants::VECTOR_TYPED_FIXED:
@@ -245,6 +249,8 @@ class ValueDecoder
                 return $this->emitValueMapKey($value);
             case ValueDecoderState::MAP_VALUE():
                 return $this->emitValueMapValue($value);
+            case ValueDecoderState::REFERENCE():
+                return $this->emitValueReference($value);
         }
 
         $this->value = $value;
@@ -252,18 +258,16 @@ class ValueDecoder
 
     private function emitValueCollectionType($value)
     {
-        $this->popState();
-
-        $this->currentContext->collectionType = $value;
+        $this->popState(); // discard the type
 
         if (0 === $this->currentContext->expectedSize) {
-            $this->popStateAndEmitValue($this->currentContext->collection);
+            $this->popStateAndEmitValue($this->currentContext->result);
         }
     }
 
     private function emitValueVector($value)
     {
-        $vector = $this->currentContext->collection;
+        $vector = $this->currentContext->result;
 
         $vector->pushBack($value);
     }
@@ -281,7 +285,7 @@ class ValueDecoder
 
     private function emitValueVectorFixed($value)
     {
-        $vector = $this->currentContext->collection;
+        $vector = $this->currentContext->result;
 
         $vector->pushBack($value);
 
@@ -299,12 +303,19 @@ class ValueDecoder
 
     private function emitValueMapValue($value)
     {
-        $this->currentContext->collection->set(
+        $this->currentContext->result->set(
             $this->currentContext->nextKey,
             $value
         );
 
         $this->setState(ValueDecoderState::MAP_KEY());
+    }
+
+    private function emitValueReference($value)
+    {
+        $this->popStateAndEmitValue(
+            $this->referenceMap->get($value)
+        );
     }
 
     private function beginCompactString($character, $signedByte, $unsignedByte)
@@ -377,16 +388,6 @@ class ValueDecoder
 
     // }
 
-    // private function beginReference()
-    // {
-
-    // }
-
-    // private function beginTypedMap()
-    // {
-
-    // }
-
     // private function beginCompactObjectInstance($character, $signedByte, $unsignedByte)
     // {
 
@@ -428,6 +429,11 @@ class ValueDecoder
             $this->currentContext->expectedSize = $unsignedByte - HessianConstants::VECTOR_FIXED_COMPACT_START;
         }
     }
+
+    // private function beginTypedMap()
+    // {
+
+    // }
 
     private function handleStringSize($character, $signedByte, $unsignedByte)
     {
@@ -471,11 +477,11 @@ class ValueDecoder
             return;
         }
 
-        $this->currentContext->collection .= $this->currentContext->buffer;
+        $this->currentContext->result .= $this->currentContext->buffer;
         $this->currentContext->buffer = '';
 
         if ($isFinal) {
-            $this->popStateAndEmitValue($this->currentContext->collection);
+            $this->popStateAndEmitValue($this->currentContext->result);
         } else {
             $this->setState(ValueDecoderState::STRING_CHUNK_CONTINUATION());
         }
@@ -535,11 +541,11 @@ class ValueDecoder
             return;
         }
 
-        $this->currentContext->collection .= $this->currentContext->buffer;
+        $this->currentContext->result .= $this->currentContext->buffer;
         $this->currentContext->buffer = '';
 
         if ($isFinal) {
-            $this->popStateAndEmitValue($this->currentContext->collection);
+            $this->popStateAndEmitValue($this->currentContext->result);
         } else {
             $this->setState(ValueDecoderState::BINARY_CHUNK_CONTINUATION());
         }
@@ -636,7 +642,7 @@ class ValueDecoder
     public function handleNextCollectionElement($character, $signedByte, $unsignedByte)
     {
         if (HessianConstants::COLLECTION_TERMINATOR === $unsignedByte) {
-            $this->popStateAndEmitValue($this->currentContext->collection);
+            $this->popStateAndEmitValue($this->currentContext->result);
         } else {
             $this->handleBegin($character, $signedByte, $unsignedByte);
         }
@@ -666,19 +672,25 @@ class ValueDecoder
      * @param mixed       $value
      * @param ParserState $state
      */
-    private function pushState(ValueDecoderState $state, $collection = '')
+    private function pushState(ValueDecoderState $state, $result = '')
     {
         $this->trace('PUSH: ' . $state);
 
         $context = new stdClass;
         $context->state = $state;
         $context->buffer = '';
-        $context->collection = $collection;
-        $context->collectionType = null;
+        $context->result = $result;
         $context->nextKey = null;
         $context->expectedSize = null;
 
         $this->stack->push($context);
+
+        if (is_object($result)) {
+            $this->referenceMap->set(
+                $this->referenceMap->size(),
+                $result
+            );
+        }
 
         $this->currentContext = $context;
     }
@@ -692,6 +704,8 @@ class ValueDecoder
 
     private function popState()
     {
+        $previousState = $this->state();
+
         $this->stack->pop();
 
         if ($this->stack->isEmpty()) {
@@ -700,7 +714,7 @@ class ValueDecoder
             $this->currentContext = $this->stack->next();
         }
 
-        $this->trace('POP (SET: ' . $this->state() . ')');
+        $this->trace('POP ' . $previousState . ' (SET: ' . $this->state() . ')');
     }
 
     private function popStateAndEmitValue($value)
@@ -792,7 +806,7 @@ class ValueDecoder
     }
 
     private $typeCheck;
-    private $typeMap;
+    private $referenceMap;
     private $stack;
     private $currentContext;
     private $value;

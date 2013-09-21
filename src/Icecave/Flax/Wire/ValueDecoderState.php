@@ -42,4 +42,6 @@ class ValueDecoderState extends Enumeration
 
     const MAP_KEY      = 80;
     const MAP_VALUE    = 81;
+
+    const REFERENCE = 90;
 }
