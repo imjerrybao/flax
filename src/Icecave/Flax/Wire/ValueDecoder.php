@@ -378,29 +378,29 @@ class ValueDecoder
 
         switch ($this->state()) {
             case ValueDecoderState::COLLECTION_TYPE():
-                return $this->emitValueCollectionType($value);
+                return $this->emitCollectionType($value);
             case ValueDecoderState::VECTOR():
-                return $this->emitValueVector($value);
+                return $this->emitVectorElement($value);
             case ValueDecoderState::VECTOR_SIZE():
-                return $this->emitValueVectorSize($value);
+                return $this->emitFixedVectorSize($value);
             case ValueDecoderState::VECTOR_FIXED():
-                return $this->emitValueVectorFixed($value);
+                return $this->emitFixedVectorElement($value);
             case ValueDecoderState::MAP_KEY():
-                return $this->emitValueMapKey($value);
+                return $this->emitMapKey($value);
             case ValueDecoderState::MAP_VALUE():
-                return $this->emitValueMapValue($value);
+                return $this->emitMapValue($value);
             case ValueDecoderState::CLASS_DEFINITION_NAME():
-                return $this->emitValueClassDefinitionName($value);
+                return $this->emitClassDefinitionName($value);
             case ValueDecoderState::CLASS_DEFINITION_SIZE():
-                return $this->emitValueClassDefinitionSize($value);
+                return $this->emitClassDefinitionSize($value);
             case ValueDecoderState::CLASS_DEFINITION_FIELD():
-                return $this->emitValueClassDefinitionField($value);
+                return $this->emitClassDefinitionField($value);
             case ValueDecoderState::OBJECT_INSTANCE_TYPE():
-                return $this->emitValueObjectInstanceType($value);
+                return $this->emitObjectInstanceType($value);
             case ValueDecoderState::OBJECT_INSTANCE_FIELD():
-                return $this->emitValueObjectInstanceField($value);
+                return $this->emitObjectInstanceField($value);
             case ValueDecoderState::REFERENCE():
-                return $this->emitValueReference($value);
+                return $this->emitReference($value);
         }
 
         $this->value = $value;
@@ -409,7 +409,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueCollectionType($value)
+    private function emitCollectionType($value)
     {
         $this->popState(); // discard the type
 
@@ -421,17 +421,15 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueVector($value)
+    private function emitVectorElement($value)
     {
-        $vector = $this->currentContext->result;
-
-        $vector->pushBack($value);
+        $this->currentContext->result->pushBack($value);
     }
 
     /**
      * @param mixed $value
      */
-    private function emitValueVectorSize($value)
+    private function emitFixedVectorSize($value)
     {
         $this->popState();
 
@@ -445,13 +443,11 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueVectorFixed($value)
+    private function emitFixedVectorElement($value)
     {
-        $vector = $this->currentContext->result;
+        $this->currentContext->result->pushBack($value);
 
-        $vector->pushBack($value);
-
-        if ($vector->size() === $this->currentContext->expectedSize) {
+        if ($this->currentContext->result->size() === $this->currentContext->expectedSize) {
             $this->popStateAndEmitResult();
         }
     }
@@ -459,7 +455,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueMapKey($value)
+    private function emitMapKey($value)
     {
         $this->currentContext->nextKey = $value;
 
@@ -469,7 +465,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueMapValue($value)
+    private function emitMapValue($value)
     {
         $this->currentContext->result->set(
             $this->currentContext->nextKey,
@@ -482,7 +478,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueClassDefinitionName($value)
+    private function emitClassDefinitionName($value)
     {
         $this->currentContext->result->name = $value;
 
@@ -492,7 +488,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueClassDefinitionSize($value)
+    private function emitClassDefinitionSize($value)
     {
         $this->currentContext->expectedSize = $value;
 
@@ -506,7 +502,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueClassDefinitionField($value)
+    private function emitClassDefinitionField($value)
     {
         $classDef = $this->currentContext->result;
 
@@ -520,7 +516,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueObjectInstanceType($value)
+    private function emitObjectInstanceType($value)
     {
         $this->popState();
         $this->beginObjectInstance($value);
@@ -529,7 +525,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueObjectInstanceField($value)
+    private function emitObjectInstanceField($value)
     {
         $fields = $this->currentContext->definition->fields;
         $fieldName = $fields[$this->currentContext->nextKey++];
@@ -543,7 +539,7 @@ class ValueDecoder
     /**
      * @param mixed $value
      */
-    private function emitValueReference($value)
+    private function emitReference($value)
     {
         $this->popStateAndEmitValue(
             $this->objects[$value]
@@ -879,7 +875,7 @@ class ValueDecoder
                 return $this->setState(ValueDecoderState::BINARY_CHUNK_FINAL_SIZE());
         }
 
-        throw new Exception\DecodeException('Invalid byte at start binary of chunk: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+        throw new Exception\DecodeException('Invalid byte at start of binary chunk: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
     }
 
     /**
