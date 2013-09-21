@@ -6,6 +6,7 @@ use Icecave\Collections\Map;
 use Icecave\Collections\Vector;
 use Icecave\Parity\ComparableInterface;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 class ValueDecoderTest extends PHPUnit_Framework_TestCase
 {
@@ -383,6 +384,30 @@ class ValueDecoderTest extends PHPUnit_Framework_TestCase
                 ),
             ),
 
+            'object - compact - empty' => array(
+                "\x43\x08stdClass\x90\x60",
+                new stdClass,
+            ),
+            'object - compact' => array(
+                "\x43\x08stdClass\x92\x03bar\x03foo\x60\x92\x91",
+                (object) array('foo' => 1, 'bar' => 2),
+            ),
+            'object - compact - nested' => array(
+                "\x43\x08stdClass\x91\x05child\x60\x43\x08stdClass\x90\x61",
+                (object) array('child' => new stdClass),
+            ),
+            'object - empty' => array(
+                "\x43\x08stdClass\x90\x4f\x90",
+                new stdClass,
+            ),
+            'object' => array(
+                "\x43\x08stdClass\x92\x03bar\x03foo\x4f\x90\x92\x91",
+                (object) array('foo' => 1, 'bar' => 2),
+            ),
+            'object - nested' => array(
+                "\x43\x08stdClass\x91\x05child\x4f\x90\x43\x08stdClass\x90\x4f\x91",
+                (object) array('child' => new stdClass),
+            ),
         );
     }
 }
