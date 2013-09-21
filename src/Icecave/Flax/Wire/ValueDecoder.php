@@ -1,9 +1,10 @@
 <?php
 namespace Icecave\Flax\Wire;
 
+use Icecave\Chrono\DateTime;
 use Icecave\Collections\Map;
 use Icecave\Collections\Stack;
-use Icecave\Chrono\DateTime;
+use Icecave\Collections\Vector;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
 
@@ -88,6 +89,11 @@ class ValueDecoder
                 return $this->handleTimestampMilliseconds($character, $signedByte, $unsignedByte);
             case ValueDecoderState::TIMESTAMP_MINUTES():
                 return $this->handleTimestampMinutes($character, $signedByte, $unsignedByte);
+
+            case ValueDecoderState::VECTOR():
+                return $this->handleVariableSizeCollection($character, $signedByte, $unsignedByte);
+            case ValueDecoderState::VECTOR_SIZE():
+                return $this->handleBeginInt32($character, $signedByte, $unsignedByte);
         }
 
         return $this->handleBegin($character, $signedByte, $unsignedByte);
@@ -101,96 +107,207 @@ class ValueDecoder
     private function handleBegin($character, $signedByte, $unsignedByte)
     {
         switch ($unsignedByte) {
-            case Constants::NULL_VALUE:
+            case HessianConstants::NULL_VALUE:
                 return $this->emitValue(null);
-            case Constants::BOOLEAN_TRUE:
+            case HessianConstants::BOOLEAN_TRUE:
                 return $this->emitValue(true);
-            case Constants::BOOLEAN_FALSE:
+            case HessianConstants::BOOLEAN_FALSE:
                 return $this->emitValue(false);
-            case Constants::STRING_CHUNK:
+            case HessianConstants::STRING_CHUNK:
                 return $this->pushState(ValueDecoderState::STRING_CHUNK_SIZE());
-            case Constants::STRING_CHUNK_FINAL:
+            case HessianConstants::STRING_CHUNK_FINAL:
                 return $this->pushState(ValueDecoderState::STRING_CHUNK_FINAL_SIZE());
-            case Constants::BINARY_CHUNK:
+            case HessianConstants::BINARY_CHUNK:
                 return $this->pushState(ValueDecoderState::BINARY_CHUNK_SIZE());
-            case Constants::BINARY_CHUNK_FINAL:
+            case HessianConstants::BINARY_CHUNK_FINAL:
                 return $this->pushState(ValueDecoderState::BINARY_CHUNK_FINAL_SIZE());
-            case Constants::INT32_4:
+            case HessianConstants::INT64_4:
                 return $this->pushState(ValueDecoderState::INT32());
-            case Constants::INT64_4:
-                return $this->pushState(ValueDecoderState::INT32());
-            case Constants::INT64_8:
+            case HessianConstants::INT64_8:
                 return $this->pushState(ValueDecoderState::INT64());
-            case Constants::DOUBLE_ZERO:
+            case HessianConstants::DOUBLE_ZERO:
                 return $this->emitValue(0.0);
-            case Constants::DOUBLE_ONE:
+            case HessianConstants::DOUBLE_ONE:
                 return $this->emitValue(1.0);
-            case Constants::DOUBLE_1:
+            case HessianConstants::DOUBLE_1:
                 return $this->pushState(ValueDecoderState::DOUBLE_1());
-            case Constants::DOUBLE_2:
+            case HessianConstants::DOUBLE_2:
                 return $this->pushState(ValueDecoderState::DOUBLE_2());
-            case Constants::DOUBLE_4:
+            case HessianConstants::DOUBLE_4:
                 return $this->pushState(ValueDecoderState::DOUBLE_4());
-            case Constants::DOUBLE_8:
+            case HessianConstants::DOUBLE_8:
                 return $this->pushState(ValueDecoderState::DOUBLE_8());
-            case Constants::TIMESTAMP_MILLISECONDS:
+            case HessianConstants::TIMESTAMP_MILLISECONDS:
                 return $this->pushState(ValueDecoderState::TIMESTAMP_MILLISECONDS());
-            case Constants::TIMESTAMP_MINUTES:
+            case HessianConstants::TIMESTAMP_MINUTES:
                 return $this->pushState(ValueDecoderState::TIMESTAMP_MINUTES());
-            // case Constants::CLASS_DEFINITION:
+            // case HessianConstants::CLASS_DEFINITION:
             //     return $this->pushState(ValueDecoderState::CLASS_DEFINITION());
-            // case Constants::OBJECT_INSTANCE:
+            // case HessianConstants::OBJECT_INSTANCE:
             //     return $this->pushState(ValueDecoderState::OBJECT_INSTANCE());
-            // case Constants::REFERENCE:
+            // case HessianConstants::REFERENCE:
             //     return $this->pushState(ValueDecoderState::REFERENCE());
-            // case Constants::VECTOR_TYPED:
+            // case HessianConstants::VECTOR_TYPED:
             //     return $this->pushState(ValueDecoderState::VECTOR_TYPED());
-            // case Constants::VECTOR_TYPED_FIXED:
+            // case HessianConstants::VECTOR_TYPED_FIXED:
             //     return $this->pushState(ValueDecoderState::VECTOR_TYPED_FIXED());
-            // case Constants::VECTOR:
-            //     return $this->pushState(ValueDecoderState::VECTOR());
-            // case Constants::VECTOR_FIXED:
-            //     return $this->pushState(ValueDecoderState::VECTOR_FIXED());
-            // case Constants::MAP_TYPED:
+            case HessianConstants::VECTOR:
+                return $this->pushState(ValueDecoderState::VECTOR(), new Vector);
+            case HessianConstants::VECTOR_FIXED:
+                return $this->pushState(ValueDecoderState::VECTOR_SIZE(), new Vector);
+            // case HessianConstants::MAP_TYPED:
             //     return $this->pushState(ValueDecoderState::MAP_TYPED());
-            // case Constants::MAP:
+            // case HessianConstants::MAP:
             //     return $this->pushState(ValueDecoderState::MAP());
         }
 
-        if (Constants::STRING_COMPACT_START <= $unsignedByte && $unsignedByte <= Constants::STRING_COMPACT_END) {
+        if ($this->handleBeginInt32($character, $signedByte, $unsignedByte)) {
+            return;
+        } elseif (HessianConstants::STRING_COMPACT_START <= $unsignedByte && $unsignedByte <= HessianConstants::STRING_COMPACT_END) {
             return $this->beginCompactString($character, $signedByte, $unsignedByte);
-        } elseif (Constants::STRING_START <= $unsignedByte && $unsignedByte <= Constants::STRING_END) {
+        } elseif (HessianConstants::STRING_START <= $unsignedByte && $unsignedByte <= HessianConstants::STRING_END) {
             return $this->beginString($character, $signedByte, $unsignedByte);
-        } elseif (Constants::BINARY_COMPACT_START <= $unsignedByte && $unsignedByte <= Constants::BINARY_COMPACT_END) {
+        } elseif (HessianConstants::BINARY_COMPACT_START <= $unsignedByte && $unsignedByte <= HessianConstants::BINARY_COMPACT_END) {
             return $this->beginCompactBinary($character, $signedByte, $unsignedByte);
-        } elseif (Constants::BINARY_START <= $unsignedByte && $unsignedByte <= Constants::BINARY_END) {
+        } elseif (HessianConstants::BINARY_START <= $unsignedByte && $unsignedByte <= HessianConstants::BINARY_END) {
             return $this->beginBinary($character, $signedByte, $unsignedByte);
-        } elseif (Constants::INT32_1_START <= $unsignedByte && $unsignedByte <= Constants::INT32_1_END) {
-            return $this->emitValue($unsignedByte - Constants::INT32_1_OFFSET);
-        } elseif (Constants::INT32_2_START <= $unsignedByte && $unsignedByte <= Constants::INT32_2_END) {
-            return $this->beginInt32Compact2($character, $signedByte, $unsignedByte);
-        } elseif (Constants::INT32_3_START <= $unsignedByte && $unsignedByte <= Constants::INT32_3_END) {
-            return $this->beginInt32Compact3($character, $signedByte, $unsignedByte);
-        } elseif (Constants::INT64_1_START <= $unsignedByte && $unsignedByte <= Constants::INT64_1_END) {
-            return $this->emitValue($unsignedByte - Constants::INT64_1_OFFSET);
-        } elseif (Constants::INT64_2_START <= $unsignedByte && $unsignedByte <= Constants::INT64_2_END) {
+        } elseif (HessianConstants::INT64_1_START <= $unsignedByte && $unsignedByte <= HessianConstants::INT64_1_END) {
+            return $this->emitValue($unsignedByte - HessianConstants::INT64_1_OFFSET);
+        } elseif (HessianConstants::INT64_2_START <= $unsignedByte && $unsignedByte <= HessianConstants::INT64_2_END) {
             return $this->beginInt64Compact2($character, $signedByte, $unsignedByte);
-        } elseif (Constants::INT64_3_START <= $unsignedByte && $unsignedByte <= Constants::INT64_3_END) {
+        } elseif (HessianConstants::INT64_3_START <= $unsignedByte && $unsignedByte <= HessianConstants::INT64_3_END) {
             return $this->beginInt64Compact3($character, $signedByte, $unsignedByte);
-        // } elseif (Constants::OBJECT_INSTANCE_COMPACT_START <= $unsignedByte && $unsignedByte <= Constants::OBJECT_INSTANCE_COMPACT_END) {
+        // } elseif (HessianConstants::OBJECT_INSTANCE_COMPACT_START <= $unsignedByte && $unsignedByte <= HessianConstants::OBJECT_INSTANCE_COMPACT_END) {
         //     return $this->beginCompactObjectInstance($character, $signedByte, $unsignedByte);
-        // } elseif (Constants::VECTOR_TYPED_FIXED_COMPACT_START <= $unsignedByte && $unsignedByte <= Constants::VECTOR_TYPED_FIXED_COMPACT_END) {
+        // } elseif (HessianConstants::VECTOR_TYPED_FIXED_COMPACT_START <= $unsignedByte && $unsignedByte <= HessianConstants::VECTOR_TYPED_FIXED_COMPACT_END) {
         //     return $this->beginCompactTypedFixedLengthVector($character, $signedByte, $unsignedByte);
-        // } elseif (Constants::VECTOR_FIXED_COMPACT_START <= $unsignedByte && $unsignedByte <= Constants::VECTOR_FIXED_COMPACT_END) {
-        //     return $this->beginCompactFixedLengthVector($character, $signedByte, $unsignedByte);
+        } elseif (HessianConstants::VECTOR_FIXED_COMPACT_START <= $unsignedByte && $unsignedByte <= HessianConstants::VECTOR_FIXED_COMPACT_END) {
+            return $this->beginCompactFixedLengthVector($character, $signedByte, $unsignedByte);
         }
 
-        throw new Exception\DecodeException('Invalid byte at start of value: 0x' . dechex($unsignedByte) . '.');
+        throw new Exception\DecodeException('Invalid byte at start of value: 0x' . dechex($unsignedByte) . ' (state: ' . $this->state() . ').');
+    }
+
+    public function handleBeginInt32($character, $signedByte, $unsignedByte)
+    {
+        if (HessianConstants::INT32_4 === $unsignedByte) {
+            $this->pushState(ValueDecoderState::INT32());
+        } elseif (HessianConstants::INT32_1_START <= $unsignedByte && $unsignedByte <= HessianConstants::INT32_1_END) {
+            $this->emitValue($unsignedByte - HessianConstants::INT32_1_OFFSET);
+        } elseif (HessianConstants::INT32_2_START <= $unsignedByte && $unsignedByte <= HessianConstants::INT32_2_END) {
+            $this->beginInt32Compact2($character, $signedByte, $unsignedByte);
+        } elseif (HessianConstants::INT32_3_START <= $unsignedByte && $unsignedByte <= HessianConstants::INT32_3_END) {
+            $this->beginInt32Compact3($character, $signedByte, $unsignedByte);
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     private function emitValue($value)
     {
+        $this->trace('EMIT: ' . $value);
+
+        switch ($this->state()) {
+            case ValueDecoderState::VECTOR():
+                return $this->emitValueVector($value);
+            case ValueDecoderState::VECTOR_SIZE():
+                return $this->emitValueVectorSize($value);
+            case ValueDecoderState::VECTOR_FIXED():
+                return $this->emitValueVectorFixed($value);
+        }
+
         $this->value = $value;
+    }
+
+    private function emitValueVector($value)
+    {
+        $vector = $this->currentContext->collection;
+
+        $vector->pushBack($value);
+    }
+
+    private function emitValueVectorSize($value)
+    {
+        if (0 === $value) {
+            $this->popStateAndEmitValue(new Vector);
+        } else {
+            $this->currentContext->expectedSize = $value;
+
+            $this->setState(ValueDecoderState::VECTOR_FIXED());
+        }
+    }
+
+    private function emitValueVectorFixed($value)
+    {
+        $vector = $this->currentContext->collection;
+
+        $vector->pushBack($value);
+
+        if ($vector->size() === $this->currentContext->expectedSize) {
+            $this->popStateAndEmitValue($vector);
+        }
+    }
+
+    private function beginCompactString($character, $signedByte, $unsignedByte)
+    {
+        if (HessianConstants::STRING_COMPACT_START === $unsignedByte) {
+            $this->emitValue('');
+        } else {
+            $this->pushState(ValueDecoderState::STRING_DATA());
+            $this->currentContext->expectedSize = $unsignedByte - HessianConstants::STRING_COMPACT_START;
+        }
+    }
+
+    private function beginString($character, $signedByte, $unsignedByte)
+    {
+        $this->pushState(ValueDecoderState::STRING_SIZE());
+        $this->currentContext->buffer .= pack('c', $unsignedByte - HessianConstants::STRING_START);
+    }
+
+    private function beginCompactBinary($character, $signedByte, $unsignedByte)
+    {
+        if (HessianConstants::BINARY_COMPACT_START === $unsignedByte) {
+            $this->emitValue('');
+        } else {
+            $this->pushState(ValueDecoderState::BINARY_DATA());
+            $this->currentContext->expectedSize = $unsignedByte - HessianConstants::BINARY_COMPACT_START;
+        }
+    }
+
+    private function beginBinary($character, $signedByte, $unsignedByte)
+    {
+        $this->pushState(ValueDecoderState::BINARY_SIZE());
+        $this->currentContext->buffer .= pack('c', $unsignedByte - HessianConstants::BINARY_START);
+    }
+
+    private function beginInt32Compact2($character, $signedByte, $unsignedByte)
+    {
+        $this->pushState(ValueDecoderState::INT32());
+        $value = $unsignedByte - HessianConstants::INT32_2_OFFSET;
+        $this->currentContext->buffer = pack('ccc', $value >> 16, $value >> 8, $value);
+    }
+
+    private function beginInt32Compact3($character, $signedByte, $unsignedByte)
+    {
+        $this->pushState(ValueDecoderState::INT32());
+        $value = $unsignedByte - HessianConstants::INT32_3_OFFSET;
+        $this->currentContext->buffer = pack('cc', $value >> 8, $value);
+    }
+
+    private function beginInt64Compact2($character, $signedByte, $unsignedByte)
+    {
+        $this->pushState(ValueDecoderState::INT32());
+        $value = $unsignedByte - HessianConstants::INT64_2_OFFSET;
+        $this->currentContext->buffer = pack('ccc', $value >> 16, $value >> 8, $value);
+    }
+
+    private function beginInt64Compact3($character, $signedByte, $unsignedByte)
+    {
+        $this->pushState(ValueDecoderState::INT32());
+        $value = $unsignedByte - HessianConstants::INT64_3_OFFSET;
+        $this->currentContext->buffer = pack('cc', $value >> 8, $value);
     }
 
     // private function beginClassDefinition()
@@ -220,7 +337,8 @@ class ValueDecoder
 
     // private function beginVector()
     // {
-
+    //     $this->pushState(ValueDecoderState::VECTOR());
+    //     $this->currentContext->collection = new Vector;
     // }
 
     // private function beginFixedLengthVector()
@@ -238,66 +356,6 @@ class ValueDecoder
 
     // }
 
-    private function beginCompactString($character, $signedByte, $unsignedByte)
-    {
-        if (Constants::STRING_COMPACT_START === $unsignedByte) {
-            $this->emitValue('');
-        } else {
-            $this->pushState(ValueDecoderState::STRING_DATA());
-            $this->currentContext->expectedSize = $unsignedByte - Constants::STRING_COMPACT_START;
-        }
-    }
-
-    private function beginString($character, $signedByte, $unsignedByte)
-    {
-        $this->pushState(ValueDecoderState::STRING_SIZE());
-        $this->currentContext->buffer .= pack('c', $unsignedByte - Constants::STRING_START);
-    }
-
-    private function beginCompactBinary($character, $signedByte, $unsignedByte)
-    {
-        if (Constants::BINARY_COMPACT_START === $unsignedByte) {
-            $this->emitValue('');
-        } else {
-            $this->pushState(ValueDecoderState::BINARY_DATA());
-            $this->currentContext->expectedSize = $unsignedByte - Constants::BINARY_COMPACT_START;
-        }
-    }
-
-    private function beginBinary($character, $signedByte, $unsignedByte)
-    {
-        $this->pushState(ValueDecoderState::BINARY_SIZE());
-        $this->currentContext->buffer .= pack('c', $unsignedByte - Constants::BINARY_START);
-    }
-
-    private function beginInt32Compact2($character, $signedByte, $unsignedByte)
-    {
-        $this->pushState(ValueDecoderState::INT32());
-        $value = $unsignedByte - Constants::INT32_2_OFFSET;
-        $this->currentContext->buffer = pack('ccc', $value >> 16, $value >> 8, $value);
-    }
-
-    private function beginInt32Compact3($character, $signedByte, $unsignedByte)
-    {
-        $this->pushState(ValueDecoderState::INT32());
-        $value = $unsignedByte - Constants::INT32_3_OFFSET;
-        $this->currentContext->buffer = pack('cc', $value >> 8, $value);
-    }
-
-    private function beginInt64Compact2($character, $signedByte, $unsignedByte)
-    {
-        $this->pushState(ValueDecoderState::INT32());
-        $value = $unsignedByte - Constants::INT64_2_OFFSET;
-        $this->currentContext->buffer = pack('ccc', $value >> 16, $value >> 8, $value);
-    }
-
-    private function beginInt64Compact3($character, $signedByte, $unsignedByte)
-    {
-        $this->pushState(ValueDecoderState::INT32());
-        $value = $unsignedByte - Constants::INT64_3_OFFSET;
-        $this->currentContext->buffer = pack('cc', $value >> 8, $value);
-    }
-
     // private function beginCompactObjectInstance($character, $signedByte, $unsignedByte)
     // {
 
@@ -308,10 +366,15 @@ class ValueDecoder
 
     // }
 
-    // private function beginCompactFixedLengthVector($character, $signedByte, $unsignedByte)
-    // {
-
-    // }
+    private function beginCompactFixedLengthVector($character, $signedByte, $unsignedByte)
+    {
+        if (HessianConstants::VECTOR_FIXED_COMPACT_START === $unsignedByte) {
+            $this->emitValue(new Vector);
+        } else {
+            $this->pushState(ValueDecoderState::VECTOR_FIXED(), new Vector);
+            $this->currentContext->expectedSize = $unsignedByte - HessianConstants::VECTOR_FIXED_COMPACT_START;
+        }
+    }
 
     private function handleStringSize($character, $signedByte, $unsignedByte)
     {
@@ -355,11 +418,11 @@ class ValueDecoder
             return;
         }
 
-        $this->currentContext->chunkBuffer .= $this->currentContext->buffer;
+        $this->currentContext->collection .= $this->currentContext->buffer;
         $this->currentContext->buffer = '';
 
         if ($isFinal) {
-            $this->popStateAndEmitValue($this->currentContext->chunkBuffer);
+            $this->popStateAndEmitValue($this->currentContext->collection);
         } else {
             $this->setState(ValueDecoderState::STRING_CHUNK_CONTINUATION());
         }
@@ -368,13 +431,13 @@ class ValueDecoder
     public function handleStringChunkContinuation($character, $signedByte, $unsignedByte)
     {
         switch ($unsignedByte) {
-            case Constants::STRING_CHUNK:
+            case HessianConstants::STRING_CHUNK:
                 return $this->setState(ValueDecoderState::STRING_CHUNK_SIZE());
-            case Constants::STRING_CHUNK_FINAL:
+            case HessianConstants::STRING_CHUNK_FINAL:
                 return $this->setState(ValueDecoderState::STRING_CHUNK_FINAL_SIZE());
         }
 
-        throw new Exception\DecodeException('Invalid byte at start string chunk: 0x' . dechex($unsignedByte) . '.');
+        throw new Exception\DecodeException('Invalid byte at start string chunk: 0x' . dechex($unsignedByte) . ' (state: ' . $this->state() . ').');
     }
 
     private function handleBinarySize($character, $signedByte, $unsignedByte)
@@ -419,11 +482,11 @@ class ValueDecoder
             return;
         }
 
-        $this->currentContext->chunkBuffer .= $this->currentContext->buffer;
+        $this->currentContext->collection .= $this->currentContext->buffer;
         $this->currentContext->buffer = '';
 
         if ($isFinal) {
-            $this->popStateAndEmitValue($this->currentContext->chunkBuffer);
+            $this->popStateAndEmitValue($this->currentContext->collection);
         } else {
             $this->setState(ValueDecoderState::BINARY_CHUNK_CONTINUATION());
         }
@@ -432,13 +495,13 @@ class ValueDecoder
     public function handleBinaryChunkContinuation($character, $signedByte, $unsignedByte)
     {
         switch ($unsignedByte) {
-            case Constants::BINARY_CHUNK:
+            case HessianConstants::BINARY_CHUNK:
                 return $this->setState(ValueDecoderState::BINARY_CHUNK_SIZE());
-            case Constants::BINARY_CHUNK_FINAL:
+            case HessianConstants::BINARY_CHUNK_FINAL:
                 return $this->setState(ValueDecoderState::BINARY_CHUNK_FINAL_SIZE());
         }
 
-        throw new Exception\DecodeException('Invalid byte at start binary chunk: 0x' . dechex($unsignedByte) . '.');
+        throw new Exception\DecodeException('Invalid byte at start binary chunk: 0x' . dechex($unsignedByte) . ' (state: ' . $this->state() . ').');
     }
 
     private function handleDouble1($character, $signedByte, $unsignedByte)
@@ -517,6 +580,15 @@ class ValueDecoder
         }
     }
 
+    public function handleVariableSizeCollection($character, $signedByte, $unsignedByte)
+    {
+        if (HessianConstants::COLLECTION_TERMINATOR === $unsignedByte) {
+            $this->popStateAndEmitValue($this->currentContext->collection);
+        } else {
+            $this->handleBegin($character, $signedByte, $unsignedByte);
+        }
+    }
+
     private function state()
     {
         if ($this->stack->isEmpty()) {
@@ -530,12 +602,14 @@ class ValueDecoder
      * @param mixed       $value
      * @param ParserState $state
      */
-    private function pushState(ValueDecoderState $state)
+    private function pushState(ValueDecoderState $state, $collection = '')
     {
+        $this->trace('PUSH: ' . $state);
+
         $context = new stdClass;
         $context->state = $state;
         $context->buffer = '';
-        $context->chunkBuffer = '';
+        $context->collection = $collection;
         $context->expectedSize = 0;
 
         $this->stack->push($context);
@@ -545,6 +619,8 @@ class ValueDecoder
 
     private function setState(ValueDecoderState $state)
     {
+        $this->trace('SET: ' . $state);
+
         $this->currentContext->state = $state;
     }
 
@@ -557,6 +633,8 @@ class ValueDecoder
         } else {
             $this->currentContext = $this->stack->next();
         }
+
+        $this->trace('POP (SET: ' . $this->state() . ')');
     }
 
     private function popStateAndEmitValue($value)
@@ -640,6 +718,11 @@ class ValueDecoder
         }
 
         return null;
+    }
+
+    public function trace($str)
+    {
+        // echo $str . PHP_EOL;
     }
 
     private $typeCheck;

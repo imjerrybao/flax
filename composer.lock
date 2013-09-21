@@ -113,42 +113,42 @@
         },
         {
             "name": "icecave/collections",
-            "version": "0.7.0",
+            "version": "0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IcecaveStudios/collections.git",
-                "reference": "f37bff04bbab6f086ce5766629dc9d99d7cc3b41"
+                "reference": "cf35e1b09c16087afb6a551a098c969b63b777df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IcecaveStudios/collections/zipball/f37bff04bbab6f086ce5766629dc9d99d7cc3b41",
-                "reference": "f37bff04bbab6f086ce5766629dc9d99d7cc3b41",
+                "url": "https://api.github.com/repos/IcecaveStudios/collections/zipball/cf35e1b09c16087afb6a551a098c969b63b777df",
+                "reference": "cf35e1b09c16087afb6a551a098c969b63b777df",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "icecave/parity": "~0.1",
+                "icecave/parity": "~0.1.0",
                 "icecave/repr": "~1",
                 "php": ">=5.3"
             },
             "require-dev": {
                 "eloquent/liberator": "~1",
-                "eloquent/typhoon": "~0.9",
+                "eloquent/typhoon": "~0.9.0",
                 "ezzatron/phpunit-extensions": "~1",
-                "icecave/archer": "1.0.0-alpha.2"
+                "icecave/archer": "~1"
             },
             "type": "library",
             "extra": {
                 "typhoon": {
-                    "output-path": "lib-typhoon",
+                    "output-path": "src-typhoon",
                     "validator-namespace": "Icecave\\Collections\\TypeCheck",
                     "use-native-callable": false
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Icecave\\Collections": "lib",
-                    "Icecave\\Collections\\TypeCheck": "lib-typhoon"
+                    "Icecave\\Collections": "src",
+                    "Icecave\\Collections\\TypeCheck": "src-typhoon"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -174,7 +174,7 @@
                 "sequence",
                 "stack"
             ],
-            "time": "2013-08-25 09:13:25"
+            "time": "2013-09-21 05:02:38"
         },
         {
             "name": "icecave/parity",

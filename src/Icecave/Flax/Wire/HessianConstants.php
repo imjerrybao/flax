@@ -1,7 +1,7 @@
 <?php
 namespace Icecave\Flax\Wire;
 
-class Constants
+class HessianConstants
 {
     // x00 - x1f : utf-8 string length 0-32
     const STRING_COMPACT_START = 0x00;

@@ -33,4 +33,8 @@ class ValueDecoderState extends Enumeration
 
     const TIMESTAMP_MILLISECONDS = 50;
     const TIMESTAMP_MINUTES      = 51;
+
+    const VECTOR       = 60;
+    const VECTOR_SIZE  = 61;
+    const VECTOR_FIXED = 62;
 }

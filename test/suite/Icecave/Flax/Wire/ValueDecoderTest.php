@@ -2,6 +2,9 @@
 namespace Icecave\Flax\Wire;
 
 use Icecave\Chrono\DateTime;
+use Icecave\Collections\Map;
+use Icecave\Collections\Vector;
+use Icecave\Parity\ComparableInterface;
 use PHPUnit_Framework_TestCase;
 
 class ValueDecoderTest extends PHPUnit_Framework_TestCase
@@ -19,6 +22,14 @@ class ValueDecoderTest extends PHPUnit_Framework_TestCase
         $this->decoder->reset();
         $this->decoder->feed($input);
         $result = $this->decoder->finalize();
+
+        if ($output instanceof ComparableInterface && $result instanceof ComparableInterface) {
+            if (0 === $output->compare($result)) {
+                $this->assertTrue(true);
+
+                return;
+            }
+        }
 
         $this->assertEquals($result, $output);
     }
@@ -249,6 +260,48 @@ class ValueDecoderTest extends PHPUnit_Framework_TestCase
                 "\x4b\x00\xe3\x83\x8f",
                 new DateTime(1998, 5, 8, 9, 51,  0),
             ),
+
+            'vector - fixed size - compact - empty' => array(
+                "\x78",
+                Vector::create(),
+            ),
+            'vector - fixed size - compact' => array(
+                "\x7b\x91\x92\x93",
+                Vector::create(1, 2, 3),
+            ),
+            'vector - fixed size - compact - nested' => array(
+                "\x7a\x7b\x91\x92\x93\x7b\x94\x95\x96",
+                Vector::create(Vector::create(1, 2, 3), Vector::create(4, 5, 6)),
+            ),
+            'vector - fixed size - empty' => array(
+                "\x58\x90",
+                Vector::create(),
+            ),
+            'vector - fixed size' => array(
+                "\x58\x93\x91\x92\x93",
+                Vector::create(1, 2, 3),
+            ),
+            'vector - fixed size - nested' => array(
+                "\x58\x92\x58\x93\x91\x92\x93\x58\x93\x94\x95\x96",
+                Vector::create(Vector::create(1, 2, 3), Vector::create(4, 5, 6)),
+            ),
+            'vector - empty' => array(
+                "\x57\x5a",
+                Vector::create(),
+            ),
+            'vector' => array(
+                "\x57\x91\x92\x93\x5a",
+                Vector::create(1, 2, 3),
+            ),
+            'vector - nested' => array(
+                "\x57\x57\x91\x92\x93\x5a\x57\x94\x95\x96\x5a\x5a",
+                Vector::create(Vector::create(1, 2, 3), Vector::create(4, 5, 6)),
+            ),
+
+            // 'map - empty' => array(
+            //     "\x48\x5a",
+            //     Map::create(),
+            // ),
         );
     }
 }

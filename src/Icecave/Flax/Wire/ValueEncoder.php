@@ -70,12 +70,12 @@ class ValueEncoder
 
         $length = strlen($value);
 
-        if ($length <= Constants::BINARY_COMPACT_LIMIT) {
-            return pack('c', $length + Constants::BINARY_COMPACT_START) . $value;
-        } elseif ($length <= Constants::BINARY_LIMIT) {
+        if ($length <= HessianConstants::BINARY_COMPACT_LIMIT) {
+            return pack('c', $length + HessianConstants::BINARY_COMPACT_START) . $value;
+        } elseif ($length <= HessianConstants::BINARY_LIMIT) {
             return pack(
                 'cc',
-                ($length >> 8) + Constants::BINARY_START,
+                ($length >> 8) + HessianConstants::BINARY_START,
                 ($length)
             ) . $value;
         }
@@ -83,12 +83,12 @@ class ValueEncoder
         $buffer = '';
 
         do {
-            if ($length > Constants::BINARY_CHUNK_SIZE) {
-                $chunkLength = Constants::BINARY_CHUNK_SIZE;
-                $buffer .= pack('c', Constants::BINARY_CHUNK);
+            if ($length > HessianConstants::BINARY_CHUNK_SIZE) {
+                $chunkLength = HessianConstants::BINARY_CHUNK_SIZE;
+                $buffer .= pack('c', HessianConstants::BINARY_CHUNK);
             } else {
                 $chunkLength = $length;
-                $buffer .= pack('c', Constants::BINARY_CHUNK_FINAL);
+                $buffer .= pack('c', HessianConstants::BINARY_CHUNK_FINAL);
             }
 
             $buffer .= pack('n', $chunkLength);
@@ -111,13 +111,13 @@ class ValueEncoder
     {
         $this->typeCheck->encodeTimestamp(func_get_args());
 
-        if ($timestamp % Constants::TIMESTAMP_MILLISECONDS_PER_MINUTE) {
-            return pack('c', Constants::TIMESTAMP_MILLISECONDS) . Utility::packInt64($timestamp);
+        if ($timestamp % HessianConstants::TIMESTAMP_MILLISECONDS_PER_MINUTE) {
+            return pack('c', HessianConstants::TIMESTAMP_MILLISECONDS) . Utility::packInt64($timestamp);
         } else {
             return pack(
                 'cN',
-                Constants::TIMESTAMP_MINUTES,
-                $timestamp / Constants::TIMESTAMP_MILLISECONDS_PER_MINUTE
+                HessianConstants::TIMESTAMP_MINUTES,
+                $timestamp / HessianConstants::TIMESTAMP_MILLISECONDS_PER_MINUTE
             );
         }
     }
@@ -130,32 +130,32 @@ class ValueEncoder
     private function encodeInteger($value)
     {
         // 1-byte ...
-        if (Constants::INT32_1_MIN <= $value && $value <= Constants::INT32_1_MAX) {
-            return pack('c', $value + Constants::INT32_1_OFFSET);
+        if (HessianConstants::INT32_1_MIN <= $value && $value <= HessianConstants::INT32_1_MAX) {
+            return pack('c', $value + HessianConstants::INT32_1_OFFSET);
 
         // 2-bytes ...
-        } elseif (Constants::INT32_2_MIN <= $value && $value <= Constants::INT32_2_MAX) {
+        } elseif (HessianConstants::INT32_2_MIN <= $value && $value <= HessianConstants::INT32_2_MAX) {
             return pack(
                 'cc',
-                ($value >> 8) + Constants::INT32_2_OFFSET,
+                ($value >> 8) + HessianConstants::INT32_2_OFFSET,
                 ($value)
             );
 
         // 3-bytes ...
-        } elseif (Constants::INT32_3_MIN <= $value && $value <= Constants::INT32_3_MAX) {
+        } elseif (HessianConstants::INT32_3_MIN <= $value && $value <= HessianConstants::INT32_3_MAX) {
             return pack(
                 'ccc',
-                ($value >> 16) + Constants::INT32_3_OFFSET,
+                ($value >> 16) + HessianConstants::INT32_3_OFFSET,
                 ($value >> 8),
                 ($value)
             );
 
         // 4-bytes ...
-        } elseif (!(Constants::INT64_HIGH_MASK & $value)) {
-            return pack('cN', Constants::INT32_4, $value);
+        } elseif (!(HessianConstants::INT64_HIGH_MASK & $value)) {
+            return pack('cN', HessianConstants::INT32_4, $value);
         }
 
-        return pack('c', Constants::INT64_8) . Utility::packInt64($value);
+        return pack('c', HessianConstants::INT64_8) . Utility::packInt64($value);
     }
 
     /**
@@ -165,7 +165,7 @@ class ValueEncoder
      */
     private function encodeBoolean($value)
     {
-        return pack('c', $value ? Constants::BOOLEAN_TRUE : Constants::BOOLEAN_FALSE);
+        return pack('c', $value ? HessianConstants::BOOLEAN_TRUE : HessianConstants::BOOLEAN_FALSE);
     }
 
     /**
@@ -177,12 +177,12 @@ class ValueEncoder
     {
         $length = mb_strlen($value, 'utf8');
 
-        if ($length <= Constants::STRING_COMPACT_LIMIT) {
-            return pack('c', $length + Constants::STRING_COMPACT_START) . $value;
-        } elseif ($length <= Constants::STRING_LIMIT) {
+        if ($length <= HessianConstants::STRING_COMPACT_LIMIT) {
+            return pack('c', $length + HessianConstants::STRING_COMPACT_START) . $value;
+        } elseif ($length <= HessianConstants::STRING_LIMIT) {
             return pack(
                 'cc',
-                ($length >> 8) + Constants::STRING_START,
+                ($length >> 8) + HessianConstants::STRING_START,
                 ($length)
             ) . $value;
         }
@@ -190,12 +190,12 @@ class ValueEncoder
         $buffer = '';
 
         do {
-            if ($length > Constants::STRING_CHUNK_SIZE) {
-                $chunkLength = Constants::STRING_CHUNK_SIZE;
-                $buffer .= pack('c', Constants::STRING_CHUNK);
+            if ($length > HessianConstants::STRING_CHUNK_SIZE) {
+                $chunkLength = HessianConstants::STRING_CHUNK_SIZE;
+                $buffer .= pack('c', HessianConstants::STRING_CHUNK);
             } else {
                 $chunkLength = $length;
-                $buffer .= pack('c', Constants::STRING_CHUNK_FINAL);
+                $buffer .= pack('c', HessianConstants::STRING_CHUNK_FINAL);
             }
 
             $buffer .= pack('n', $chunkLength);
@@ -218,18 +218,18 @@ class ValueEncoder
     private function encodeDouble($value)
     {
         if (0.0 === $value) {
-            return pack('c', Constants::DOUBLE_ZERO);
+            return pack('c', HessianConstants::DOUBLE_ZERO);
         } elseif (1.0 === $value) {
-            return pack('c', Constants::DOUBLE_ONE);
+            return pack('c', HessianConstants::DOUBLE_ONE);
         }
 
         $fraction = fmod($value, 1);
 
         if (0.0 == $fraction) {
-            if (Constants::DOUBLE_1_MIN <= $value && $value <= Constants::DOUBLE_1_MAX) {
-                return pack('cc', Constants::DOUBLE_1, $value);
-            } elseif (Constants::DOUBLE_2_MIN <= $value && $value <= Constants::DOUBLE_2_MAX) {
-                return pack('cn', Constants::DOUBLE_2, $value);
+            if (HessianConstants::DOUBLE_1_MIN <= $value && $value <= HessianConstants::DOUBLE_1_MAX) {
+                return pack('cc', HessianConstants::DOUBLE_1, $value);
+            } elseif (HessianConstants::DOUBLE_2_MIN <= $value && $value <= HessianConstants::DOUBLE_2_MAX) {
+                return pack('cn', HessianConstants::DOUBLE_2, $value);
             }
         }
 
@@ -237,10 +237,10 @@ class ValueEncoder
         $unpacked = current(unpack('f', $bytes));
 
         if ($value === $unpacked) {
-            return pack('c', Constants::DOUBLE_4) . Utility::convertEndianness($bytes);
+            return pack('c', HessianConstants::DOUBLE_4) . Utility::convertEndianness($bytes);
         }
 
-        return pack('c', Constants::DOUBLE_8) . Utility::convertEndianness(pack('d', $value));
+        return pack('c', HessianConstants::DOUBLE_8) . Utility::convertEndianness(pack('d', $value));
     }
 
     /**
@@ -248,7 +248,7 @@ class ValueEncoder
      */
     private function encodeNull()
     {
-        return pack('c', Constants::NULL_VALUE);
+        return pack('c', HessianConstants::NULL_VALUE);
     }
 
     /**
@@ -275,11 +275,11 @@ class ValueEncoder
         $size = count($value);
 
         if (0 === $size) {
-            $buffer = pack('cc', Constants::VECTOR, Constants::COLLECTION_TERMINATOR);
-        } elseif ($size <= Constants::VECTOR_FIXED_COMPACT_LIMIT) {
-            $buffer = pack('c', $size + Constants::VECTOR_FIXED_COMPACT_START);
+            $buffer = pack('cc', HessianConstants::VECTOR, HessianConstants::COLLECTION_TERMINATOR);
+        } elseif ($size <= HessianConstants::VECTOR_FIXED_COMPACT_LIMIT) {
+            $buffer = pack('c', $size + HessianConstants::VECTOR_FIXED_COMPACT_START);
         } else {
-            $buffer = pack('c', Constants::VECTOR_FIXED) . $this->encodeInteger($size);
+            $buffer = pack('c', HessianConstants::VECTOR_FIXED) . $this->encodeInteger($size);
         }
 
         foreach ($value as $element) {
@@ -297,14 +297,14 @@ class ValueEncoder
     private function encodeMap(array $value)
     {
         $size = count($value);
-        $buffer = pack('c', Constants::MAP);
+        $buffer = pack('c', HessianConstants::MAP);
 
         foreach ($value as $key => $value) {
             $buffer .= $this->encode($key);
             $buffer .= $this->encode($value);
         }
 
-        $buffer .= pack('c', Constants::COLLECTION_TERMINATOR);
+        $buffer .= pack('c', HessianConstants::COLLECTION_TERMINATOR);
 
         return $buffer;
     }
@@ -349,10 +349,10 @@ class ValueEncoder
             $buffer .= $this->encodeClassDefinition('stdClass', array_keys($sortedProperties));
         }
 
-        if ($defId <= Constants::OBJECT_INSTANCE_COMPACT_LIMIT) {
-            $buffer .= pack('c', $defId + Constants::OBJECT_INSTANCE_COMPACT_START);
+        if ($defId <= HessianConstants::OBJECT_INSTANCE_COMPACT_LIMIT) {
+            $buffer .= pack('c', $defId + HessianConstants::OBJECT_INSTANCE_COMPACT_START);
         } else {
-            $buffer .= pack('c', Constants::OBJECT_INSTANCE) . $this->encodeInteger($defId);
+            $buffer .= pack('c', HessianConstants::OBJECT_INSTANCE) . $this->encodeInteger($defId);
         }
 
         foreach ($sortedProperties as $value) {
@@ -386,7 +386,7 @@ class ValueEncoder
      */
     private function encodeReference($ref)
     {
-        return pack('c', Constants::REFERENCE) . $this->encodeInteger($ref);
+        return pack('c', HessianConstants::REFERENCE) . $this->encodeInteger($ref);
     }
 
     /**
@@ -416,7 +416,7 @@ class ValueEncoder
      */
     private function encodeClassDefinition($className, array $propertyNames)
     {
-        $buffer  = pack('c', Constants::CLASS_DEFINITION) . $this->encodeString($className);
+        $buffer  = pack('c', HessianConstants::CLASS_DEFINITION) . $this->encodeString($className);
         $buffer .= $this->encodeInteger(count($propertyNames));
 
         foreach ($propertyNames as $name) {
