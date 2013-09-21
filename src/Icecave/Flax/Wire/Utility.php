@@ -64,15 +64,29 @@ abstract class Utility
         return ($hi << 32) | $lo;
     }
 
+    /**
+     * @param integer $byte
+     *
+     * @return integer
+     */
     public static function byteToUnsigned($byte)
     {
+        TypeCheck::get(__CLASS__)->byteToUnsigned(func_get_args());
+
         list(, $value) = unpack('C', pack('c', $byte));
 
         return $value;
     }
 
+    /**
+     * @param integer $byte
+     *
+     * @return integer
+     */
     public static function byteToSigned($byte)
     {
+        TypeCheck::get(__CLASS__)->byteToSigned(func_get_args());
+
         list(, $value) = unpack('c', pack('C', $byte));
 
         return $value;
