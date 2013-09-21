@@ -37,4 +37,7 @@ class ValueDecoderState extends Enumeration
     const VECTOR       = 60;
     const VECTOR_SIZE  = 61;
     const VECTOR_FIXED = 62;
+
+    const MAP_KEY      = 70;
+    const MAP_VALUE    = 70;
 }

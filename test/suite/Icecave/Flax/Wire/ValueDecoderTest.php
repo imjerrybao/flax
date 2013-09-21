@@ -298,10 +298,23 @@ class ValueDecoderTest extends PHPUnit_Framework_TestCase
                 Vector::create(Vector::create(1, 2, 3), Vector::create(4, 5, 6)),
             ),
 
-            // 'map - empty' => array(
-            //     "\x48\x5a",
-            //     Map::create(),
-            // ),
+            'map - empty' => array(
+                "\x48\x5a",
+                Map::create(),
+            ),
+            'map' => array(
+                "\x48\x9a\x91\x9f\x92\x5a",
+                Map::create(array(10, 1), array(15, 2)),
+            ),
+            'map - nested' => array(
+                "\x48\x91\x48\x92\x93\x5a\x5a",
+                Map::create(
+                    array(
+                        1,
+                        Map::create(array(2, 3))
+                    )
+                ),
+            ),
         );
     }
 }
