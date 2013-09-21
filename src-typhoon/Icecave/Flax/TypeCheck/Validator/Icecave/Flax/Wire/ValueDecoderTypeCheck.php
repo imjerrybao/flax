@@ -62,6 +62,462 @@ class ValueDecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
+    public function emitValue(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function emitCollectionType(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'string|integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!(\is_string($value) || \is_int($value))) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                0,
+                $arguments[0],
+                'string|integer'
+            );
+        }
+    }
+
+    public function emitVectorElement(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function emitFixedVectorSize(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function emitFixedVectorElement(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function emitMapKey(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function emitMapValue(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function emitClassDefinitionName(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'string');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                0,
+                $arguments[0],
+                'string'
+            );
+        }
+    }
+
+    public function emitClassDefinitionSize(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function emitClassDefinitionField(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'string');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                0,
+                $arguments[0],
+                'string'
+            );
+        }
+    }
+
+    public function emitObjectInstanceType(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function emitObjectInstanceField(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
+    public function emitReference(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'value',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startCompactString(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startString(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startCompactBinary(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startBinary(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startInt32Compact2(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startInt32Compact3(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startInt64Compact2(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startInt64Compact3(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startFixedLengthVector(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
+    public function startTypedVector(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
+    public function startTypedFixedLengthVector(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
+    public function startCompactTypedFixedLengthVector(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startCompactFixedLengthVector(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startTypedMap(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
+    public function startClassDefinition(array $arguments)
+    {
+        if (\count($arguments) > 0) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
+        }
+    }
+
+    public function startObjectInstance(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('classDefIndex', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'classDefIndex',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function startCompactObjectInstance(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
     public function handleBegin(array $arguments)
     {
         $argumentCount = \count($arguments);
@@ -291,399 +747,6 @@ class ValueDecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
     }
 
     public function handleBeginObject(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function emitValue(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueCollectionType(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueVector(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueVectorSize(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueVectorFixed(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueMapKey(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueMapValue(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueClassDefinitionName(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueClassDefinitionSize(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueClassDefinitionField(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueObjectInstanceType(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueObjectInstanceField(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function emitValueReference(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
-    public function beginCompactString(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginString(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginCompactBinary(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginBinary(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginInt32Compact2(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginInt32Compact3(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginInt64Compact2(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginInt64Compact3(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginFixedLengthVector(array $arguments)
-    {
-        if (\count($arguments) > 0) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
-        }
-    }
-
-    public function beginTypedVector(array $arguments)
-    {
-        if (\count($arguments) > 0) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
-        }
-    }
-
-    public function beginTypedFixedLengthVector(array $arguments)
-    {
-        if (\count($arguments) > 0) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
-        }
-    }
-
-    public function beginCompactTypedFixedLengthVector(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginCompactFixedLengthVector(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'byte',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginTypedMap(array $arguments)
-    {
-        if (\count($arguments) > 0) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
-        }
-    }
-
-    public function beginClassDefinition(array $arguments)
-    {
-        if (\count($arguments) > 0) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
-        }
-    }
-
-    public function beginObjectInstance(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('classDefIndex', 0, 'integer');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-        $value = $arguments[0];
-        if (!\is_int($value)) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
-                'classDefIndex',
-                0,
-                $arguments[0],
-                'integer'
-            );
-        }
-    }
-
-    public function beginCompactObjectInstance(array $arguments)
     {
         $argumentCount = \count($arguments);
         if ($argumentCount < 1) {

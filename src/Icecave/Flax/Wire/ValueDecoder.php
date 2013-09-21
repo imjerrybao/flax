@@ -8,6 +8,9 @@ use Icecave\Collections\Vector;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
 
+/**
+ * Streaming Hessian decoder.
+ */
 class ValueDecoder
 {
     public function __construct()
@@ -17,19 +20,28 @@ class ValueDecoder
         $this->reset();
     }
 
+    /**
+     * Reset the decoder.
+     *
+     * Clears all internal state and allows the decoder to decode a new value.
+     */
     public function reset()
     {
         $this->typeCheck->reset(func_get_args());
 
         $this->stack = new Stack;
         $this->classDefinitions = new Vector;
-        $this->objects = new Vector;
+        $this->references = new Vector;
         $this->currentContext = null;
         $this->value = null;
     }
 
     /**
-     * @param string $buffer
+     * Feed Hessian data to the decoder.
+     *
+     * The buffer may contain an incomplete Hessian value.
+     *
+     * @param string $buffer The hessian data to decode.
      */
     public function feed($buffer)
     {
@@ -44,8 +56,10 @@ class ValueDecoder
     }
 
     /**
-     * @return mixed
-     * @throws Exception\DecodeException
+     * Finalize decoding and return the decoded value.
+     *
+     * @return mixed                     The decoded value.
+     * @throws Exception\DecodeException If the decoder has not yet received a full Hessian value.
      */
     public function finalize()
     {
@@ -62,7 +76,14 @@ class ValueDecoder
     }
 
     /**
+     * Feed a single byte of Hessian data to the decoder.
+     *
+     * This is the main point-of-entry to the parser, responsible for delegating to the individual methods
+     * responsible for handling each decoder state ($this->handleXXX()).
+     *
      * @param integer $byte
+     *
+     * @throws Exception\DecodeException if the given byte can not be decoded in the current state.
      */
     private function feedByte($byte)
     {
@@ -132,244 +153,13 @@ class ValueDecoder
     }
 
     /**
-     * @param integer $byte
-     */
-    private function handleBegin($byte)
-    {
-        return $this->handleBeginScalar($byte)
-            || $this->handleBeginInt32($byte, false)
-            || $this->handleBeginInt64($byte)
-            || $this->handleBeginDouble($byte)
-            || $this->handleBeginString($byte, false)
-            || $this->handleBeginBinary($byte)
-            || $this->handleBeginTimestamp($byte)
-            || $this->handleBeginVector($byte)
-            || $this->handleBeginMap($byte)
-            || $this->handleBeginObject($byte)
-            ;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginScalar($byte)
-    {
-        if (HessianConstants::NULL_VALUE === $byte) {
-            $this->emitValue(null);
-        } elseif (HessianConstants::BOOLEAN_TRUE === $byte) {
-            $this->emitValue(true);
-        } elseif (HessianConstants::BOOLEAN_FALSE === $byte) {
-            $this->emitValue(false);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginString($byte)
-    {
-        if (HessianConstants::STRING_CHUNK === $byte) {
-            $this->pushState(ValueDecoderState::STRING_CHUNK_SIZE());
-        } elseif (HessianConstants::STRING_CHUNK_FINAL === $byte) {
-            $this->pushState(ValueDecoderState::STRING_CHUNK_FINAL_SIZE());
-        } elseif (HessianConstants::STRING_COMPACT_START <= $byte && $byte <= HessianConstants::STRING_COMPACT_END) {
-            $this->beginCompactString($byte);
-        } elseif (HessianConstants::STRING_START <= $byte && $byte <= HessianConstants::STRING_END) {
-            $this->beginString($byte);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginStringStrict($byte)
-    {
-        if (!$this->handleBeginString($byte)) {
-            throw new Exception\DecodeException('Invalid byte at start of string: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
-        }
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginBinary($byte)
-    {
-        if (HessianConstants::BINARY_CHUNK === $byte) {
-            $this->pushState(ValueDecoderState::BINARY_CHUNK_SIZE());
-        } elseif (HessianConstants::BINARY_CHUNK_FINAL === $byte) {
-            $this->pushState(ValueDecoderState::BINARY_CHUNK_FINAL_SIZE());
-        } elseif (HessianConstants::BINARY_COMPACT_START <= $byte && $byte <= HessianConstants::BINARY_COMPACT_END) {
-            $this->beginCompactBinary($byte);
-        } elseif (HessianConstants::BINARY_START <= $byte && $byte <= HessianConstants::BINARY_END) {
-            $this->beginBinary($byte);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginInt32($byte)
-    {
-        if (HessianConstants::INT32_4 === $byte) {
-            $this->pushState(ValueDecoderState::INT32());
-        } elseif (HessianConstants::INT32_1_START <= $byte && $byte <= HessianConstants::INT32_1_END) {
-            $this->emitValue($byte - HessianConstants::INT32_1_OFFSET);
-        } elseif (HessianConstants::INT32_2_START <= $byte && $byte <= HessianConstants::INT32_2_END) {
-            $this->beginInt32Compact2($byte);
-        } elseif (HessianConstants::INT32_3_START <= $byte && $byte <= HessianConstants::INT32_3_END) {
-            $this->beginInt32Compact3($byte);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginInt32Strict($byte)
-    {
-        if (!$this->handleBeginInt32($byte)) {
-            throw new Exception\DecodeException('Invalid byte at start of int: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
-        }
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginInt64($byte)
-    {
-        if (HessianConstants::INT64_4 === $byte) {
-            $this->pushState(ValueDecoderState::INT32());
-        } elseif (HessianConstants::INT64_8 === $byte) {
-            $this->pushState(ValueDecoderState::INT64());
-        } elseif (HessianConstants::INT64_1_START <= $byte && $byte <= HessianConstants::INT64_1_END) {
-            $this->emitValue($byte - HessianConstants::INT64_1_OFFSET);
-        } elseif (HessianConstants::INT64_2_START <= $byte && $byte <= HessianConstants::INT64_2_END) {
-            $this->beginInt64Compact2($byte);
-        } elseif (HessianConstants::INT64_3_START <= $byte && $byte <= HessianConstants::INT64_3_END) {
-            $this->beginInt64Compact3($byte);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginDouble($byte)
-    {
-        if (HessianConstants::DOUBLE_ZERO === $byte) {
-            $this->emitValue(0.0);
-        } elseif (HessianConstants::DOUBLE_ONE === $byte) {
-            $this->emitValue(1.0);
-        } elseif (HessianConstants::DOUBLE_1 === $byte) {
-            $this->pushState(ValueDecoderState::DOUBLE_1());
-        } elseif (HessianConstants::DOUBLE_2 === $byte) {
-            $this->pushState(ValueDecoderState::DOUBLE_2());
-        } elseif (HessianConstants::DOUBLE_4 === $byte) {
-            $this->pushState(ValueDecoderState::DOUBLE_4());
-        } elseif (HessianConstants::DOUBLE_8 === $byte) {
-            $this->pushState(ValueDecoderState::DOUBLE_8());
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginTimestamp($byte)
-    {
-        if (HessianConstants::TIMESTAMP_MILLISECONDS === $byte) {
-            $this->pushState(ValueDecoderState::TIMESTAMP_MILLISECONDS());
-        } elseif (HessianConstants::TIMESTAMP_MINUTES === $byte) {
-            $this->pushState(ValueDecoderState::TIMESTAMP_MINUTES());
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginVector($byte)
-    {
-        if (HessianConstants::VECTOR_TYPED === $byte) {
-            $this->beginTypedVector();
-        } elseif (HessianConstants::VECTOR_TYPED_FIXED === $byte) {
-            $this->beginTypedFixedLengthVector();
-        } elseif (HessianConstants::VECTOR === $byte) {
-            $this->pushState(ValueDecoderState::VECTOR(), new Vector);
-        } elseif (HessianConstants::VECTOR_FIXED === $byte) {
-            $this->beginFixedLengthVector();
-        } elseif (HessianConstants::VECTOR_TYPED_FIXED_COMPACT_START <= $byte && $byte <= HessianConstants::VECTOR_TYPED_FIXED_COMPACT_END) {
-            $this->beginCompactTypedFixedLengthVector($byte);
-        } elseif (HessianConstants::VECTOR_FIXED_COMPACT_START <= $byte && $byte <= HessianConstants::VECTOR_FIXED_COMPACT_END) {
-            $this->beginCompactFixedLengthVector($byte);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginMap($byte)
-    {
-        if (HessianConstants::MAP_TYPED === $byte) {
-            $this->beginTypedMap();
-        } elseif (HessianConstants::MAP === $byte) {
-            $this->pushState(ValueDecoderState::MAP_KEY(), new Map);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param integer $byte
-     */
-    private function handleBeginObject($byte)
-    {
-        if (HessianConstants::OBJECT_INSTANCE === $byte) {
-            $this->pushState(ValueDecoderState::OBJECT_INSTANCE_TYPE());
-        } elseif (HessianConstants::CLASS_DEFINITION === $byte) {
-            $this->beginClassDefinition();
-        } elseif (HessianConstants::REFERENCE === $byte) {
-            $this->pushState(ValueDecoderState::REFERENCE());
-        } elseif (HessianConstants::OBJECT_INSTANCE_COMPACT_START <= $byte && $byte <= HessianConstants::OBJECT_INSTANCE_COMPACT_END) {
-            $this->beginCompactObjectInstance($byte);
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
+     * Emit a decoded value.
+     *
+     * Depending on the current state the value emitted will be used if different ways.
+     *
+     * If the decoder has reached the end of the value being decoded the emitted value is stored
+     * for retreival by {@see ValueDecoder::finalize()};
+     *
      * @param mixed $value
      */
     private function emitValue($value)
@@ -407,7 +197,11 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit a collection type.
+     *
+     * As PHP does not have typed collections the collection type is currently ignored.
+     *
+     * @param string|integer $value The type name or index.
      */
     private function emitCollectionType($value)
     {
@@ -419,7 +213,9 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit the element in a vector.
+     *
+     * @param mixed $value The vector element.
      */
     private function emitVectorElement($value)
     {
@@ -427,7 +223,9 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit the size of a fixed-length vector.
+     *
+     * @param integer $value The size of the vector.
      */
     private function emitFixedVectorSize($value)
     {
@@ -441,7 +239,9 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit an element in a fixed-length vector.
+     *
+     * @param mixed $value The vector element.
      */
     private function emitFixedVectorElement($value)
     {
@@ -453,7 +253,9 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit the key of the next element in a map.
+     *
+     * @param mixed $value The key of the next element in the map.
      */
     private function emitMapKey($value)
     {
@@ -463,7 +265,9 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit the value of the next element in a map.
+     *
+     * @param mixed $value The value of the next element in the map.
      */
     private function emitMapValue($value)
     {
@@ -472,11 +276,15 @@ class ValueDecoder
             $value
         );
 
+        $this->currentContext->nextKey = null;
+
         $this->setState(ValueDecoderState::MAP_KEY());
     }
 
     /**
-     * @param mixed $value
+     * Emit the name of a class definition.
+     *
+     * @param string $value The name of the class.
      */
     private function emitClassDefinitionName($value)
     {
@@ -486,7 +294,9 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit the number of fields in a class definition.
+     *
+     * @param integer $value THe number of fields in the class.
      */
     private function emitClassDefinitionSize($value)
     {
@@ -500,7 +310,9 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit a field name in a class definition.
+     *
+     * @param string $value The name of the field.
      */
     private function emitClassDefinitionField($value)
     {
@@ -514,16 +326,20 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit type (class definition index) of an object instance.
+     *
+     * @param integer $value The index of the class definition.
      */
     private function emitObjectInstanceType($value)
     {
         $this->popState();
-        $this->beginObjectInstance($value);
+        $this->startObjectInstance($value);
     }
 
     /**
-     * @param mixed $value
+     * Emit the value of an object instance field.
+     *
+     * @param mixed $value The value of the object field.
      */
     private function emitObjectInstanceField($value)
     {
@@ -537,19 +353,21 @@ class ValueDecoder
     }
 
     /**
-     * @param mixed $value
+     * Emit a value reference.
+     *
+     * @param integer $value The index of the referenced object.
      */
     private function emitReference($value)
     {
         $this->popStateAndEmitValue(
-            $this->objects[$value]
+            $this->references[$value]
         );
     }
 
     /**
      * @param integer $byte
      */
-    private function beginCompactString($byte)
+    private function startCompactString($byte)
     {
         if (HessianConstants::STRING_COMPACT_START === $byte) {
             $this->emitValue('');
@@ -562,7 +380,7 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginString($byte)
+    private function startString($byte)
     {
         $this->pushState(ValueDecoderState::STRING_SIZE());
         $this->currentContext->buffer .= pack('c', $byte - HessianConstants::STRING_START);
@@ -571,7 +389,7 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginCompactBinary($byte)
+    private function startCompactBinary($byte)
     {
         if (HessianConstants::BINARY_COMPACT_START === $byte) {
             $this->emitValue('');
@@ -584,7 +402,7 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginBinary($byte)
+    private function startBinary($byte)
     {
         $this->pushState(ValueDecoderState::BINARY_SIZE());
         $this->currentContext->buffer .= pack('c', $byte - HessianConstants::BINARY_START);
@@ -593,7 +411,7 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginInt32Compact2($byte)
+    private function startInt32Compact2($byte)
     {
         $this->pushState(ValueDecoderState::INT32());
         $value = $byte - HessianConstants::INT32_2_OFFSET;
@@ -603,7 +421,7 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginInt32Compact3($byte)
+    private function startInt32Compact3($byte)
     {
         $this->pushState(ValueDecoderState::INT32());
         $value = $byte - HessianConstants::INT32_3_OFFSET;
@@ -613,7 +431,7 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginInt64Compact2($byte)
+    private function startInt64Compact2($byte)
     {
         $this->pushState(ValueDecoderState::INT32());
         $value = $byte - HessianConstants::INT64_2_OFFSET;
@@ -623,26 +441,26 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginInt64Compact3($byte)
+    private function startInt64Compact3($byte)
     {
         $this->pushState(ValueDecoderState::INT32());
         $value = $byte - HessianConstants::INT64_3_OFFSET;
         $this->currentContext->buffer = pack('cc', $value >> 8, $value);
     }
 
-    private function beginFixedLengthVector()
+    private function startFixedLengthVector()
     {
         $this->pushState(ValueDecoderState::VECTOR_FIXED(), new Vector);
         $this->pushState(ValueDecoderState::VECTOR_SIZE());
     }
 
-    private function beginTypedVector()
+    private function startTypedVector()
     {
         $this->pushState(ValueDecoderState::VECTOR(), new Vector);
         $this->pushState(ValueDecoderState::COLLECTION_TYPE());
     }
 
-    private function beginTypedFixedLengthVector()
+    private function startTypedFixedLengthVector()
     {
         $this->pushState(ValueDecoderState::VECTOR_FIXED(), new Vector);
         $this->pushState(ValueDecoderState::VECTOR_SIZE());
@@ -652,7 +470,7 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginCompactTypedFixedLengthVector($byte)
+    private function startCompactTypedFixedLengthVector($byte)
     {
         $this->pushState(ValueDecoderState::VECTOR_FIXED(), new Vector);
         $this->currentContext->expectedSize = $byte - HessianConstants::VECTOR_TYPED_FIXED_COMPACT_START;
@@ -663,7 +481,7 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginCompactFixedLengthVector($byte)
+    private function startCompactFixedLengthVector($byte)
     {
         if (HessianConstants::VECTOR_FIXED_COMPACT_START === $byte) {
             $this->emitValue(new Vector);
@@ -673,13 +491,13 @@ class ValueDecoder
         }
     }
 
-    private function beginTypedMap()
+    private function startTypedMap()
     {
         $this->pushState(ValueDecoderState::MAP_KEY(), new Map);
         $this->pushState(ValueDecoderState::COLLECTION_TYPE());
     }
 
-    private function beginClassDefinition()
+    private function startClassDefinition()
     {
         $this->pushState(ValueDecoderState::CLASS_DEFINITION_NAME());
 
@@ -695,7 +513,7 @@ class ValueDecoder
     /**
      * @param integer $classDefIndex
      */
-    private function beginObjectInstance($classDefIndex)
+    private function startObjectInstance($classDefIndex)
     {
         $classDef = $this->classDefinitions[$classDefIndex];
 
@@ -711,9 +529,299 @@ class ValueDecoder
     /**
      * @param integer $byte
      */
-    private function beginCompactObjectInstance($byte)
+    private function startCompactObjectInstance($byte)
     {
-        $this->beginObjectInstance($byte - HessianConstants::OBJECT_INSTANCE_COMPACT_START);
+        $this->startObjectInstance($byte - HessianConstants::OBJECT_INSTANCE_COMPACT_START);
+    }
+
+    /**
+     * Handle the start of a new value.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian value; otherwise, false.
+     */
+    private function handleBegin($byte)
+    {
+        return $this->handleBeginScalar($byte)
+            || $this->handleBeginInt32($byte, false)
+            || $this->handleBeginInt64($byte)
+            || $this->handleBeginDouble($byte)
+            || $this->handleBeginString($byte, false)
+            || $this->handleBeginBinary($byte)
+            || $this->handleBeginTimestamp($byte)
+            || $this->handleBeginVector($byte)
+            || $this->handleBeginMap($byte)
+            || $this->handleBeginObject($byte)
+            ;
+    }
+
+    /**
+     * Handle the start of a scalar (null, true, false) value.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte represents true, false or null; otherwise, false.
+     */
+    private function handleBeginScalar($byte)
+    {
+        if (HessianConstants::NULL_VALUE === $byte) {
+            $this->emitValue(null);
+        } elseif (HessianConstants::BOOLEAN_TRUE === $byte) {
+            $this->emitValue(true);
+        } elseif (HessianConstants::BOOLEAN_FALSE === $byte) {
+            $this->emitValue(false);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of a string value.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian string; otherwise, false.
+     */
+    private function handleBeginString($byte)
+    {
+        if (HessianConstants::STRING_CHUNK === $byte) {
+            $this->pushState(ValueDecoderState::STRING_CHUNK_SIZE());
+        } elseif (HessianConstants::STRING_CHUNK_FINAL === $byte) {
+            $this->pushState(ValueDecoderState::STRING_CHUNK_FINAL_SIZE());
+        } elseif (HessianConstants::STRING_COMPACT_START <= $byte && $byte <= HessianConstants::STRING_COMPACT_END) {
+            $this->startCompactString($byte);
+        } elseif (HessianConstants::STRING_START <= $byte && $byte <= HessianConstants::STRING_END) {
+            $this->startString($byte);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of a string value, throwing if unable to do so.
+     *
+     * @param integer $byte
+     *
+     * @throws Exception\DecodeException if the given byte is valid as the first byte of a Hessian string.
+     */
+    private function handleBeginStringStrict($byte)
+    {
+        if (!$this->handleBeginString($byte)) {
+            throw new Exception\DecodeException('Invalid byte at start of string: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+        }
+    }
+
+    /**
+     * Handle the start of a binary value.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian binary buffer; otherwise, false.
+     */
+    private function handleBeginBinary($byte)
+    {
+        if (HessianConstants::BINARY_CHUNK === $byte) {
+            $this->pushState(ValueDecoderState::BINARY_CHUNK_SIZE());
+        } elseif (HessianConstants::BINARY_CHUNK_FINAL === $byte) {
+            $this->pushState(ValueDecoderState::BINARY_CHUNK_FINAL_SIZE());
+        } elseif (HessianConstants::BINARY_COMPACT_START <= $byte && $byte <= HessianConstants::BINARY_COMPACT_END) {
+            $this->startCompactBinary($byte);
+        } elseif (HessianConstants::BINARY_START <= $byte && $byte <= HessianConstants::BINARY_END) {
+            $this->startBinary($byte);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of a 32-bit integer value.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian 32-bit integer; otherwise, false.
+     */
+    private function handleBeginInt32($byte)
+    {
+        if (HessianConstants::INT32_4 === $byte) {
+            $this->pushState(ValueDecoderState::INT32());
+        } elseif (HessianConstants::INT32_1_START <= $byte && $byte <= HessianConstants::INT32_1_END) {
+            $this->emitValue($byte - HessianConstants::INT32_1_OFFSET);
+        } elseif (HessianConstants::INT32_2_START <= $byte && $byte <= HessianConstants::INT32_2_END) {
+            $this->startInt32Compact2($byte);
+        } elseif (HessianConstants::INT32_3_START <= $byte && $byte <= HessianConstants::INT32_3_END) {
+            $this->startInt32Compact3($byte);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of a 32-bit integer value, throwing if unable to do so.
+     *
+     * @param integer $byte
+     *
+     * @throws Exception\DecodeEception if the given byte is valid as the first byte of a Hessian 32-bit integer.
+     */
+    private function handleBeginInt32Strict($byte)
+    {
+        if (!$this->handleBeginInt32($byte)) {
+            throw new Exception\DecodeException('Invalid byte at start of int: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+        }
+    }
+
+    /**
+     * Handle the start of a 64-bit integer value.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian 64-bit integer; otherwise, false.
+     */
+    private function handleBeginInt64($byte)
+    {
+        if (HessianConstants::INT64_4 === $byte) {
+            $this->pushState(ValueDecoderState::INT32());
+        } elseif (HessianConstants::INT64_8 === $byte) {
+            $this->pushState(ValueDecoderState::INT64());
+        } elseif (HessianConstants::INT64_1_START <= $byte && $byte <= HessianConstants::INT64_1_END) {
+            $this->emitValue($byte - HessianConstants::INT64_1_OFFSET);
+        } elseif (HessianConstants::INT64_2_START <= $byte && $byte <= HessianConstants::INT64_2_END) {
+            $this->startInt64Compact2($byte);
+        } elseif (HessianConstants::INT64_3_START <= $byte && $byte <= HessianConstants::INT64_3_END) {
+            $this->startInt64Compact3($byte);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of a double precision floating point value.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian double; otherwise, false.
+     */
+    private function handleBeginDouble($byte)
+    {
+        if (HessianConstants::DOUBLE_ZERO === $byte) {
+            $this->emitValue(0.0);
+        } elseif (HessianConstants::DOUBLE_ONE === $byte) {
+            $this->emitValue(1.0);
+        } elseif (HessianConstants::DOUBLE_1 === $byte) {
+            $this->pushState(ValueDecoderState::DOUBLE_1());
+        } elseif (HessianConstants::DOUBLE_2 === $byte) {
+            $this->pushState(ValueDecoderState::DOUBLE_2());
+        } elseif (HessianConstants::DOUBLE_4 === $byte) {
+            $this->pushState(ValueDecoderState::DOUBLE_4());
+        } elseif (HessianConstants::DOUBLE_8 === $byte) {
+            $this->pushState(ValueDecoderState::DOUBLE_8());
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of timestamp value.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian timestamp; otherwise, false.
+     */
+    private function handleBeginTimestamp($byte)
+    {
+        if (HessianConstants::TIMESTAMP_MILLISECONDS === $byte) {
+            $this->pushState(ValueDecoderState::TIMESTAMP_MILLISECONDS());
+        } elseif (HessianConstants::TIMESTAMP_MINUTES === $byte) {
+            $this->pushState(ValueDecoderState::TIMESTAMP_MINUTES());
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of a vector.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian vector; otherwise, false.
+     */
+    private function handleBeginVector($byte)
+    {
+        if (HessianConstants::VECTOR_TYPED === $byte) {
+            $this->startTypedVector();
+        } elseif (HessianConstants::VECTOR_TYPED_FIXED === $byte) {
+            $this->startTypedFixedLengthVector();
+        } elseif (HessianConstants::VECTOR === $byte) {
+            $this->pushState(ValueDecoderState::VECTOR(), new Vector);
+        } elseif (HessianConstants::VECTOR_FIXED === $byte) {
+            $this->startFixedLengthVector();
+        } elseif (HessianConstants::VECTOR_TYPED_FIXED_COMPACT_START <= $byte && $byte <= HessianConstants::VECTOR_TYPED_FIXED_COMPACT_END) {
+            $this->startCompactTypedFixedLengthVector($byte);
+        } elseif (HessianConstants::VECTOR_FIXED_COMPACT_START <= $byte && $byte <= HessianConstants::VECTOR_FIXED_COMPACT_END) {
+            $this->startCompactFixedLengthVector($byte);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of a map.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian map; otherwise, false.
+     */
+    private function handleBeginMap($byte)
+    {
+        if (HessianConstants::MAP_TYPED === $byte) {
+            $this->startTypedMap();
+        } elseif (HessianConstants::MAP === $byte) {
+            $this->pushState(ValueDecoderState::MAP_KEY(), new Map);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the start of an object.
+     *
+     * @param integer $byte
+     *
+     * @return boolean True if the given byte is valid as the first byte of a Hessian object; otherwise, false.
+     */
+    private function handleBeginObject($byte)
+    {
+        if (HessianConstants::OBJECT_INSTANCE === $byte) {
+            $this->pushState(ValueDecoderState::OBJECT_INSTANCE_TYPE());
+        } elseif (HessianConstants::CLASS_DEFINITION === $byte) {
+            $this->startClassDefinition();
+        } elseif (HessianConstants::REFERENCE === $byte) {
+            $this->pushState(ValueDecoderState::REFERENCE());
+        } elseif (HessianConstants::OBJECT_INSTANCE_COMPACT_START <= $byte && $byte <= HessianConstants::OBJECT_INSTANCE_COMPACT_END) {
+            $this->startCompactObjectInstance($byte);
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -1034,7 +1142,7 @@ class ValueDecoder
         $this->stack->push($context);
 
         if (is_object($result)) {
-            $this->objects->pushBack($result);
+            $this->references->pushBack($result);
         }
 
         $this->currentContext = $context;
