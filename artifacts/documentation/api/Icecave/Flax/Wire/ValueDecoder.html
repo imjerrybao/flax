@@ -90,6 +90,17 @@
                     
                 </td>
                 <td class="last">
+                    <a href="#method_handleBeginInt32">handleBeginInt32</a>($character, $signedByte, $unsignedByte)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
                     <a href="#method_handleStringChunkSize">handleStringChunkSize</a>($character, $signedByte, $unsignedByte, $isFinal)
                     <p>
 </p>
@@ -200,7 +211,29 @@
                     
                 </td>
                 <td class="last">
+                    <a href="#method_handleVariableSizeCollection">handleVariableSizeCollection</a>($character, $signedByte, $unsignedByte)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
                     <a href="#method_appendInt64Data">appendInt64Data</a>($character)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_trace">trace</a>($str)
                     <p>
 </p>
                 </td>
@@ -212,7 +245,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 12</div>
+        <div class="location">at line 13</div>
         <code>            public            
     <strong>__construct</strong>()</code>
     </h3>
@@ -229,7 +262,7 @@
     </div>
 
                 <h3 id="method_reset">
-        <div class="location">at line 19</div>
+        <div class="location">at line 20</div>
         <code>            public            
     <strong>reset</strong>()</code>
     </h3>
@@ -246,7 +279,7 @@
     </div>
 
                 <h3 id="method_feed">
-        <div class="location">at line 26</div>
+        <div class="location">at line 27</div>
         <code>            public            
     <strong>feed</strong>($buffer)</code>
     </h3>
@@ -274,7 +307,7 @@
     </div>
 
                 <h3 id="method_feedCharacter">
-        <div class="location">at line 37</div>
+        <div class="location">at line 38</div>
         <code>            public            
     <strong>feedCharacter</strong>($character)</code>
     </h3>
@@ -302,7 +335,7 @@
     </div>
 
                 <h3 id="method_finalize">
-        <div class="location">at line 96</div>
+        <div class="location">at line 102</div>
         <code>            public            
     <strong>finalize</strong>()</code>
     </h3>
@@ -318,8 +351,48 @@
                     </div>
     </div>
 
+                <h3 id="method_handleBeginInt32">
+        <div class="location">at line 191</div>
+        <code>            public            
+    <strong>handleBeginInt32</strong>($character, $signedByte, $unsignedByte)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_handleStringChunkSize">
-        <div class="location">at line 335</div>
+        <div class="location">at line 398</div>
         <code>            public            
     <strong>handleStringChunkSize</strong>($character, $signedByte, $unsignedByte, $isFinal)</code>
     </h3>
@@ -365,7 +438,7 @@
     </div>
 
                 <h3 id="method_handleStringChunkData">
-        <div class="location">at line 352</div>
+        <div class="location">at line 415</div>
         <code>            public            
     <strong>handleStringChunkData</strong>($character, $signedByte, $unsignedByte, $isFinal)</code>
     </h3>
@@ -411,7 +484,7 @@
     </div>
 
                 <h3 id="method_handleStringChunkContinuation">
-        <div class="location">at line 368</div>
+        <div class="location">at line 431</div>
         <code>            public            
     <strong>handleStringChunkContinuation</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
@@ -451,7 +524,7 @@
     </div>
 
                 <h3 id="method_handleBinaryChunkSize">
-        <div class="location">at line 399</div>
+        <div class="location">at line 462</div>
         <code>            public            
     <strong>handleBinaryChunkSize</strong>($character, $signedByte, $unsignedByte, $isFinal)</code>
     </h3>
@@ -497,7 +570,7 @@
     </div>
 
                 <h3 id="method_handleBinaryChunkData">
-        <div class="location">at line 416</div>
+        <div class="location">at line 479</div>
         <code>            public            
     <strong>handleBinaryChunkData</strong>($character, $signedByte, $unsignedByte, $isFinal)</code>
     </h3>
@@ -543,7 +616,7 @@
     </div>
 
                 <h3 id="method_handleBinaryChunkContinuation">
-        <div class="location">at line 432</div>
+        <div class="location">at line 495</div>
         <code>            public            
     <strong>handleBinaryChunkContinuation</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
@@ -583,7 +656,7 @@
     </div>
 
                 <h3 id="method_handleInt32">
-        <div class="location">at line 484</div>
+        <div class="location">at line 547</div>
         <code>            public            
     <strong>handleInt32</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
@@ -623,7 +696,7 @@
     </div>
 
                 <h3 id="method_handleInt64">
-        <div class="location">at line 493</div>
+        <div class="location">at line 556</div>
         <code>            public            
     <strong>handleInt64</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
@@ -663,7 +736,7 @@
     </div>
 
                 <h3 id="method_handleTimestampMilliseconds">
-        <div class="location">at line 502</div>
+        <div class="location">at line 565</div>
         <code>            public            
     <strong>handleTimestampMilliseconds</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
@@ -703,7 +776,7 @@
     </div>
 
                 <h3 id="method_handleTimestampMinutes">
-        <div class="location">at line 511</div>
+        <div class="location">at line 574</div>
         <code>            public            
     <strong>handleTimestampMinutes</strong>($character, $signedByte, $unsignedByte)</code>
     </h3>
@@ -742,8 +815,48 @@
                     </div>
     </div>
 
+                <h3 id="method_handleVariableSizeCollection">
+        <div class="location">at line 583</div>
+        <code>            public            
+    <strong>handleVariableSizeCollection</strong>($character, $signedByte, $unsignedByte)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$character</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$signedByte</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$unsignedByte</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_appendInt64Data">
-        <div class="location">at line 634</div>
+        <div class="location">at line 712</div>
         <code>            public            
     <strong>appendInt64Data</strong>($character)</code>
     </h3>
@@ -759,6 +872,34 @@
                     <tr>
                 <td></td>
                 <td>$character</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_trace">
+        <div class="location">at line 723</div>
+        <code>            public            
+    <strong>trace</strong>($str)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$str</td>
                 <td>
 </td>
             </tr>
