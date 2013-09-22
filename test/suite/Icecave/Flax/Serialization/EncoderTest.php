@@ -1,5 +1,5 @@
 <?php
-namespace Icecave\Flax\Wire;
+namespace Icecave\Flax\Serialization;
 
 use DateTime as NativeDateTime;
 use Icecave\Chrono\DateTime;
@@ -11,7 +11,7 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->encoder = new ValueEncoder;
+        $this->encoder = new Encoder;
     }
 
     /**

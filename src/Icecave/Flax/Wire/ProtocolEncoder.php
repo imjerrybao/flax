@@ -1,6 +1,7 @@
 <?php
 namespace Icecave\Flax\Wire;
 
+use Icecave\Flax\Serialization\Encoder;
 use Icecave\Flax\TypeCheck\TypeCheck;
 
 class ProtocolEncoder
@@ -9,7 +10,7 @@ class ProtocolEncoder
     {
         $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
 
-        $this->valueEncoder = new ValueEncoder;
+        $this->valueEncoder = new Encoder;
     }
 
     public function reset()

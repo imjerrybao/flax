@@ -1,5 +1,5 @@
 <?php
-namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Wire;
+namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Serialization;
 
 class UtilityTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
 {

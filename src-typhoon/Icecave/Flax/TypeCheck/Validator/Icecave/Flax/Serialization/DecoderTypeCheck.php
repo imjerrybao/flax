@@ -1,7 +1,7 @@
 <?php
-namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Wire;
+namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Serialization;
 
-class ValueDecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
+class DecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
 {
     public function validateConstruct(array $arguments)
     {
@@ -1204,7 +1204,7 @@ class ValueDecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
     {
         $argumentCount = \count($arguments);
         if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('state', 0, 'Icecave\\Flax\\Wire\\ValueDecoderState');
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('state', 0, 'Icecave\\Flax\\Serialization\\DecoderState');
         } elseif ($argumentCount > 2) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
         }
@@ -1214,7 +1214,7 @@ class ValueDecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
     {
         $argumentCount = \count($arguments);
         if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('state', 0, 'Icecave\\Flax\\Wire\\ValueDecoderState');
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('state', 0, 'Icecave\\Flax\\Serialization\\DecoderState');
         } elseif ($argumentCount > 1) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
         }

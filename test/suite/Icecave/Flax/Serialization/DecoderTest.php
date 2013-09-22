@@ -1,5 +1,5 @@
 <?php
-namespace Icecave\Flax\Wire;
+namespace Icecave\Flax\Serialization;
 
 use Icecave\Chrono\DateTime;
 use Icecave\Collections\Map;
@@ -8,11 +8,11 @@ use Icecave\Parity\ComparableInterface;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 
-class ValueDecoderTest extends PHPUnit_Framework_TestCase
+class DecoderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->decoder = new ValueDecoder;
+        $this->decoder = new Decoder;
     }
 
     /**

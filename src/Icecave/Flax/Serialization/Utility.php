@@ -1,5 +1,5 @@
 <?php
-namespace Icecave\Flax\Wire;
+namespace Icecave\Flax\Serialization;
 
 use Icecave\Flax\TypeCheck\TypeCheck;
 

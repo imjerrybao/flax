@@ -1,5 +1,5 @@
 <?php
-namespace Icecave\Flax\Wire;
+namespace Icecave\Flax\Serialization;
 
 use DateTime;
 use Icecave\Chrono\TimePointInterface;
@@ -9,7 +9,7 @@ use Icecave\Flax\TypeCheck\TypeCheck;
 use InvalidArgumentException;
 use stdClass;
 
-class ValueEncoder
+class Encoder
 {
     public function __construct()
     {

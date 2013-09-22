@@ -1,5 +1,5 @@
 <?php
-namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Wire\Exception;
+namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Serialization\Exception;
 
 class DecodeExceptionTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
 {

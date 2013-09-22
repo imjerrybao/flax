@@ -1,9 +1,9 @@
 <?php
-namespace Icecave\Flax\Wire;
+namespace Icecave\Flax\Serialization;
 
 use Eloquent\Enumeration\Enumeration;
 
-class ValueDecoderState extends Enumeration
+class DecoderState extends Enumeration
 {
     const BEGIN = 0;
 
