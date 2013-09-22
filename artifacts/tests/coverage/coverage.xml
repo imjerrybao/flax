@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1379768440">
-  <project timestamp="1379768440">
+<coverage generated="1379892074">
+  <project timestamp="1379892074">
     <package name="Icecave\Flax">
       <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClient.php">
         <class name="HessianClient" namespace="Icecave\Flax">
@@ -58,103 +58,9 @@
     <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/HessianClientInterface.php">
       <metrics loc="21" ncloc="9" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
-    <package name="Icecave\Flax\Wire\Exception">
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Exception/DecodeException.php">
-        <class name="DecodeException" namespace="Icecave\Flax\Wire\Exception">
-          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
-        </class>
-        <line num="13" type="method" name="__construct" crap="2" count="0"/>
-        <line num="15" type="stmt" count="0"/>
-        <line num="16" type="stmt" count="0"/>
-        <line num="18" type="stmt" count="0"/>
-        <metrics loc="17" ncloc="13" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
-      </file>
-    </package>
-    <package name="Icecave\Flax\Wire">
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/HessianConstants.php">
-        <class name="HessianConstants" namespace="Icecave\Flax\Wire">
-          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
-        </class>
-        <line num="171" type="stmt" count="0"/>
-        <metrics loc="170" ncloc="88" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
-      </file>
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ProtocolDecoder.php">
-        <class name="ProtocolDecoder" namespace="Icecave\Flax\Wire">
-          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
-        </class>
-        <metrics loc="143" ncloc="-59" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
-      </file>
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ProtocolDecoderState.php">
-        <class name="ProtocolDecoderState" namespace="Icecave\Flax\Wire">
-          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
-        </class>
-        <metrics loc="12" ncloc="12" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
-      </file>
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ProtocolEncoder.php">
-        <class name="ProtocolEncoder" namespace="Icecave\Flax\Wire">
-          <metrics methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="13" elements="20" coveredelements="16"/>
-        </class>
-        <line num="8" type="method" name="__construct" crap="1" count="2"/>
-        <line num="10" type="stmt" count="2"/>
-        <line num="12" type="stmt" count="2"/>
-        <line num="13" type="stmt" count="2"/>
-        <line num="15" type="method" name="reset" crap="2" count="0"/>
-        <line num="17" type="stmt" count="0"/>
-        <line num="19" type="stmt" count="0"/>
-        <line num="20" type="stmt" count="0"/>
-        <line num="25" type="method" name="encodeVersion" crap="1" count="1"/>
-        <line num="27" type="stmt" count="1"/>
-        <line num="29" type="stmt" count="1"/>
-        <line num="38" type="method" name="encodeCall" crap="2" count="1"/>
-        <line num="40" type="stmt" count="1"/>
-        <line num="42" type="stmt" count="1"/>
-        <line num="43" type="stmt" count="1"/>
-        <line num="44" type="stmt" count="1"/>
-        <line num="46" type="stmt" count="1"/>
-        <line num="47" type="stmt" count="1"/>
-        <line num="48" type="stmt" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="56" type="stmt" count="0"/>
-        <metrics loc="55" ncloc="46" classes="1" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="13" elements="20" coveredelements="16"/>
-      </file>
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Utility.php">
-        <class name="Utility" namespace="Icecave\Flax\Wire">
-          <metrics methods="6" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="17" elements="29" coveredelements="21"/>
-        </class>
-        <line num="11" type="method" name="isBigEndian" crap="2" count="2"/>
-        <line num="13" type="stmt" count="2"/>
-        <line num="15" type="stmt" count="2"/>
-        <line num="17" type="stmt" count="2"/>
-        <line num="18" type="stmt" count="1"/>
-        <line num="19" type="stmt" count="1"/>
-        <line num="21" type="stmt" count="2"/>
-        <line num="29" type="method" name="convertEndianness" crap="2" count="1"/>
-        <line num="31" type="stmt" count="1"/>
-        <line num="33" type="stmt" count="1"/>
-        <line num="34" type="stmt" count="1"/>
-        <line num="35" type="stmt" count="1"/>
-        <line num="43" type="method" name="packInt64" crap="1" count="1"/>
-        <line num="45" type="stmt" count="1"/>
-        <line num="47" type="stmt" count="1"/>
-        <line num="48" type="stmt" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="58" type="method" name="unpackInt64" crap="1" count="1"/>
-        <line num="60" type="stmt" count="1"/>
-        <line num="62" type="stmt" count="1"/>
-        <line num="64" type="stmt" count="1"/>
-        <line num="72" type="method" name="byteToUnsigned" crap="2" count="0"/>
-        <line num="74" type="stmt" count="0"/>
-        <line num="76" type="stmt" count="0"/>
-        <line num="78" type="stmt" count="0"/>
-        <line num="86" type="method" name="byteToSigned" crap="2" count="0"/>
-        <line num="88" type="stmt" count="0"/>
-        <line num="90" type="stmt" count="0"/>
-        <line num="92" type="stmt" count="0"/>
-        <line num="95" type="stmt" count="0"/>
-        <metrics loc="94" ncloc="66" classes="1" methods="6" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="17" elements="29" coveredelements="21"/>
-      </file>
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ValueDecoder.php">
-        <class name="ValueDecoder" namespace="Icecave\Flax\Wire">
+    <package name="Icecave\Flax\Serialization">
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Serialization/Decoder.php">
+        <class name="Decoder" namespace="Icecave\Flax\Serialization">
           <metrics methods="81" coveredmethods="81" conditionals="0" coveredconditionals="0" statements="564" coveredstatements="564" elements="645" coveredelements="645"/>
         </class>
         <line num="0" type="stmt" count="0"/>
@@ -806,15 +712,15 @@
         <line num="1308" type="stmt" count="0"/>
         <metrics loc="1307" ncloc="964" classes="1" methods="81" coveredmethods="81" conditionals="0" coveredconditionals="0" statements="564" coveredstatements="564" elements="645" coveredelements="645"/>
       </file>
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ValueDecoderState.php">
-        <class name="ValueDecoderState" namespace="Icecave\Flax\Wire">
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Serialization/DecoderState.php">
+        <class name="DecoderState" namespace="Icecave\Flax\Serialization">
           <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
         </class>
         <line num="55" type="stmt" count="0"/>
         <metrics loc="54" ncloc="54" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </file>
-      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ValueEncoder.php">
-        <class name="ValueEncoder" namespace="Icecave\Flax\Wire">
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Serialization/Encoder.php">
+        <class name="Encoder" namespace="Icecave\Flax\Serialization">
           <metrics methods="20" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="175" coveredstatements="175" elements="195" coveredelements="195"/>
         </class>
         <line num="14" type="method" name="__construct" crap="1" count="61"/>
@@ -1012,14 +918,112 @@
         <line num="436" type="stmt" count="7"/>
         <line num="437" type="stmt" count="7"/>
         <line num="439" type="stmt" count="7"/>
-        <line num="446" type="stmt" count="0"/>
+        <line num="446" type="stmt" count="1"/>
+        <line num="458" type="stmt" count="2"/>
         <metrics loc="445" ncloc="343" classes="1" methods="20" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="175" coveredstatements="175" elements="195" coveredelements="195"/>
+      </file>
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Serialization/HessianConstants.php">
+        <class name="HessianConstants" namespace="Icecave\Flax\Serialization">
+          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        </class>
+        <line num="171" type="stmt" count="0"/>
+        <metrics loc="170" ncloc="88" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </file>
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Serialization/Utility.php">
+        <class name="Utility" namespace="Icecave\Flax\Serialization">
+          <metrics methods="6" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="15" elements="29" coveredelements="19"/>
+        </class>
+        <line num="11" type="method" name="isBigEndian" crap="2.15" count="5"/>
+        <line num="13" type="stmt" count="5"/>
+        <line num="15" type="stmt" count="5"/>
+        <line num="17" type="stmt" count="5"/>
+        <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="5"/>
+        <line num="29" type="method" name="convertEndianness" crap="2" count="4"/>
+        <line num="31" type="stmt" count="4"/>
+        <line num="33" type="stmt" count="4"/>
+        <line num="34" type="stmt" count="4"/>
+        <line num="35" type="stmt" count="4"/>
+        <line num="43" type="method" name="packInt64" crap="1" count="5"/>
+        <line num="45" type="stmt" count="5"/>
+        <line num="47" type="stmt" count="5"/>
+        <line num="48" type="stmt" count="5"/>
+        <line num="50" type="stmt" count="5"/>
+        <line num="58" type="method" name="unpackInt64" crap="1" count="1"/>
+        <line num="60" type="stmt" count="1"/>
+        <line num="62" type="stmt" count="1"/>
+        <line num="64" type="stmt" count="1"/>
+        <line num="72" type="method" name="byteToUnsigned" crap="2" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="86" type="method" name="byteToSigned" crap="2" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <metrics loc="94" ncloc="66" classes="1" methods="6" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="15" elements="29" coveredelements="18"/>
+      </file>
+    </package>
+    <package name="Icecave\Flax\Serialization\Exception">
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Serialization/Exception/DecodeException.php">
+        <class name="DecodeException" namespace="Icecave\Flax\Serialization\Exception">
+          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
+        </class>
+        <line num="17" type="method" name="__construct" crap="2" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <metrics loc="23" ncloc="16" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Icecave\Flax\Wire">
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ProtocolDecoder.php">
+        <class name="ProtocolDecoder" namespace="Icecave\Flax\Wire">
+          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        </class>
+        <metrics loc="143" ncloc="-59" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </file>
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ProtocolDecoderState.php">
+        <class name="ProtocolDecoderState" namespace="Icecave\Flax\Wire">
+          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        </class>
+        <metrics loc="12" ncloc="12" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </file>
+      <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/ProtocolEncoder.php">
+        <class name="ProtocolEncoder" namespace="Icecave\Flax\Wire">
+          <metrics methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="13" elements="20" coveredelements="16"/>
+        </class>
+        <line num="9" type="method" name="__construct" crap="1" count="2"/>
+        <line num="11" type="stmt" count="2"/>
+        <line num="13" type="stmt" count="2"/>
+        <line num="14" type="stmt" count="2"/>
+        <line num="16" type="method" name="reset" crap="2" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="26" type="method" name="encodeVersion" crap="1" count="1"/>
+        <line num="28" type="stmt" count="1"/>
+        <line num="30" type="stmt" count="1"/>
+        <line num="39" type="method" name="encodeCall" crap="2" count="1"/>
+        <line num="41" type="stmt" count="1"/>
+        <line num="43" type="stmt" count="1"/>
+        <line num="44" type="stmt" count="1"/>
+        <line num="45" type="stmt" count="1"/>
+        <line num="47" type="stmt" count="1"/>
+        <line num="48" type="stmt" count="1"/>
+        <line num="49" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="57" type="stmt" count="0"/>
+        <metrics loc="56" ncloc="47" classes="1" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="13" elements="20" coveredelements="16"/>
       </file>
     </package>
     <file name="/home/travis/build/IcecaveLabs/flax/src/Icecave/Flax/Wire/Reader.php">
       <line num="1" type="stmt" count="0"/>
       <metrics loc="1" ncloc="1" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
     </file>
-    <metrics files="13" loc="2431" ncloc="1626" classes="11" methods="116" coveredmethods="108" conditionals="0" coveredconditionals="0" statements="818" coveredstatements="769" elements="934" coveredelements="877"/>
+    <metrics files="13" loc="2438" ncloc="1630" classes="11" methods="116" coveredmethods="107" conditionals="0" coveredconditionals="0" statements="819" coveredstatements="767" elements="935" coveredelements="874"/>
   </project>
 </coverage>
