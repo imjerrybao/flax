@@ -5,6 +5,7 @@ use Icecave\Chrono\DateTime;
 use Icecave\Collections\Map;
 use Icecave\Collections\Stack;
 use Icecave\Collections\Vector;
+use Icecave\Flax\Exception\DecodeException;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
 
@@ -58,15 +59,15 @@ class Decoder
     /**
      * Finalize decoding and return the decoded value.
      *
-     * @return mixed                     The decoded value.
-     * @throws Exception\DecodeException If the decoder has not yet received a full Hessian value.
+     * @return mixed           The decoded value.
+     * @throws DecodeException If the decoder has not yet received a full Hessian value.
      */
     public function finalize()
     {
         $this->typeCheck->finalize(func_get_args());
 
         if (!$this->stack->isEmpty()) {
-            throw new Exception\DecodeException('Unexpected end of stream (state: ' . $this->state() . ').');
+            throw new DecodeException('Unexpected end of stream (state: ' . $this->state() . ').');
         }
 
         $value = $this->value;
@@ -83,7 +84,7 @@ class Decoder
      *
      * @param integer $byte
      *
-     * @throws Exception\DecodeException if the given byte can not be decoded in the current state.
+     * @throws DecodeException if the given byte can not be decoded in the current state.
      */
     private function feedByte($byte)
     {
@@ -148,7 +149,7 @@ class Decoder
         }
 
          if (!$this->handleBegin($byte)) {
-            throw new Exception\DecodeException('Invalid byte at start of value: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+            throw new DecodeException('Invalid byte at start of value: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
          }
     }
 
@@ -605,12 +606,12 @@ class Decoder
      *
      * @param integer $byte
      *
-     * @throws Exception\DecodeException if the given byte is valid as the first byte of a Hessian string.
+     * @throws DecodeException if the given byte is valid as the first byte of a Hessian string.
      */
     private function handleBeginStringStrict($byte)
     {
         if (!$this->handleBeginString($byte)) {
-            throw new Exception\DecodeException('Invalid byte at start of string: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+            throw new DecodeException('Invalid byte at start of string: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
         }
     }
 
@@ -672,7 +673,7 @@ class Decoder
     private function handleBeginInt32Strict($byte)
     {
         if (!$this->handleBeginInt32($byte)) {
-            throw new Exception\DecodeException('Invalid byte at start of int: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+            throw new DecodeException('Invalid byte at start of int: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
         }
     }
 
@@ -825,8 +826,8 @@ class Decoder
     /**
      * Handle decoding a 16-bit (short) string or binary buffer size.
      *
+     * @param integer      $byte
      * @param DecoderState $nextState
-     * @param integer $byte
      */
     private function handleStringOrBinarySize($byte, DecoderState $nextState)
     {
@@ -894,7 +895,7 @@ class Decoder
                 return $this->setState(DecoderState::STRING_CHUNK_FINAL_SIZE());
         }
 
-        throw new Exception\DecodeException('Invalid byte at start of string chunk: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+        throw new DecodeException('Invalid byte at start of string chunk: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
     }
 
     /**
@@ -951,7 +952,7 @@ class Decoder
                 return $this->setState(DecoderState::BINARY_CHUNK_FINAL_SIZE());
         }
 
-        throw new Exception\DecodeException('Invalid byte at start of binary chunk: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+        throw new DecodeException('Invalid byte at start of binary chunk: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
     }
 
     /**
@@ -1099,7 +1100,7 @@ class Decoder
             return;
         }
 
-        throw new Exception\DecodeException('Invalid byte at start of collection type: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+        throw new DecodeException('Invalid byte at start of collection type: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
     }
 
     /**
@@ -1180,8 +1181,6 @@ class Decoder
 
     /**
      * Pop the current state off the stack, and emit the buffer.
-     *
-     * @param mixed $value
      */
     private function popStateAndEmitBuffer()
     {
@@ -1190,8 +1189,6 @@ class Decoder
 
     /**
      * Pop the current state off the stack, and emit the result.
-     *
-     * @param mixed $value
      */
     private function popStateAndEmitResult()
     {

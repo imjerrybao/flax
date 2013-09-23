@@ -1,7 +1,7 @@
 <?php
-namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Wire;
+namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax\Message;
 
-class ProtocolEncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
+class EncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
 {
     public function validateConstruct(array $arguments)
     {

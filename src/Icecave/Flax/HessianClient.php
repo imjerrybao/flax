@@ -3,31 +3,31 @@ namespace Icecave\Flax;
 
 use Buzz\Browser;
 use Icecave\Flax\TypeCheck\TypeCheck;
-use Icecave\Flax\Wire\ProtocolEncoder;
-use Icecave\Flax\Wire\ProtocolDecoder;
+use Icecave\Flax\Message\Encoder;
+use Icecave\Flax\Message\Decoder;
 
 class HessianClient implements HessianClientInterface
 {
     /**
-     * @param string               $url
-     * @param Browser              $httpBrowser
-     * @param ProtocolEncoder|null $encoder
-     * @param ProtocolDecoder|null $decoder
+     * @param string       $url
+     * @param Browser      $httpBrowser
+     * @param Encoder|null $encoder
+     * @param Decoder|null $decoder
      */
     public function __construct(
         $url,
         Browser $httpBrowser,
-        ProtocolEncoder $encoder = null,
-        ProtocolDecoder $decoder = null
+        Encoder $encoder = null,
+        Decoder $decoder = null
     ) {
         $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
 
         if (null === $encoder) {
-            $encoder = new ProtocolEncoder;
+            $encoder = new Encoder;
         }
 
         if (null === $decoder) {
-            $decoder = new ProtocolDecoder;
+            $decoder = new Decoder;
         }
 
         $this->url = $url;

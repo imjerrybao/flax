@@ -7,6 +7,7 @@ use Icecave\Collections\AssociativeInterface;
 use Icecave\Collections\Collection;
 use Icecave\Collections\Map;
 use Icecave\Collections\SequenceInterface;
+use Icecave\Flax\Exception\EncodeException;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
 
@@ -42,7 +43,7 @@ class Encoder
      * @param mixed $value
      *
      * @return string
-     * @throws Exception\EncodeException
+     * @throws EncodeException
      */
     public function encode($value)
     {
@@ -67,7 +68,7 @@ class Encoder
                 return $this->encodeNull();
         }
 
-        throw new Exception\EncodeException('Can not encode value of type "' . $type . '".');
+        throw new EncodeException('Can not encode value of type "' . $type . '".');
     }
 
     /**
@@ -343,7 +344,7 @@ class Encoder
             return $this->encodeStdClass($value);
         }
 
-        throw new Exception\EncodeException('Can not encode object of type "' . get_class($value) . '".');
+        throw new EncodeException('Can not encode object of type "' . get_class($value) . '".');
     }
 
     /**

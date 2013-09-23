@@ -12,13 +12,7 @@ abstract class Utility
     {
         TypeCheck::get(__CLASS__)->isBigEndian(func_get_args());
 
-        static $isBigEndian = null;
-
-        if (null === $isBigEndian) {
-            $isBigEndian = pack('S', 0x1020) === pack('n', 0x1020);
-        }
-
-        return $isBigEndian;
+        return pack('S', 0x1020) === pack('n', 0x1020);
     }
 
     /**

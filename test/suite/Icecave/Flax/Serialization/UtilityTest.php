@@ -42,4 +42,14 @@ class UtilityTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(0x4142434445464748, Utility::unpackInt64("ABCDEFGH"));
     }
+
+    public function testByteToUnsigned()
+    {
+        $this->assertSame(0x80, Utility::byteToUnsigned(-0x80));
+    }
+
+    public function testByteToSigned()
+    {
+        $this->assertSame(-0x80, Utility::byteToSigned(0x80));
+    }
 }

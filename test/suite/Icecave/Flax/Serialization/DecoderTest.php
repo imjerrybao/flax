@@ -52,67 +52,67 @@ class DecoderTest extends PHPUnit_Framework_TestCase
     {
         $this->decoder->feed("C");
 
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Unexpected end of stream (state: CLASS_DEFINITION_NAME).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Unexpected end of stream (state: CLASS_DEFINITION_NAME).');
         $this->decoder->finalize();
     }
 
     public function testFeedFailureReservedByte()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of value: 0x45 (state: BEGIN).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of value: 0x45 (state: BEGIN).');
         $this->decoder->feed("\x45");
     }
 
     public function testFeedFailureWithInvalidCollectionType()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of collection type: 0x54 (state: COLLECTION_TYPE).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of collection type: 0x54 (state: COLLECTION_TYPE).');
         $this->decoder->feed("UT");
     }
 
     public function testFeedFailureWithInvalidStringContinuation()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of string chunk: 0x20 (state: STRING_CHUNK_CONTINUATION).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of string chunk: 0x20 (state: STRING_CHUNK_CONTINUATION).');
         $this->decoder->feed("\x52\x00\x05hello\x20");
     }
 
     public function testFeedFailureWithInvalidBinaryContinuation()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of binary chunk: 0x20 (state: BINARY_CHUNK_CONTINUATION).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of binary chunk: 0x20 (state: BINARY_CHUNK_CONTINUATION).');
         $this->decoder->feed("\x41\x00\x05hello\x20");
     }
 
     public function testFeedFailureWithInvalidVectorSize()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of int: 0x54 (state: VECTOR_SIZE).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of int: 0x54 (state: VECTOR_SIZE).');
         $this->decoder->feed("XT");
     }
 
     public function testFeedFailureWithInvalidReference()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of int: 0x54 (state: REFERENCE).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of int: 0x54 (state: REFERENCE).');
         $this->decoder->feed("QT");
     }
 
     public function testFeedFailureWithInvalidClassDefinitionName()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of string: 0x54 (state: CLASS_DEFINITION_NAME).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of string: 0x54 (state: CLASS_DEFINITION_NAME).');
         $this->decoder->feed("CT");
     }
 
     public function testFeedFailureWithInvalidClassDefinitionSize()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of int: 0x54 (state: CLASS_DEFINITION_SIZE).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of int: 0x54 (state: CLASS_DEFINITION_SIZE).');
         $this->decoder->feed("C\x08stdClassT");
     }
 
     public function testFeedFailureWithInvalidClassDefinitionField()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of string: 0x54 (state: CLASS_DEFINITION_FIELD).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of string: 0x54 (state: CLASS_DEFINITION_FIELD).');
         $this->decoder->feed("C\x08stdClass\x91T");
     }
 
     public function testFeedFailureWithInvalidObjectInstanceType()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DecodeException', 'Invalid byte at start of int: 0x54 (state: OBJECT_INSTANCE_TYPE).');
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of int: 0x54 (state: OBJECT_INSTANCE_TYPE).');
         $this->decoder->feed("OT");
     }
 }

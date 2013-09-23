@@ -1,9 +1,9 @@
 <?php
-namespace Icecave\Flax\Wire;
+namespace Icecave\Flax\Message;
 
 use Icecave\Flax\TypeCheck\TypeCheck;
 
-class ProtocolDecoder
+class Decoder
 {
     // public function __construct()
     // {

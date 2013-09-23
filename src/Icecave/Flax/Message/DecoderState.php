@@ -1,9 +1,9 @@
 <?php
-namespace Icecave\Flax\Wire;
+namespace Icecave\Flax\Message;
 
 use Eloquent\Enumeration\Enumeration;
 
-class ProtocolDecoderState extends Enumeration
+class DecoderState extends Enumeration
 {
     const VERSION = 0;
     const RESPONSE_TYPE = 1;

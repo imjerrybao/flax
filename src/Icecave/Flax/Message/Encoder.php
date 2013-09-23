@@ -1,23 +1,23 @@
 <?php
-namespace Icecave\Flax\Wire;
+namespace Icecave\Flax\Message;
 
-use Icecave\Flax\Serialization\Encoder;
+use Icecave\Flax\Serialization\Encoder as SerializationEncoder;
 use Icecave\Flax\TypeCheck\TypeCheck;
 
-class ProtocolEncoder
+class Encoder
 {
     public function __construct()
     {
         $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
 
-        $this->valueEncoder = new Encoder;
+        $this->serializationEncoder = new SerializationEncoder;
     }
 
     public function reset()
     {
         $this->typeCheck->reset(func_get_args());
 
-        $this->valueEncoder->reset();
+        $this->serializationEncoder->reset();
     }
 
     /**
@@ -27,7 +27,7 @@ class ProtocolEncoder
     {
         $this->typeCheck->encodeVersion(func_get_args());
 
-        return "H\x02\x00";
+        return HessianConstants::VERSION;
     }
 
     /**
@@ -40,17 +40,17 @@ class ProtocolEncoder
     {
         $this->typeCheck->encodeCall(func_get_args());
 
-        $buffer  = 'C';
-        $buffer .= $this->valueEncoder->encode($methodName);
-        $buffer .= $this->valueEncoder->encode(count($arguments));
+        $buffer  = pack('c', HessianConstants::CALL);
+        $buffer .= $this->serializationEncoder->encode($methodName);
+        $buffer .= $this->serializationEncoder->encode(count($arguments));
 
         foreach ($arguments as $value) {
-            $buffer .= $this->valueEncoder->encode($value);
+            $buffer .= $this->serializationEncoder->encode($value);
         }
 
         return $buffer;
     }
 
     private $typeCheck;
-    private $valueEncoder;
+    private $serializationEncoder;
 }

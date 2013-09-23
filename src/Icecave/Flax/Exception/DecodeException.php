@@ -1,5 +1,5 @@
 <?php
-namespace Icecave\Flax\Serialization\Exception;
+namespace Icecave\Flax\Exception;
 
 use Exception;
 use Icecave\Flax\TypeCheck\TypeCheck;
