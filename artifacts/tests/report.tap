@@ -34,145 +34,149 @@ ok 32 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "timest
 ok 33 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "timestamp - minutes" ('K' . "\0" . 'ãƒ', 1998-05-08T09:51:00+00:00)
 ok 34 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size - compact - empty" ('x', <Vector 0>)
 ok 35 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size - compact" ('{‘’“', <Vector 3 [1, 2, 3]>)
-ok 36 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size - compact - nested" ('z{‘’“{”•–', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000006d1a8ff90000000000969cbc>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000006d1a8ff70000000000969cbc>]>)
+ok 36 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size - compact - nested" ('z{‘’“{”•–', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000005aeaa3e80000000036c84b2d>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000005aeaa3e60000000036c84b2d>]>)
 ok 37 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size" ('X˜‘’“”•–—˜', <Vector 8 [1, 2, 3, ...]>)
-ok 38 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size - nested" ('X˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜', <Vector 8 [<Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000006d1a8ff10000000000969cbc>, <Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000006d1a8fef0000000000969cbc>, <Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000006d1a8fed0000000000969cbc>, ...]>)
+ok 38 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size - nested" ('X˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜', <Vector 8 [<Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000005aeaa3e00000000036c84b2d>, <Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000005aeaa3fe0000000036c84b2d>, <Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000005aeaa3fc0000000036c84b2d>, ...]>)
 ok 39 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - empty" ('HZ', <Map 0>)
 ok 40 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map" ('Hš‘Ÿ’Z', <Map 2 [10 => 1, 15 => 2]>)
-ok 41 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - nested" ('H‘H’“ZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 000000006d1a8fd70000000000969cbc>]>)
+ok 41 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - nested" ('H‘H’“ZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 000000005aeaa3c60000000036c84b2d>]>)
 ok 42 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object - compact - empty" ('CstdClass`', stdClass)
 ok 43 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object - compact" ('CstdClass’barfoo`’‘', stdClass)
 ok 44 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object - compact - nested" ('CstdClass‘child`CstdClassa', stdClass)
 ok 45 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "string - empty" ('0' . "\0" . '', '')
 ok 46 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "string - hello" ('0hello', 'hello')
 ok 47 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "string - unicode" ('0Ãƒ', 'Ãƒ')
-ok 48 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "string - chunked - single" ('S' . "\0" . 'hello', 'hello')
-ok 49 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "string - chunked - multiple" ('R' . "\0" . 'heÌˆlloR' . "\0" . ', worldS' . "\0" . '!', 'heÌˆllo, world!')
-ok 50 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - compact - empty" (' ', '')
-ok 51 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - compact - hello" ('%hello', 'hello')
-ok 52 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - empty" ('4' . "\0" . '', '')
-ok 53 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - hello" ('4hello', 'hello')
-ok 54 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - chunked - single" ('B' . "\0" . 'hello', 'hello')
-ok 55 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - chunked - multiple" ('A' . "\0" . 'helloA' . "\0" . ', worldB' . "\0" . '!', 'hello, world!')
-ok 56 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 1 octet zero" ('à', 0)
-ok 57 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 1 octet min" ('Ø', -8)
-ok 58 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 1 octet max" ('ï', 15)
-ok 59 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 1 octet midway" ('Ü', -4)
-ok 60 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 2 octet min" ('ğ' . "\0" . '', -2048)
-ok 61 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 2 octet max" ('ÿÿ', 2047)
-ok 62 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 2 octet midway" ('÷' . "\0" . '', -256)
-ok 63 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 3 octet min" ('8' . "\0" . '' . "\0" . '', -262144)
-ok 64 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 3 octet max" ('?ÿÿ', 262143)
-ok 65 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 3 octet midway" (';ğ`', -4000)
-ok 66 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 4 octet" ('Y 0@', 270544960)
-ok 67 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size - empty" ('X', <Vector 0>)
-ok 68 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - empty" ('WZ', <Vector 0>)
-ok 69 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector" ('W‘’“Z', <Vector 3 [1, 2, 3]>)
-ok 70 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - nested" ('WW‘’“ZW”•–ZZ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000006d1a8c550000000000969cbc>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000006d1a8c530000000000969cbc>]>)
-ok 71 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - compact - empty" ('p???', <Vector 0>)
-ok 72 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - compact" ('s???‘’“', <Vector 3 [1, 2, 3]>)
-ok 73 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - compact - nested" ('r???s???‘’“s???”•–', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000006d1a8c4b0000000000969cbc>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000006d1a8c490000000000969cbc>]>)
-ok 74 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - empty" ('V???', <Vector 0>)
-ok 75 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size" ('V???“‘’“', <Vector 3 [1, 2, 3]>)
-ok 76 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - nested" ('V???’V???“‘’“V???“”•–', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000006d1a8c410000000000969cbc>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000006d1a8fbf0000000000969cbc>]>)
-ok 77 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed - empty" ('U???Z', <Vector 0>)
-ok 78 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed" ('U???‘’“Z', <Vector 3 [1, 2, 3]>)
-ok 79 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed - integer type" ('U‘’“Z', <Vector 3 [1, 2, 3]>)
-ok 80 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed - nested" ('U???U???‘’“ZU???”•–ZZ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000006d1a8fb50000000000969cbc>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000006d1a8fb30000000000969cbc>]>)
-ok 81 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - typed - empty" ('M???Z', <Map 0>)
-ok 82 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - typed" ('M???š‘Ÿ’Z', <Map 2 [10 => 1, 15 => 2]>)
-ok 83 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - typed - integer type" ('M‘š‘Ÿ’Z', <Map 2 [10 => 1, 15 => 2]>)
-ok 84 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - typed - nested" ('M???‘M???’‘ZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 000000006d1a8f970000000000969cbc>]>)
-ok 85 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object - empty" ('CstdClassO', stdClass)
-ok 86 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object" ('CstdClass’barfooO’‘', stdClass)
-ok 87 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object - nested" ('CstdClass‘childOCstdClassO‘', stdClass)
-ok 88 - Icecave\Flax\Serialization\DecoderTest::testDecodeWithReference
-ok 89 - Icecave\Flax\Serialization\DecoderTest::testFinalizedFailure
-ok 90 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureReservedByte
-ok 91 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidCollectionType
-ok 92 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidStringContinuation
-ok 93 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidBinaryContinuation
-ok 94 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidVectorSize
-ok 95 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidReference
-ok 96 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidClassDefinitionName
-ok 97 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidClassDefinitionSize
-ok 98 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidClassDefinitionField
-ok 99 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidObjectInstanceType
-ok 100 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "null" ('N', NULL)
-ok 101 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "boolean - true" ('T', true)
-ok 102 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "boolean - false" ('F', false)
-ok 103 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "string - compact - empty" ('' . "\0" . '', '')
-ok 104 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "string - compact - hello" ('hello', 'hello')
-ok 105 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "string - compact - unicode" ('Ãƒ', 'Ãƒ')
-ok 106 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 1 octet zero" ('', 0)
-ok 107 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 1 octet min" ('€', -16)
-ok 108 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 1 octet max" ('¿', 47)
-ok 109 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 1 octet midway" ('ˆ', -8)
-ok 110 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 2 octet min" ('À' . "\0" . '', -2048)
-ok 111 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 2 octet max" ('Ïÿ', 2047)
-ok 112 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 2 octet midway" ('Ç' . "\0" . '', -256)
-ok 113 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 3 octet min" ('Ğ' . "\0" . '' . "\0" . '', -262144)
-ok 114 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 3 octet max" ('×ÿÿ', 262143)
-ok 115 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 3 octet midway" ('Óğ`', -4000)
-ok 116 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 4 octet" ('I 0@', 270544960)
-ok 117 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "long - 8 octet" ('L 0@P`p€', 1161981756646125696, false)
-ok 118 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 1 octet zero" ('[', 0)
-ok 119 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 1 octet one" ('\\', 1)
-ok 120 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 2 octet min" (']€', -128)
-ok 121 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 2 octet max" (']', 127)
-ok 122 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 2 octet midway 1" (']ö', -10)
-ok 123 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 2 octet midway 2" (']', 12)
-ok 124 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 3 octet min" ('^€' . "\0" . '', -32768)
-ok 125 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 3 octet max" ('^ÿ', 32767)
-ok 126 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 3 octet midway" ('^ü', -1000)
-ok 127 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 4 octet float" ('_AD' . "\0" . '' . "\0" . '', 12.25)
-ok 128 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 4 octet float (whole)" ('_G/È' . "\0" . '', 45000)
-ok 129 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 8 octet" ('D@(€¡¾+IZ', 12.251234)
-ok 130 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "timestamp - milliseconds" ('J' . "\0" . '' . "\0" . '' . "\0" . 'ĞK’„¸', 1998-05-08T09:51:31+00:00)
-ok 131 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "timestamp - minutes" ('K' . "\0" . 'ãƒ', 1998-05-08T09:51:00+00:00)
-ok 132 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size - compact - empty" ('x', <Vector 0>)
-ok 133 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size - compact" ('{‘’“', <Vector 3 [1, 2, 3]>)
-ok 134 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size - compact - nested" ('z{‘’“{”•–', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000006d1a8f4e0000000000969cbc>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000006d1a8f4c0000000000969cbc>]>)
-ok 135 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size" ('X˜‘’“”•–—˜', <Vector 8 [1, 2, 3, ...]>)
-ok 136 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size - nested" ('X˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜', <Vector 8 [<Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000006d1a8f460000000000969cbc>, <Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000006d1a8f440000000000969cbc>, <Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000006d1a8f420000000000969cbc>, ...]>)
-ok 137 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "map - empty" ('HZ', <Map 0>)
-ok 138 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "map" ('Hš‘Ÿ’Z', <Map 2 [10 => 1, 15 => 2]>)
-ok 139 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "map - nested" ('H‘H’“ZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 000000006d1a8eac0000000000969cbc>]>)
-ok 140 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "object - compact - empty" ('CstdClass`', stdClass)
-ok 141 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "object - compact" ('CstdClass’barfoo`’‘', stdClass)
-ok 142 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "object - compact - nested" ('CstdClass‘child`CstdClassa', stdClass)
-ok 143 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "timestamp - native datetime - milliseconds" ('J' . "\0" . '' . "\0" . '' . "\0" . 'ĞK’„¸', DateTime)
-ok 144 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "timestamp - native datetime - minutes" ('K' . "\0" . 'ãƒ', DateTime)
-ok 145 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "array - compact - empty" ('x', array())
-ok 146 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "array - compact" ('{‘’“', array(1, 2, 3))
-ok 147 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "array" ('X˜‘’“”•–—˜', array(1, 2, 3, 4, 5, 6, 7, 8))
-ok 148 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "array - map" ('Hš‘Ÿ’Z', array(1, 2))
-ok 149 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringMediumLength
-ok 150 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringSmallestChunk
-ok 151 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringWholeChunk
-ok 152 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringPartialChunk
-ok 153 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringMultipleChunks
-ok 154 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinary with data set "binary - compact - empty" (' ', '')
-ok 155 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinary with data set "binary - compact - hello" ('%hello', 'hello')
-ok 156 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinaryMediumLength
-ok 157 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinarySmallestChunk
-ok 158 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinaryWholeChunk
-ok 159 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinaryPartialChunk
-ok 160 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinaryMultipleChunks
-ok 161 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - milliseconds" ('J' . "\0" . '' . "\0" . '' . "\0" . 'ĞK’„¸', 894621091000)
-ok 162 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - minutes" ('K' . "\0" . 'ãƒ', 894621060000)
-ok 163 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeMultipleObjects
-ok 164 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeMultipleObjectsSingleDefinition
-ok 165 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeMultipleObjectsReference
-ok 166 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeArrayIncreasesReferenceId
-ok 167 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeObjectWithLongFormClassDefinitionId
-ok 168 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeUnsupportedObject
-ok 169 - Icecave\Flax\Serialization\ValueEncoderTest::testReset
-ok 170 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeUnsupportedType
-ok 171 - Icecave\Flax\Serialization\UtilityTest::testIsBigEndian
-ok 172 - Icecave\Flax\Serialization\UtilityTest::testConvertEndianess
-ok 173 - Icecave\Flax\Serialization\UtilityTest::testPackInt64
-ok 174 - Icecave\Flax\Serialization\UtilityTest::testUnpackInt64
-ok 175 - Icecave\Flax\Wire\ProtocolEncoderTest::testEncodeVersion
-ok 176 - Icecave\Flax\Wire\ProtocolEncoderTest::testEncodeCall
-1..176
+ok 48 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "string - chunked - empty" ('S' . "\0" . '' . "\0" . '', '')
+ok 49 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "string - chunked - single" ('S' . "\0" . 'hello', 'hello')
+ok 50 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "string - chunked - multiple" ('R' . "\0" . 'heÌˆlloR' . "\0" . ', worldS' . "\0" . '!', 'heÌˆllo, world!')
+ok 51 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - compact - empty" (' ', '')
+ok 52 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - compact - hello" ('%hello', 'hello')
+ok 53 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - empty" ('4' . "\0" . '', '')
+ok 54 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - hello" ('4hello', 'hello')
+ok 55 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - chunked - empty" ('B' . "\0" . '' . "\0" . '', '')
+ok 56 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - chunked - single" ('B' . "\0" . 'hello', 'hello')
+ok 57 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "binary - chunked - multiple" ('A' . "\0" . 'helloA' . "\0" . ', worldB' . "\0" . '!', 'hello, world!')
+ok 58 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 1 octet zero" ('à', 0)
+ok 59 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 1 octet min" ('Ø', -8)
+ok 60 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 1 octet max" ('ï', 15)
+ok 61 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 1 octet midway" ('Ü', -4)
+ok 62 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 2 octet min" ('ğ' . "\0" . '', -2048)
+ok 63 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 2 octet max" ('ÿÿ', 2047)
+ok 64 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 2 octet midway" ('÷' . "\0" . '', -256)
+ok 65 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 3 octet min" ('8' . "\0" . '' . "\0" . '', -262144)
+ok 66 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 3 octet max" ('?ÿÿ', 262143)
+ok 67 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 3 octet midway" (';ğ`', -4000)
+ok 68 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "long - 4 octet" ('Y 0@', 270544960)
+ok 69 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - fixed size - empty" ('X', <Vector 0>)
+ok 70 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - empty" ('WZ', <Vector 0>)
+ok 71 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector" ('W‘’“Z', <Vector 3 [1, 2, 3]>)
+ok 72 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - nested" ('WW‘’“ZW”•–ZZ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000005aeaa0440000000036c84b2d>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000005aeaa0420000000036c84b2d>]>)
+ok 73 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - compact - empty" ('p???', <Vector 0>)
+ok 74 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - compact" ('s???‘’“', <Vector 3 [1, 2, 3]>)
+ok 75 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - compact - nested" ('r???s???‘’“s???”•–', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000005aeaa05a0000000036c84b2d>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000005aeaa0580000000036c84b2d>]>)
+ok 76 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - empty" ('V???', <Vector 0>)
+ok 77 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size" ('V???“‘’“', <Vector 3 [1, 2, 3]>)
+ok 78 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed + fixed size - nested" ('V???’V???“‘’“V???“”•–', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000005aeaa0500000000036c84b2d>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000005aeaa3ae0000000036c84b2d>]>)
+ok 79 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed - empty" ('U???Z', <Vector 0>)
+ok 80 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed" ('U???‘’“Z', <Vector 3 [1, 2, 3]>)
+ok 81 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed - integer type" ('U‘’“Z', <Vector 3 [1, 2, 3]>)
+ok 82 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "vector - typed - nested" ('U???U???‘’“ZU???”•–ZZ', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000005aeaa3a40000000036c84b2d>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000005aeaa3a20000000036c84b2d>]>)
+ok 83 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - typed - empty" ('M???Z', <Map 0>)
+ok 84 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - typed" ('M???š‘Ÿ’Z', <Map 2 [10 => 1, 15 => 2]>)
+ok 85 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - typed - integer type" ('M‘š‘Ÿ’Z', <Map 2 [10 => 1, 15 => 2]>)
+ok 86 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "map - typed - nested" ('M???‘M???’‘ZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 000000005aeaa3860000000036c84b2d>]>)
+ok 87 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object - empty" ('CstdClassO', stdClass)
+ok 88 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object" ('CstdClass’barfooO’‘', stdClass)
+ok 89 - Icecave\Flax\Serialization\DecoderTest::testDecode with data set "object - nested" ('CstdClass‘childOCstdClassO‘', stdClass)
+ok 90 - Icecave\Flax\Serialization\DecoderTest::testDecodeWithReference
+ok 91 - Icecave\Flax\Serialization\DecoderTest::testFinalizedFailure
+ok 92 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureReservedByte
+ok 93 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidCollectionType
+ok 94 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidStringContinuation
+ok 95 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidBinaryContinuation
+ok 96 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidVectorSize
+ok 97 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidReference
+ok 98 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidClassDefinitionName
+ok 99 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidClassDefinitionSize
+ok 100 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidClassDefinitionField
+ok 101 - Icecave\Flax\Serialization\DecoderTest::testFeedFailureWithInvalidObjectInstanceType
+ok 102 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "null" ('N', NULL)
+ok 103 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "boolean - true" ('T', true)
+ok 104 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "boolean - false" ('F', false)
+ok 105 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "string - compact - empty" ('' . "\0" . '', '')
+ok 106 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "string - compact - hello" ('hello', 'hello')
+ok 107 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "string - compact - unicode" ('Ãƒ', 'Ãƒ')
+ok 108 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 1 octet zero" ('', 0)
+ok 109 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 1 octet min" ('€', -16)
+ok 110 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 1 octet max" ('¿', 47)
+ok 111 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 1 octet midway" ('ˆ', -8)
+ok 112 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 2 octet min" ('À' . "\0" . '', -2048)
+ok 113 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 2 octet max" ('Ïÿ', 2047)
+ok 114 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 2 octet midway" ('Ç' . "\0" . '', -256)
+ok 115 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 3 octet min" ('Ğ' . "\0" . '' . "\0" . '', -262144)
+ok 116 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 3 octet max" ('×ÿÿ', 262143)
+ok 117 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 3 octet midway" ('Óğ`', -4000)
+ok 118 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "integer - 4 octet" ('I 0@', 270544960)
+ok 119 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "long - 8 octet" ('L 0@P`p€', 1161981756646125696, false)
+ok 120 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 1 octet zero" ('[', 0)
+ok 121 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 1 octet one" ('\\', 1)
+ok 122 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 2 octet min" (']€', -128)
+ok 123 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 2 octet max" (']', 127)
+ok 124 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 2 octet midway 1" (']ö', -10)
+ok 125 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 2 octet midway 2" (']', 12)
+ok 126 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 3 octet min" ('^€' . "\0" . '', -32768)
+ok 127 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 3 octet max" ('^ÿ', 32767)
+ok 128 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 3 octet midway" ('^ü', -1000)
+ok 129 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 4 octet float" ('_AD' . "\0" . '' . "\0" . '', 12.25)
+ok 130 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 4 octet float (whole)" ('_G/È' . "\0" . '', 45000)
+ok 131 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "double - 8 octet" ('D@(€¡¾+IZ', 12.251234)
+ok 132 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "timestamp - milliseconds" ('J' . "\0" . '' . "\0" . '' . "\0" . 'ĞK’„¸', 1998-05-08T09:51:31+00:00)
+ok 133 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "timestamp - minutes" ('K' . "\0" . 'ãƒ', 1998-05-08T09:51:00+00:00)
+ok 134 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size - compact - empty" ('x', <Vector 0>)
+ok 135 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size - compact" ('{‘’“', <Vector 3 [1, 2, 3]>)
+ok 136 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size - compact - nested" ('z{‘’“{”•–', <Vector 2 [<Icecave\Collections\Vector "<Vector 3 [1, 2, 3]>" @ 000000005aeaa35d0000000036c84b2d>, <Icecave\Collections\Vector "<Vector 3 [4, 5, 6]>" @ 000000005aeaa35b0000000036c84b2d>]>)
+ok 137 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size" ('X˜‘’“”•–—˜', <Vector 8 [1, 2, 3, ...]>)
+ok 138 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "vector - fixed size - nested" ('X˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜X˜‘’“”•–—˜', <Vector 8 [<Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000005aeaa3550000000036c84b2d>, <Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000005aeaa3530000000036c84b2d>, <Icecave\Collections\Vector "<Vector 8 [1, 2, 3, ...]>" @ 000000005aeaa3510000000036c84b2d>, ...]>)
+ok 139 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "map - empty" ('HZ', <Map 0>)
+ok 140 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "map" ('Hš‘Ÿ’Z', <Map 2 [10 => 1, 15 => 2]>)
+ok 141 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "map - nested" ('H‘H’“ZZ', <Map 1 [1 => <Icecave\Collections\Map "<Map 1 [2 => 3]>" @ 000000005aeaa2bb0000000036c84b2d>]>)
+ok 142 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "object - compact - empty" ('CstdClass`', stdClass)
+ok 143 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "object - compact" ('CstdClass’barfoo`’‘', stdClass)
+ok 144 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "object - compact - nested" ('CstdClass‘child`CstdClassa', stdClass)
+ok 145 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "timestamp - native datetime - milliseconds" ('J' . "\0" . '' . "\0" . '' . "\0" . 'ĞK’„¸', DateTime)
+ok 146 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "timestamp - native datetime - minutes" ('K' . "\0" . 'ãƒ', DateTime)
+ok 147 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "array - compact - empty" ('x', array())
+ok 148 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "array - compact" ('{‘’“', array(1, 2, 3))
+ok 149 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "array" ('X˜‘’“”•–—˜', array(1, 2, 3, 4, 5, 6, 7, 8))
+ok 150 - Icecave\Flax\Serialization\ValueEncoderTest::testEncode with data set "array - map" ('Hš‘Ÿ’Z', array(1, 2))
+ok 151 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringMediumLength
+ok 152 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringSmallestChunk
+ok 153 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringWholeChunk
+ok 154 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringPartialChunk
+ok 155 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeStringMultipleChunks
+ok 156 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinary with data set "binary - compact - empty" (' ', '')
+ok 157 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinary with data set "binary - compact - hello" ('%hello', 'hello')
+ok 158 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinaryMediumLength
+ok 159 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinarySmallestChunk
+ok 160 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinaryWholeChunk
+ok 161 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinaryPartialChunk
+ok 162 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeBinaryMultipleChunks
+ok 163 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - milliseconds" ('J' . "\0" . '' . "\0" . '' . "\0" . 'ĞK’„¸', 894621091000)
+ok 164 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeTimestamp with data set "timestamp - minutes" ('K' . "\0" . 'ãƒ', 894621060000)
+ok 165 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeMultipleObjects
+ok 166 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeMultipleObjectsSingleDefinition
+ok 167 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeMultipleObjectsReference
+ok 168 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeArrayIncreasesReferenceId
+ok 169 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeObjectWithLongFormClassDefinitionId
+ok 170 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeUnsupportedObject
+ok 171 - Icecave\Flax\Serialization\ValueEncoderTest::testReset
+ok 172 - Icecave\Flax\Serialization\ValueEncoderTest::testEncodeUnsupportedType
+ok 173 - Icecave\Flax\Serialization\Exception\DecodeExceptionTest::testException
+ok 174 - Icecave\Flax\Serialization\Exception\ExceptionExceptionTest::testException
+ok 175 - Icecave\Flax\Serialization\UtilityTest::testIsBigEndian
+ok 176 - Icecave\Flax\Serialization\UtilityTest::testConvertEndianess
+ok 177 - Icecave\Flax\Serialization\UtilityTest::testPackInt64
+ok 178 - Icecave\Flax\Serialization\UtilityTest::testUnpackInt64
+ok 179 - Icecave\Flax\Wire\ProtocolEncoderTest::testEncodeVersion
+ok 180 - Icecave\Flax\Wire\ProtocolEncoderTest::testEncodeCall
+1..180

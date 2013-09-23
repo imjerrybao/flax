@@ -81,9 +81,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_handleStringChunkSize">handleStringChunkSize</a>(integer $byte, boolean $isFinal)
-                    <p>
-</p>
+                    <a href="#method_handleStringChunkData">handleStringChunkData</a>(integer $byte)
+                    <p>Handle decoding a chunked UTF-8 string.</p>
                 </td>
                 <td></td>
             </tr>
@@ -92,9 +91,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_handleStringChunkData">handleStringChunkData</a>(integer $byte, boolean $isFinal)
-                    <p>
-</p>
+                    <a href="#method_handleStringChunkFinalData">handleStringChunkFinalData</a>(integer $byte)
+                    <p>Handle decoding the final chunk of a chunked UTF-8 string.</p>
                 </td>
                 <td></td>
             </tr>
@@ -104,8 +102,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_handleStringChunkContinuation">handleStringChunkContinuation</a>(integer $byte)
-                    <p>
-</p>
+                    <p>Handle decoding the first byte after a string chunk.</p>
                 </td>
                 <td></td>
             </tr>
@@ -114,9 +111,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_handleBinaryChunkSize">handleBinaryChunkSize</a>(integer $byte, boolean $isFinal)
-                    <p>
-</p>
+                    <a href="#method_handleBinaryChunkData">handleBinaryChunkData</a>(integer $byte)
+                    <p>Handle decoding a chunked binary buffer.</p>
                 </td>
                 <td></td>
             </tr>
@@ -125,9 +121,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_handleBinaryChunkData">handleBinaryChunkData</a>(integer $byte, boolean $isFinal)
-                    <p>
-</p>
+                    <a href="#method_handleBinaryChunkFinalData">handleBinaryChunkFinalData</a>(integer $byte)
+                    <p>Handle decoding the final chunk in a chunked binary buffer.</p>
                 </td>
                 <td></td>
             </tr>
@@ -137,8 +132,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_handleBinaryChunkContinuation">handleBinaryChunkContinuation</a>(integer $byte)
-                    <p>
-</p>
+                    <p>Handle decoding the first byte after a binary chunk.</p>
                 </td>
                 <td></td>
             </tr>
@@ -148,8 +142,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_handleInt32">handleInt32</a>(integer $byte)
-                    <p>
-</p>
+                    <p>Handle decoding a 32-bit integer.</p>
                 </td>
                 <td></td>
             </tr>
@@ -159,8 +152,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_handleInt64">handleInt64</a>(integer $byte)
-                    <p>
-</p>
+                    <p>Handle decoding a 64-bit integer.</p>
                 </td>
                 <td></td>
             </tr>
@@ -170,8 +162,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_handleTimestampMilliseconds">handleTimestampMilliseconds</a>(integer $byte)
-                    <p>
-</p>
+                    <p>Handle decoding a timestamp in milliseconds.</p>
                 </td>
                 <td></td>
             </tr>
@@ -181,8 +172,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_handleTimestampMinutes">handleTimestampMinutes</a>(integer $byte)
-                    <p>
-</p>
+                    <p>Handle decoding a timestamp in minutes.</p>
                 </td>
                 <td></td>
             </tr>
@@ -192,8 +182,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_handleNextCollectionElement">handleNextCollectionElement</a>(integer $byte)
-                    <p>
-</p>
+                    <p>Handle decoding the end of a variable length collection.</p>
                 </td>
                 <td></td>
             </tr>
@@ -203,30 +192,17 @@
                 </td>
                 <td class="last">
                     <a href="#method_handleCollectionType">handleCollectionType</a>(integer $byte)
-                    <p>
-</p>
+                    <p>Handle decoding a the type of a typed collection.</p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    boolean
+                    integer|null
                 </td>
                 <td class="last">
                     <a href="#method_appendInt64Data">appendInt64Data</a>(integer $byte)
-                    <p>
-</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_trace">trace</a>(string $str)
-                    <p>
-</p>
+                    <p>Append 64-bit integer data to the internal buffer.</p>
                 </td>
                 <td></td>
             </tr>
@@ -326,14 +302,13 @@
                     </div>
     </div>
 
-                <h3 id="method_handleStringChunkSize">
-        <div class="location">at line 856</div>
+                <h3 id="method_handleStringChunkData">
+        <div class="location">at line 860</div>
         <code>            public            
-    <strong>handleStringChunkSize</strong>(integer $byte, boolean $isFinal)</code>
+    <strong>handleStringChunkData</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding a chunked UTF-8 string.</p>
         <p>
 </p>
         <div class="tags">
@@ -343,12 +318,6 @@
                     <tr>
                 <td>integer</td>
                 <td>$byte</td>
-                <td>
-</td>
-            </tr>
-                    <tr>
-                <td>boolean</td>
-                <td>$isFinal</td>
                 <td>
 </td>
             </tr>
@@ -360,14 +329,13 @@
                     </div>
     </div>
 
-                <h3 id="method_handleStringChunkData">
-        <div class="location">at line 877</div>
+                <h3 id="method_handleStringChunkFinalData">
+        <div class="location">at line 874</div>
         <code>            public            
-    <strong>handleStringChunkData</strong>(integer $byte, boolean $isFinal)</code>
+    <strong>handleStringChunkFinalData</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding the final chunk of a chunked UTF-8 string.</p>
         <p>
 </p>
         <div class="tags">
@@ -377,12 +345,6 @@
                     <tr>
                 <td>integer</td>
                 <td>$byte</td>
-                <td>
-</td>
-            </tr>
-                    <tr>
-                <td>boolean</td>
-                <td>$isFinal</td>
                 <td>
 </td>
             </tr>
@@ -395,41 +357,12 @@
     </div>
 
                 <h3 id="method_handleStringChunkContinuation">
-        <div class="location">at line 896</div>
+        <div class="location">at line 888</div>
         <code>            public            
     <strong>handleStringChunkContinuation</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
-        <p>
-</p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>integer</td>
-                <td>$byte</td>
-                <td>
-</td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_handleBinaryChunkSize">
-        <div class="location">at line 937</div>
-        <code>            public            
-    <strong>handleBinaryChunkSize</strong>(integer $byte, boolean $isFinal)</code>
-    </h3>
-    <div class="details">
-        <p>
-</p>
+        <p>Handle decoding the first byte after a string chunk.</p>
         <p>
 </p>
         <div class="tags">
@@ -439,12 +372,6 @@
                     <tr>
                 <td>integer</td>
                 <td>$byte</td>
-                <td>
-</td>
-            </tr>
-                    <tr>
-                <td>boolean</td>
-                <td>$isFinal</td>
                 <td>
 </td>
             </tr>
@@ -457,13 +384,12 @@
     </div>
 
                 <h3 id="method_handleBinaryChunkData">
-        <div class="location">at line 958</div>
+        <div class="location">at line 917</div>
         <code>            public            
-    <strong>handleBinaryChunkData</strong>(integer $byte, boolean $isFinal)</code>
+    <strong>handleBinaryChunkData</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding a chunked binary buffer.</p>
         <p>
 </p>
         <div class="tags">
@@ -476,9 +402,30 @@
                 <td>
 </td>
             </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_handleBinaryChunkFinalData">
+        <div class="location">at line 931</div>
+        <code>            public            
+    <strong>handleBinaryChunkFinalData</strong>(integer $byte)</code>
+    </h3>
+    <div class="details">
+        <p>Handle decoding the final chunk in a chunked binary buffer.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
                     <tr>
-                <td>boolean</td>
-                <td>$isFinal</td>
+                <td>integer</td>
+                <td>$byte</td>
                 <td>
 </td>
             </tr>
@@ -491,13 +438,12 @@
     </div>
 
                 <h3 id="method_handleBinaryChunkContinuation">
-        <div class="location">at line 977</div>
+        <div class="location">at line 945</div>
         <code>            public            
     <strong>handleBinaryChunkContinuation</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding the first byte after a binary chunk.</p>
         <p>
 </p>
         <div class="tags">
@@ -519,13 +465,12 @@
     </div>
 
                 <h3 id="method_handleInt32">
-        <div class="location">at line 1046</div>
+        <div class="location">at line 1024</div>
         <code>            public            
     <strong>handleInt32</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding a 32-bit integer.</p>
         <p>
 </p>
         <div class="tags">
@@ -547,13 +492,12 @@
     </div>
 
                 <h3 id="method_handleInt64">
-        <div class="location">at line 1058</div>
+        <div class="location">at line 1038</div>
         <code>            public            
     <strong>handleInt64</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding a 64-bit integer.</p>
         <p>
 </p>
         <div class="tags">
@@ -575,13 +519,12 @@
     </div>
 
                 <h3 id="method_handleTimestampMilliseconds">
-        <div class="location">at line 1070</div>
+        <div class="location">at line 1052</div>
         <code>            public            
     <strong>handleTimestampMilliseconds</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding a timestamp in milliseconds.</p>
         <p>
 </p>
         <div class="tags">
@@ -603,13 +546,12 @@
     </div>
 
                 <h3 id="method_handleTimestampMinutes">
-        <div class="location">at line 1082</div>
+        <div class="location">at line 1066</div>
         <code>            public            
     <strong>handleTimestampMinutes</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding a timestamp in minutes.</p>
         <p>
 </p>
         <div class="tags">
@@ -631,13 +573,12 @@
     </div>
 
                 <h3 id="method_handleNextCollectionElement">
-        <div class="location">at line 1094</div>
+        <div class="location">at line 1080</div>
         <code>            public            
     <strong>handleNextCollectionElement</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding the end of a variable length collection.</p>
         <p>
 </p>
         <div class="tags">
@@ -659,13 +600,12 @@
     </div>
 
                 <h3 id="method_handleCollectionType">
-        <div class="location">at line 1106</div>
+        <div class="location">at line 1094</div>
         <code>            public            
     <strong>handleCollectionType</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Handle decoding a the type of a typed collection.</p>
         <p>
 </p>
         <div class="tags">
@@ -687,13 +627,12 @@
     </div>
 
                 <h3 id="method_appendInt64Data">
-        <div class="location">at line 1282</div>
-        <code>            public            boolean
+        <div class="location">at line 1298</div>
+        <code>            public            integer|null
     <strong>appendInt64Data</strong>(integer $byte)</code>
     </h3>
     <div class="details">
-        <p>
-</p>
+        <p>Append 64-bit integer data to the internal buffer.</p>
         <p>
 </p>
         <div class="tags">
@@ -713,40 +652,11 @@
 
                     <table>
         <tr>
-            <td>boolean</td>
-            <td>
-</td>
+            <td>integer|null</td>
+            <td>Returns the decoded 64-bit integer; or null if the buffer does not yet contain enough data.</td>
         </tr>
     </table>
 
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_trace">
-        <div class="location">at line 1296</div>
-        <code>            public            
-    <strong>trace</strong>(string $str)</code>
-    </h3>
-    <div class="details">
-        <p>
-</p>
-        <p>
-</p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>string</td>
-                <td>$str</td>
-                <td>
-</td>
-            </tr>
-            </table>
-
-            
             
             
                     </div>
