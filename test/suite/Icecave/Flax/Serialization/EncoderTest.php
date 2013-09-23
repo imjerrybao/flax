@@ -248,7 +248,7 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
 
     public function testEncodeUnsupportedObject()
     {
-        $this->setExpectedException('InvalidArgumentException', 'Can not encode object of type "Exception".');
+        $this->setExpectedException(__NAMESPACE__ . '\Exception\EncodeException', 'Can not encode object of type "Exception".');
         $this->encoder->encode(new Exception);
     }
 
@@ -266,7 +266,7 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
     public function testEncodeUnsupportedType()
     {
         $resource = fopen(__FILE__, 'r');
-        $this->setExpectedException('InvalidArgumentException', 'Can not encode value of type "resource".');
+        $this->setExpectedException(__NAMESPACE__ . '\Exception\EncodeException', 'Can not encode value of type "resource".');
         $this->encoder->encode($resource);
     }
 
