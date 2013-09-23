@@ -3,8 +3,10 @@ namespace Icecave\Flax\Serialization;
 
 use DateTime;
 use Icecave\Chrono\TimePointInterface;
+use Icecave\Collections\AssociativeInterface;
 use Icecave\Collections\Collection;
 use Icecave\Collections\Map;
+use Icecave\Collections\SequenceInterface;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use InvalidArgumentException;
 use stdClass;
@@ -15,7 +17,16 @@ class Encoder
     {
         $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
 
-        $this->references = new Map;
+        $this->nextReferenceId = 0;
+        $this->references = new Map(
+            null,
+            function ($lhs, $rhs) {
+                return strcmp(
+                    spl_object_hash($lhs),
+                    spl_object_hash($rhs)
+                );
+            }
+        );
         $this->classDefinitions = new Map;
     }
 
@@ -23,6 +34,7 @@ class Encoder
     {
         $this->typeCheck->reset(func_get_args());
 
+        $this->nextReferenceId = 0;
         $this->references->clear();
         $this->classDefinitions->clear();
     }
@@ -258,6 +270,8 @@ class Encoder
      */
     private function encodeArray(array $value)
     {
+        ++$this->nextReferenceId;
+
         if (Collection::isSequential($value)) {
             return $this->encodeVector($value);
         } else {
@@ -266,23 +280,21 @@ class Encoder
     }
 
     /**
-     * @param array $value
+     * @param mixed<mixed> $collection
      *
      * @return string
      */
-    private function encodeVector(array $value)
+    private function encodeVector($collection)
     {
-        $size = count($value);
+        $size = Collection::size($collection);
 
-        if (0 === $size) {
-            $buffer = pack('cc', HessianConstants::VECTOR, HessianConstants::COLLECTION_TERMINATOR);
-        } elseif ($size <= HessianConstants::VECTOR_FIXED_COMPACT_LIMIT) {
+        if ($size <= HessianConstants::VECTOR_FIXED_COMPACT_LIMIT) {
             $buffer = pack('c', $size + HessianConstants::VECTOR_FIXED_COMPACT_START);
         } else {
             $buffer = pack('c', HessianConstants::VECTOR_FIXED) . $this->encodeInteger($size);
         }
 
-        foreach ($value as $element) {
+        foreach ($collection as $element) {
             $buffer .= $this->encode($element);
         }
 
@@ -290,16 +302,15 @@ class Encoder
     }
 
     /**
-     * @param array $value
+     * @param mixed<mixed,mixed> $collection
      *
      * @return string
      */
-    private function encodeMap(array $value)
+    private function encodeMap($collection)
     {
-        $size = count($value);
         $buffer = pack('c', HessianConstants::MAP);
 
-        foreach ($value as $key => $value) {
+        foreach ($collection as $key => $value) {
             $buffer .= $this->encode($key);
             $buffer .= $this->encode($value);
         }
@@ -320,16 +331,20 @@ class Encoder
             return $this->encodeTimestamp($value->getTimestamp() * 1000);
         } elseif ($value instanceof TimePointInterface) {
             return $this->encodeTimestamp($value->unixTime() * 1000);
-        } elseif ('stdClass' !== get_class($value)) {
-            throw new InvalidArgumentException('Can not encode object of type "' . get_class($value) . '".');
         }
 
         $ref = null;
         if ($this->findReference($value, $ref)) {
             return $this->encodeReference($ref);
+        } elseif ($value instanceof SequenceInterface) {
+            return $this->encodeVector($value);
+        } elseif ($value instanceof AssociativeInterface) {
+            return $this->encodeMap($value);
+        } elseif ('stdClass' === get_class($value)) {
+            return $this->encodeStdClass($value);
         }
 
-        return $this->encodeStdClass($value);
+        throw new InvalidArgumentException('Can not encode object of type "' . get_class($value) . '".');
     }
 
     /**
@@ -363,20 +378,20 @@ class Encoder
     }
 
     /**
-     * @param stdClass     $value
+     * @param mixed        $value
      * @param integer|null &$ref
      *
      * @return boolean
      */
-    private function findReference(stdClass $value, &$ref = null)
+    private function findReference($value, &$ref = null)
     {
-        if (!$this->references->tryGet($value, $ref)) {
-            $this->references[$value] = $ref = $this->references->size();
-
-            return false;
+        if ($this->references->tryGet($value, $ref)) {
+            return true;
         }
 
-        return true;
+        $this->references[$value] = $ref = $this->nextReferenceId++;
+
+        return false;
     }
 
     /**
@@ -440,6 +455,7 @@ class Encoder
     }
 
     private $typeCheck;
+    private $nextReferenceId;
     private $references;
     private $classDefinitions;
 }

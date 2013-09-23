@@ -1,9 +1,7 @@
 <?php
 namespace Icecave\Flax\Serialization;
 
-use DateTime as NativeDateTime;
-use Icecave\Chrono\DateTime;
-use Icecave\Collections\Map;
+use Exception;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 
@@ -15,41 +13,57 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider getTestValues
+     * @dataProvider Icecave\Flax\Serialization\TestVectors::encoderTestVectors
      */
-    public function testEncode($value, $expectedResult)
+    public function testEncode($output, $input, $skipTest = false)
     {
-        $buffer = $this->encoder->encode($value);
+        if ($skipTest) {
+            $this->markTestSkipped();
+        }
 
-        $this->assertSameBinary($expectedResult, $buffer);
+        $result = $this->encoder->encode($input);
+
+        $this->assertSameBinary($output, $result);
     }
 
-    public function testEncodeMediumLengthString()
+    public function testEncodeStringMediumLength()
     {
         $value = $this->generateData(1023);
 
-        $this->testEncode($value, "\x33\xff" . $value);
+        $this->testEncode(
+            "\x33\xff" . $value,
+            $value
+        );
     }
 
     public function testEncodeStringSmallestChunk()
     {
         $chunk = $this->generateData(1024);
 
-        $this->testEncode($chunk, "S\x04\x00" . $chunk);
+        $this->testEncode(
+            "S\x04\x00" . $chunk,
+            $chunk
+        );
     }
 
     public function testEncodeStringWholeChunk()
     {
         $chunk = $this->generateData(0xffff);
 
-        $this->testEncode($chunk, "S\xff\xff" . $chunk);
+        $this->testEncode(
+            "S\xff\xff" . $chunk,
+            $chunk
+        );
     }
 
     public function testEncodeStringPartialChunk()
     {
         $chunk = $this->generateData(0x7fff);
 
-        $this->testEncode($chunk, "S\x7f\xff" . $chunk);
+        $this->testEncode(
+            "S\x7f\xff" . $chunk,
+            $chunk
+        );
     }
 
     public function testEncodeStringMultipleChunks()
@@ -57,45 +71,74 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
         $chunkA = $this->generateData(0xffff);
         $chunkB = $this->generateData(0x012C);
 
-        $this->testEncode($chunkA . $chunkB, "R\xff\xff" . $chunkA . "S\x01\x2c" . $chunkB);
+        $this->testEncode(
+            "R\xff\xff" . $chunkA . "S\x01\x2c" . $chunkB,
+            $chunkA . $chunkB
+        );
     }
 
     /**
-     * @dataProvider getBinaryTestValues
+     * @dataProvider binaryTestVectors
      */
-    public function testEncodeBinary($value, $expectedResult)
+    public function testEncodeBinary($output, $input)
     {
-        $buffer = $this->encoder->encodeBinary($value);
+        $result = $this->encoder->encodeBinary($input);
 
-        $this->assertSameBinary($expectedResult, $buffer);
+        $this->assertSameBinary($output, $result);
     }
 
-    public function testEncodeMediumLength()
+    public function binaryTestVectors()
+    {
+        return array(
+            'binary - compact - empty' => array(
+                "\x20",
+                "",
+            ),
+            'binary - compact - hello' => array(
+                "\x25hello",
+                "hello",
+            ),
+        );
+    }
+
+    public function testEncodeBinaryMediumLength()
     {
         $value = $this->generateData(1023);
 
-        $this->testEncodeBinary($value, "\x37\xff" . $value);
+        $this->testEncodeBinary(
+            "\x37\xff" . $value,
+            $value
+        );
     }
 
     public function testEncodeBinarySmallestChunk()
     {
         $chunk = $this->generateData(1024);
 
-        $this->testEncodeBinary($chunk, "B\x04\x00" . $chunk);
+        $this->testEncodeBinary(
+            "B\x04\x00" . $chunk,
+            $chunk
+        );
     }
 
     public function testEncodeBinaryWholeChunk()
     {
         $chunk = $this->generateData(0xffff);
 
-        $this->testEncodeBinary($chunk, "B\xff\xff" . $chunk);
+        $this->testEncodeBinary(
+            "B\xff\xff" . $chunk,
+            $chunk
+        );
     }
 
     public function testEncodeBinaryPartialChunk()
     {
         $chunk = $this->generateData(0x7fff);
 
-        $this->testEncodeBinary($chunk, "B\x7f\xff" . $chunk);
+        $this->testEncodeBinary(
+            "B\x7f\xff" . $chunk,
+            $chunk
+        );
     }
 
     public function testEncodeBinaryMultipleChunks()
@@ -103,17 +146,34 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
         $chunkA = $this->generateData(0xffff);
         $chunkB = $this->generateData(0x012C);
 
-        $this->testEncodeBinary($chunkA . $chunkB, "A\xff\xff" . $chunkA . "B\x01\x2c" . $chunkB);
+        $this->testEncodeBinary(
+            "A\xff\xff" . $chunkA . "B\x01\x2c" . $chunkB,
+            $chunkA . $chunkB
+        );
     }
 
     /**
-     * @dataProvider getTimestampTestValues
+     * @dataProvider timestampTestVectors
      */
-    public function testEncodeTimestamp($value, $expectedResult)
+    public function testEncodeTimestamp($output, $input)
     {
-        $buffer = $this->encoder->encodeTimestamp($value);
+        $result = $this->encoder->encodeTimestamp($input);
 
-        $this->assertSameBinary($expectedResult, $buffer);
+        $this->assertSameBinary($result, $output);
+    }
+
+    public function timestampTestVectors()
+    {
+        return array(
+            'timestamp - milliseconds' => array(
+                "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8",
+                894621091 * 1000
+            ),
+            'timestamp - minutes' => array(
+                "\x4b\x00\xe3\x83\x8f",
+                894621060 * 1000
+            ),
+        );
     }
 
     public function testEncodeMultipleObjects()
@@ -160,20 +220,14 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
         $this->assertSameBinary("Q\x91", $this->encoder->encode($value2));
     }
 
-    public function testReset()
+    public function testEncodeArrayIncreasesReferenceId()
     {
-        $this->encoder->encode(new stdClass);
+        $value = new stdClass;
 
-        $this->encoder->reset();
-        $this->assertSameBinary("C\x08stdClass\x90\x60", $this->encoder->encode(new stdClass));
+        $this->encoder->encode(array());
 
-    }
-
-    public function testEncodeUnsupportedType()
-    {
-        $resource = fopen(__FILE__, 'r');
-        $this->setExpectedException('InvalidArgumentException', 'Can not encode value of type "resource".');
-        $this->encoder->encode($resource);
+        $this->assertSameBinary("C\x08stdClass\x90\x60", $this->encoder->encode($value));
+        $this->assertSameBinary("Q\x91", $this->encoder->encode($value));
     }
 
     public function testEncodeObjectWithLongFormClassDefinitionId()
@@ -194,103 +248,41 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
 
     public function testEncodeUnsupportedObject()
     {
-        $this->setExpectedException('InvalidArgumentException', 'Can not encode object of type "Icecave\Collections\Map".');
-        $this->encoder->encode(new Map);
+        $this->setExpectedException('InvalidArgumentException', 'Can not encode object of type "Exception".');
+        $this->encoder->encode(new Exception);
     }
 
-    public function getTestValues()
+    public function testReset()
     {
-        $data = array(
-            'null'                           => array(null, 'N'),
+        $value = new stdClass;
 
-            'boolean - true'                 => array(true,  'T'),
-            'boolean - false'                => array(false, 'F'),
+        $this->encoder->encode($value);
 
-            'string'                         => array("",         "\x00"),
-            'string - hello'                 => array("hello",    "\x05hello"),
-            'string - unicode'               => array("\xc3\x83", "\x01\xc3\x83"),
-
-            'double - 1 octet zero'          => array(       0.0, "\x5b"),
-            'double - 1 octet one'           => array(       1.0, "\x5c"),
-            'double - 2 octet min'           => array(    -128.0, "\x5d\x80"),
-            'double - 2 octet max'           => array(     127.0, "\x5d\x7f"),
-            'double - 2 octet midway 1'      => array(     -10.0, "\x5d\xf6"),
-            'double - 2 octet midway 2'      => array(      12.0, "\x5d\x0c"),
-            'double - 3 octet min'           => array(  -32768.0, "\x5e\x80\x00"),
-            'double - 3 octet max'           => array(   32767.0, "\x5e\x7f\xff"),
-            'double - 3 octet midway'        => array(   -1000.0, "\x5e\xfc\x18"),
-            'double - 4 octet float'         => array(     12.25, "\x5f\x41\x44\x00\x00"),
-            'double - 4 octet float (whole)' => array(  45000.00, "\x5f\x47\x2f\xc8\x00"),
-            'double - 8 octet'               => array( 12.251234, "D\x40\x28\x80\xa1\xbe\x2b\x49\x5a"),
-
-            'integer - 1 octet zero'         => array(         0, "\x90"),
-            'integer - 1 octet min'          => array(       -16, "\x80"),
-            'integer - 1 octet max'          => array(        47, "\xbf"),
-            'integer - 1 octet midway'       => array(        -8, "\x88"),
-            'integer - 2 octet min'          => array(     -2048, "\xc0\x00"),
-            'integer - 2 octet max'          => array(      2047, "\xcf\xff"),
-            'integer - 2 octet midway'       => array(      -256, "\xc7\x00"),
-            'integer - 3 octet min'          => array(   -262144, "\xd0\x00\x00"),
-            'integer - 3 octet max'          => array(    262143, "\xd7\xff\xff"),
-            'integer - 3 octet midway'       => array(     -4000, "\xd3\xf0\x60"),
-            'integer - 4 octet'              => array(0x10203040, "I\x10\x20\x30\x40"),
-
-            'array - empty'                  => array(array(),                       "\x57Z"),
-            'array - small'                  => array(array(1, 2, 3),                "\x7b\x91\x92\x93"),
-            'array - longer'                 => array(array(1, 2, 3, 4, 5, 6, 7, 8), "\x58\x98\x91\x92\x93\x94\x95\x96\x97\x98"),
-            'array - map'                    => array(array(10 => 1, 15 => 2),       "H\x9a\x91\x9f\x92Z"),
-
-            'object - empty'                 => array(new stdClass,                                   "C\x08stdClass\x90\x60"),
-            'object - simple'                => array((object) array('foo' => 1, 'bar' => 2),         "C\x08stdClass\x92\x03bar\x03foo\x60\x92\x91"),
-            'object - datetime'              => array(new NativeDateTime('09:51:31 May 8, 1998 UTC'), "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),
-            'object - datetime minutes'      => array(new NativeDateTime('09:51:00 May 8, 1998 UTC'), "\x4b\x00\xe3\x83\x8f"),
-            'object - chrono'                => array(new DateTime(1998, 5, 8, 9, 51, 31),            "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),
-            'object - chrono minutes'        => array(new DateTime(1998, 5, 8, 9, 51,  0),            "\x4b\x00\xe3\x83\x8f"),
-        );
-
-        if (PHP_INT_SIZE > 4) {
-            $data['integer - 8 octet'] = array(0x1020304050607080, "L\x10\x20\x30\x40\x50\x60\x70\x80");
-        }
-
-        return $data;
+        $this->encoder->reset();
+        $this->assertSameBinary("C\x08stdClass\x90\x60", $this->encoder->encode($value));
+        $this->assertSameBinary("Q\x90", $this->encoder->encode($value));
     }
 
-    public function getBinaryTestValues()
+    public function testEncodeUnsupportedType()
     {
-        return array(
-            'binary - empty'            => array("",             "\x20"),
-            'binary - 3 octet'          => array("\x01\x02\x03", "\x23\x01\x02\x03"),
-        );
-    }
-
-    public function getTimestampTestValues()
-    {
-        date_default_timezone_set('UTC');
-
-        return array(
-            'timestamp - milliseconds' => array(strtotime('09:51:31 May 8, 1998 UTC') * 1000, "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8"),
-            'timestamp - minutes'      => array(strtotime('09:51:00 May 8, 1998 UTC') * 1000, "\x4b\x00\xe3\x83\x8f"),
-        );
+        $resource = fopen(__FILE__, 'r');
+        $this->setExpectedException('InvalidArgumentException', 'Can not encode value of type "resource".');
+        $this->encoder->encode($resource);
     }
 
     private function generateData($length)
     {
-        $text = preg_replace(
-            '/\s+/',
-            ' ',
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+        $text  = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod ';
+        $text .= 'tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ';
+        $text .= 'quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo ';
+        $text .= 'consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse ';
+        $text .= 'cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ';
+        $text .= 'proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+        $str = str_repeat(
+            $text,
+            ceil($length / strlen($text))
         );
-
-        $str = '';
-
-        while (strlen($str) < $length) {
-            $str .= $text;
-        }
 
         return substr($str, 0, $length - 1) . '!';
     }
@@ -298,7 +290,7 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
     public function assertSameBinary($expectedResult, $buffer)
     {
         if ($buffer !== $expectedResult) {
-            $this->assertSame(
+            $this->assertEquals(
                 $this->formatBinaryData($expectedResult),
                 $this->formatBinaryData($buffer)
             );
@@ -310,16 +302,18 @@ class ValueEncoderTest extends PHPUnit_Framework_TestCase
     private function formatBinaryData($buffer)
     {
         $result = '';
-        $length = strlen($buffer);
 
-        for ($index = 0; $index < $length; ++$index) {
-            $ordinal = ord($buffer[$index]);
+        while ($length = strlen($buffer)) {
+            $char = $buffer[0];
+            $ordinal = ord($char);
+
             $result .= sprintf(
-                '%8d 0x%02x %s' . PHP_EOL,
-                $index,
+                '0x%02x %s' . PHP_EOL,
                 $ordinal,
-                $ordinal >= 0x20 && $ordinal <= 0x7e ? $buffer[$index] : ''
+                $ordinal >= 0x20 && $ordinal <= 0x7e ? $char : ''
             );
+
+            $buffer = substr($buffer, 1);
         }
 
         return $result;

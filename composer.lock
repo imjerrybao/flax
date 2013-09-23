@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c2895fdfac5f41d7e26c1d6256b8d990",
+    "hash": "4afb15716008453ecacfc23603517291",
     "packages": [
         {
             "name": "eloquent/enumeration",
@@ -113,16 +113,16 @@
         },
         {
             "name": "icecave/collections",
-            "version": "0.7.1",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IcecaveStudios/collections.git",
-                "reference": "cf35e1b09c16087afb6a551a098c969b63b777df"
+                "reference": "c12f606057b91c956a5af4ae7bdd7a13fdbedcd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IcecaveStudios/collections/zipball/cf35e1b09c16087afb6a551a098c969b63b777df",
-                "reference": "cf35e1b09c16087afb6a551a098c969b63b777df",
+                "url": "https://api.github.com/repos/IcecaveStudios/collections/zipball/c12f606057b91c956a5af4ae7bdd7a13fdbedcd9",
+                "reference": "c12f606057b91c956a5af4ae7bdd7a13fdbedcd9",
                 "shasum": ""
             },
             "require": {
@@ -174,7 +174,7 @@
                 "sequence",
                 "stack"
             ],
-            "time": "2013-09-21 05:02:38"
+            "time": "2013-09-23 04:36:07"
         },
         {
             "name": "icecave/parity",

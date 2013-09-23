@@ -162,9 +162,26 @@ class EncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
     {
         $argumentCount = \count($arguments);
         if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'array');
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('collection', 0, 'mixed<mixed>');
         } elseif ($argumentCount > 1) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        $check = function ($value) {
+            if (!\is_array($value) && !$value instanceof \Traversable) {
+                return false;
+            }
+            foreach ($value as $key => $subValue) {
+            }
+            return true;
+        };
+        if (!$check($arguments[0])) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'collection',
+                0,
+                $arguments[0],
+                'mixed<mixed>'
+            );
         }
     }
 
@@ -172,9 +189,26 @@ class EncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
     {
         $argumentCount = \count($arguments);
         if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'array');
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('collection', 0, 'mixed<mixed>');
         } elseif ($argumentCount > 1) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        $check = function ($value) {
+            if (!\is_array($value) && !$value instanceof \Traversable) {
+                return false;
+            }
+            foreach ($value as $key => $subValue) {
+            }
+            return true;
+        };
+        if (!$check($arguments[0])) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'collection',
+                0,
+                $arguments[0],
+                'mixed<mixed>'
+            );
         }
     }
 
@@ -211,7 +245,7 @@ class EncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
     {
         $argumentCount = \count($arguments);
         if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'stdClass');
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'mixed');
         } elseif ($argumentCount > 2) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
         }
