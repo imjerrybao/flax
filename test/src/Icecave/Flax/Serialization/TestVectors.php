@@ -320,6 +320,10 @@ abstract class TestVectors
                 "\x30\x01\xc3\x83",
                 "\xc3\x83",
             ),
+            'string - chunked - empty' => array(
+                "\x53\x00\x00",
+                "",
+            ),
             'string - chunked - single' => array(
                 "\x53\x00\x05hello",
                 "hello",
@@ -348,6 +352,10 @@ abstract class TestVectors
             'binary - hello' => array(
                 "\x34\x05hello",
                 "hello",
+            ),
+            'binary - chunked - empty' => array(
+                "\x42\x00\x00",
+                "",
             ),
             'binary - chunked - single' => array(
                 "\x42\x00\x05hello",
