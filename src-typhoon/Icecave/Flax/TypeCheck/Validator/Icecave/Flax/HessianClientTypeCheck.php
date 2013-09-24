@@ -40,6 +40,23 @@ class HessianClientTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         $argumentCount = \count($arguments);
         if ($argumentCount < 1) {
             throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('name', 0, 'string');
+        }
+        $value = $arguments[0];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'name',
+                0,
+                $arguments[0],
+                'string'
+            );
+        }
+    }
+
+    public function invokeArray(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('name', 0, 'string');
         } elseif ($argumentCount > 2) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
         }
@@ -51,6 +68,16 @@ class HessianClientTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
                 $arguments[0],
                 'string'
             );
+        }
+    }
+
+    public function createException(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('properties', 0, 'Icecave\\Collections\\Map');
+        } elseif ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
         }
     }
 

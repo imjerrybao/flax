@@ -1137,13 +1137,6 @@ class DecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
-    public function state(array $arguments)
-    {
-        if (\count($arguments) > 0) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(0, $arguments[0]);
-        }
-    }
-
     public function pushState(array $arguments)
     {
         $argumentCount = \count($arguments);
@@ -1151,16 +1144,6 @@ class DecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
             throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('state', 0, 'Icecave\\Flax\\Serialization\\DecoderState');
         } elseif ($argumentCount > 2) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
-        }
-    }
-
-    public function setState(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('state', 0, 'Icecave\\Flax\\Serialization\\DecoderState');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
         }
     }
 

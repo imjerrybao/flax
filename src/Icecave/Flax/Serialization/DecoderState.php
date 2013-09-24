@@ -51,4 +51,6 @@ class DecoderState extends Enumeration
     const OBJECT_INSTANCE_FIELD  = 101;
 
     const REFERENCE = 110;
+
+    const COMPLETE = 120;
 }

@@ -48,12 +48,47 @@ class DecoderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($result[0], $result[1]);
     }
 
+    public function testDecodeFailureNotReset()
+    {
+        $this->decoder->feed("\x91");
+
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Decoder has not been reset.');
+        $this->decoder->feed("\x91");
+    }
+
     public function testFinalizedFailure()
     {
         $this->decoder->feed("C");
 
         $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Unexpected end of stream (state: CLASS_DEFINITION_NAME).');
         $this->decoder->finalize();
+    }
+
+    public function testTryFinalize()
+    {
+        $this->decoder->feed("\x91");
+
+        $value = null;
+        $this->assertTrue($this->decoder->tryFinalize($value));
+        $this->assertSame(1, $value);
+    }
+
+    public function testTryFinalizeFailure()
+    {
+        $this->decoder->feed("C");
+
+        $value = null;
+        $this->assertFalse($this->decoder->tryFinalize($value));
+        $this->assertNull($value);
+    }
+
+    public function testTryFinalizeFailureAfterClassDefinition()
+    {
+        $this->decoder->feed("C\x08stdClass\x90");
+
+        $value = null;
+        $this->assertFalse($this->decoder->tryFinalize($value));
+        $this->assertNull($value);
     }
 
     public function testFeedFailureReservedByte()

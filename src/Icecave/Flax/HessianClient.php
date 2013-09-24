@@ -3,7 +3,14 @@ namespace Icecave\Flax;
 
 use Guzzle\Http\ClientInterface;
 use Guzzle\Stream\PhpStreamRequestFactory;
-use Icecave\Flax\Exception\RPCFaultException;
+use Icecave\Collections\Map;
+use Icecave\Flax\Exception\AbstractHessianFaultException;
+use Icecave\Flax\Exception\DecodeException;
+use Icecave\Flax\Exception\NoSuchMethodException;
+use Icecave\Flax\Exception\NoSuchObjectException;
+use Icecave\Flax\Exception\ProtocolException;
+use Icecave\Flax\Exception\RequireHeaderException;
+use Icecave\Flax\Exception\ServiceException;
 use Icecave\Flax\Message\Decoder;
 use Icecave\Flax\Message\Encoder;
 use Icecave\Flax\TypeCheck\TypeCheck;
@@ -11,10 +18,10 @@ use Icecave\Flax\TypeCheck\TypeCheck;
 class HessianClient implements HessianClientInterface
 {
     /**
-     * @param ClientInterface $httpClient
+     * @param ClientInterface              $httpClient
      * @param PhpStreamRequestFactory|null $streamFactory
-     * @param Encoder|null $encoder
-     * @param Decoder|null $decoder
+     * @param Encoder|null                 $encoder
+     * @param Decoder|null                 $decoder
      */
     public function __construct(
         ClientInterface $httpClient,
@@ -52,7 +59,25 @@ class HessianClient implements HessianClientInterface
     {
         $this->typeCheck->validateCall(func_get_args());
 
-        return $this->invoke($name, $arguments);
+        return $this->invokeArray($name, $arguments);
+    }
+
+    /**
+     * Invoke a Hessian operation.
+     *
+     * @param string $name          The name of the operation to invoke.
+     * @param mixed  $arguments,... Arguments to the operation.
+     *
+     * @return mixed                                   The result of the Hessian call.
+     * @throws Exception\AbstractHessianFaultException
+     */
+    public function invoke($name)
+    {
+        $this->typeCheck->invoke(func_get_args());
+
+        $arguments = array_slice(func_get_args(), 1);
+
+        return $this->invokeArray($name, $arguments);
     }
 
     /**
@@ -60,37 +85,27 @@ class HessianClient implements HessianClientInterface
      *
      * @param string       $name      The name of the operation to invoke.
      * @param array<mixed> $arguments Arguments to the operation.
+     *
+     * @return mixed                                   The result of the Hessian call.
+     * @throws Exception\AbstractHessianFaultException
      */
-    public function invoke($name, array $arguments = array())
+    public function invokeArray($name, array $arguments = array())
     {
-        $this->typeCheck->invoke(func_get_args());
+        $this->typeCheck->invokeArray(func_get_args());
 
         $this->encoder->reset();
         $this->decoder->reset();
 
         $buffer  = $this->encoder->encodeVersion();
         $buffer .= $this->encoder->encodeCall($name, $arguments);
-
-        $request = $this->httpClient->post(
-            null,
-            array('Content-Type' => 'x-application/hessian'),
-            $buffer
-        );
-
+        $request = $this->httpClient->post(null, null, $buffer);
         $stream  = $this->streamFactory->fromRequest($request);
 
-        $TEST_BUFFER = '';
         while (!$stream->feof()) {
-            $TEST_BUFFER .= $stream->read(1024);
+            $this->decoder->feed(
+                $stream->read(1024)
+            );
         }
-        var_dump($TEST_BUFFER);
-        $this->decoder->feed($TEST_BUFFER);
-
-        // while (!$stream->feof()) {
-        //     $this->decoder->feed(
-        //         $stream->read(1024)
-        //     );
-        // }
 
         list($success, $value) = $this->decoder->finalize();
 
@@ -98,7 +113,32 @@ class HessianClient implements HessianClientInterface
             return $value;
         }
 
-        throw new RPCFaultException($value);
+        throw $this->createException($value);
+    }
+
+    /**
+     * @param Map $properties
+     *
+     * @return AbstractHessianFaultException
+     */
+    protected function createException(Map $properties)
+    {
+        $this->typeCheck->createException(func_get_args());
+
+        switch ($properties['code']) {
+            case 'NoSuchMethodException':
+                return new NoSuchMethodException($properties);
+            case 'NoSuchObjectException':
+                return new NoSuchObjectException($properties);
+            case 'ProtocolException':
+                return new ProtocolException($properties);
+            case 'RequireHeaderException':
+                return new RequireHeaderException($properties);
+            case 'ServiceException':
+                return new ServiceException($properties);
+        }
+
+        throw new DecodeException('Unknown exception code: ' . $properties['code'] . '.');
     }
 
     private $typeCheck;

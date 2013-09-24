@@ -3,12 +3,11 @@ namespace Icecave\Flax\Exception;
 
 use Exception;
 use Icecave\Flax\TypeCheck\TypeCheck;
-use RuntimeException;
 
 /**
  * Indicates an error while decoding a serialized Hessian value.
  */
-class DecodeException extends RuntimeException
+class DecodeException extends Exception
 {
     /**
      * @param string         $message  The exception message.

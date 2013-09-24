@@ -1,7 +1,9 @@
 <?php
 namespace Icecave\Flax\Serialization;
 
-class HessianConstants
+use Eloquent\Enumeration\Enumeration;
+
+class HessianConstants extends Enumeration
 {
     // x00 - x1f : utf-8 string length 0-32
     const STRING_COMPACT_START = 0x00;

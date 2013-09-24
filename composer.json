@@ -19,6 +19,7 @@
         "icecave/collections": "~0.8.0"
     },
     "require-dev": {
+        "eloquent/liberator": "~1",
         "eloquent/typhoon": "~0.9.0",
         "icecave/archer": "~1"
     },

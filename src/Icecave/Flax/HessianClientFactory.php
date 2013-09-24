@@ -1,7 +1,6 @@
 <?php
 namespace Icecave\Flax;
 
-use Buzz\Client\Curl;
 use Guzzle\Http\Client;
 use Icecave\Flax\TypeCheck\TypeCheck;
 
@@ -17,6 +16,11 @@ class HessianClientFactory
         $httpClient = new Client($url);
         $httpClient->setUserAgent(
             sprintf('Flax/%s', PackageInfo::VERSION)
+        );
+
+        $httpClient->setDefaultOption(
+            'headers/Content-Type',
+            'x-application/hessian'
         );
 
         return new HessianClient($httpClient);

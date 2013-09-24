@@ -39,6 +39,8 @@ class Decoder
         $this->references->clear();
         $this->currentContext = null;
         $this->value = null;
+
+        $this->pushState(DecoderState::BEGIN());
     }
 
     /**
@@ -63,7 +65,7 @@ class Decoder
     /**
      * Attempt to finalize decoding.
      *
-     * @param mixed           &$value Assigned the the decoded value.
+     * @param mixed &$value Assigned the the decoded value.
      *
      * @return boolean True if the decoder has received a complete value, otherwise false.
      */
@@ -71,7 +73,7 @@ class Decoder
     {
         $this->typeCheck->tryFinalize(func_get_args());
 
-        if (!$this->stack->isEmpty()) {
+        if ($this->currentContext->state !== DecoderState::COMPLETE()) {
             return false;
         }
 
@@ -95,7 +97,7 @@ class Decoder
             return $value;
         }
 
-        throw new DecodeException('Unexpected end of stream (state: ' . $this->state() . ').');
+        throw new DecodeException('Unexpected end of stream (state: ' . $this->currentContext->state . ').');
     }
 
     /**
@@ -110,7 +112,7 @@ class Decoder
      */
     private function feedByte($byte)
     {
-        switch ($this->state()) {
+        switch ($this->currentContext->state) {
             case DecoderState::STRING_SIZE():
                 return $this->handleStringOrBinarySize($byte, DecoderState::STRING_DATA());
             case DecoderState::STRING_DATA():
@@ -168,10 +170,12 @@ class Decoder
             case DecoderState::CLASS_DEFINITION_NAME():
             case DecoderState::CLASS_DEFINITION_FIELD():
                 return $this->handleBeginStringStrict($byte);
+            case DecoderState::COMPLETE():
+                throw new DecodeException('Decoder has not been reset.');
         }
 
          if (!$this->handleBegin($byte)) {
-            throw new DecodeException('Invalid byte at start of value: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+            throw new DecodeException('Invalid byte at start of value: 0x' . dechex($byte) . ' (state: ' . $this->currentContext->state . ').');
          }
     }
 
@@ -187,7 +191,7 @@ class Decoder
      */
     private function emitValue($value)
     {
-        switch ($this->state()) {
+        switch ($this->currentContext->state) {
             case DecoderState::COLLECTION_TYPE():
                 return $this->emitCollectionType($value);
             case DecoderState::VECTOR():
@@ -215,6 +219,7 @@ class Decoder
         }
 
         $this->value = $value;
+        $this->currentContext->state = DecoderState::COMPLETE();
     }
 
     /**
@@ -281,8 +286,7 @@ class Decoder
     private function emitMapKey($value)
     {
         $this->currentContext->nextKey = $value;
-
-        $this->setState(DecoderState::MAP_VALUE());
+        $this->currentContext->state = DecoderState::MAP_VALUE();
     }
 
     /**
@@ -298,8 +302,7 @@ class Decoder
         );
 
         $this->currentContext->nextKey = null;
-
-        $this->setState(DecoderState::MAP_KEY());
+        $this->currentContext->state = DecoderState::MAP_KEY();
     }
 
     /**
@@ -310,8 +313,7 @@ class Decoder
     private function emitClassDefinitionName($value)
     {
         $this->currentContext->result->name = $value;
-
-        $this->setState(DecoderState::CLASS_DEFINITION_SIZE());
+        $this->currentContext->state = DecoderState::CLASS_DEFINITION_SIZE();
     }
 
     /**
@@ -326,7 +328,7 @@ class Decoder
         if (0 === $value) {
             $this->popState();
         } else {
-            $this->setState(DecoderState::CLASS_DEFINITION_FIELD());
+            $this->currentContext->state = DecoderState::CLASS_DEFINITION_FIELD();
         }
     }
 
@@ -633,7 +635,7 @@ class Decoder
     private function handleBeginStringStrict($byte)
     {
         if (!$this->handleBeginString($byte)) {
-            throw new DecodeException('Invalid byte at start of string: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+            throw new DecodeException('Invalid byte at start of string: 0x' . dechex($byte) . ' (state: ' . $this->currentContext->state . ').');
         }
     }
 
@@ -695,7 +697,7 @@ class Decoder
     private function handleBeginInt32Strict($byte)
     {
         if (!$this->handleBeginInt32($byte)) {
-            throw new DecodeException('Invalid byte at start of int: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
+            throw new DecodeException('Invalid byte at start of int: 0x' . dechex($byte) . ' (state: ' . $this->currentContext->state . ').');
         }
     }
 
@@ -859,7 +861,7 @@ class Decoder
             $this->popStateAndEmitValue('');
         } elseif (null !== $this->currentContext->expectedSize) {
             $this->currentContext->buffer = '';
-            $this->setState($nextState);
+            $this->currentContext->state = $nextState;
         }
     }
 
@@ -885,7 +887,7 @@ class Decoder
         if ($this->appendStringData($byte)) {
             $this->currentContext->result .= $this->currentContext->buffer;
             $this->currentContext->buffer = '';
-            $this->setState(DecoderState::STRING_CHUNK_CONTINUATION());
+            $this->currentContext->state = DecoderState::STRING_CHUNK_CONTINUATION();
         }
     }
 
@@ -910,14 +912,13 @@ class Decoder
      */
     public function handleStringChunkContinuation($byte)
     {
-        switch ($byte) {
-            case HessianConstants::STRING_CHUNK:
-                return $this->setState(DecoderState::STRING_CHUNK_SIZE());
-            case HessianConstants::STRING_CHUNK_FINAL:
-                return $this->setState(DecoderState::STRING_CHUNK_FINAL_SIZE());
+        if (HessianConstants::STRING_CHUNK === $byte) {
+            $this->currentContext->state = DecoderState::STRING_CHUNK_SIZE();
+        } elseif (HessianConstants::STRING_CHUNK_FINAL === $byte) {
+            $this->currentContext->state = DecoderState::STRING_CHUNK_FINAL_SIZE();
+        } else {
+            throw new DecodeException('Invalid byte at start of string chunk: 0x' . dechex($byte) . ' (state: ' . $this->currentContext->state . ').');
         }
-
-        throw new DecodeException('Invalid byte at start of string chunk: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
     }
 
     /**
@@ -942,7 +943,7 @@ class Decoder
         if ($this->appendBinaryData($byte)) {
             $this->currentContext->result .= $this->currentContext->buffer;
             $this->currentContext->buffer = '';
-            $this->setState(DecoderState::BINARY_CHUNK_CONTINUATION());
+            $this->currentContext->state = DecoderState::BINARY_CHUNK_CONTINUATION();
         }
     }
 
@@ -967,14 +968,13 @@ class Decoder
      */
     public function handleBinaryChunkContinuation($byte)
     {
-        switch ($byte) {
-            case HessianConstants::BINARY_CHUNK:
-                return $this->setState(DecoderState::BINARY_CHUNK_SIZE());
-            case HessianConstants::BINARY_CHUNK_FINAL:
-                return $this->setState(DecoderState::BINARY_CHUNK_FINAL_SIZE());
+        if (HessianConstants::BINARY_CHUNK === $byte) {
+            $this->currentContext->state = DecoderState::BINARY_CHUNK_SIZE();
+        } elseif (HessianConstants::BINARY_CHUNK_FINAL === $byte) {
+            $this->currentContext->state = DecoderState::BINARY_CHUNK_FINAL_SIZE();
+        } else {
+            throw new DecodeException('Invalid byte at start of binary chunk: 0x' . dechex($byte) . ' (state: ' . $this->currentContext->state . ').');
         }
-
-        throw new DecodeException('Invalid byte at start of binary chunk: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
     }
 
     /**
@@ -1122,21 +1122,7 @@ class Decoder
             return;
         }
 
-        throw new DecodeException('Invalid byte at start of collection type: 0x' . dechex($byte) . ' (state: ' . $this->state() . ').');
-    }
-
-    /**
-     * Get the current decoder state.
-     *
-     * @return DecoderState
-     */
-    public function state()
-    {
-        if ($this->stack->isEmpty()) {
-            return DecoderState::BEGIN();
-        }
-
-        return $this->currentContext->state;
+        throw new DecodeException('Invalid byte at start of collection type: 0x' . dechex($byte) . ' (state: ' . $this->currentContext->state . ').');
     }
 
     /**
@@ -1165,29 +1151,14 @@ class Decoder
     }
 
     /**
-     * Set the current state without pushing a new context onto the stack.
-     *
-     * @param DecoderState $state
-     */
-    private function setState(DecoderState $state)
-    {
-        $this->currentContext->state = $state;
-    }
-
-    /**
      * Pop the current state off the stack.
      */
     private function popState()
     {
-        $previousState = $this->state();
+        $previousState = $this->currentContext->state;
 
         $this->stack->pop();
-
-        if ($this->stack->isEmpty()) {
-            $this->currentContext = null;
-        } else {
-            $this->currentContext = $this->stack->next();
-        }
+        $this->currentContext = $this->stack->next();
     }
 
     /**

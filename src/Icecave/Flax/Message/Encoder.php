@@ -27,7 +27,7 @@ class Encoder
     {
         $this->typeCheck->encodeVersion(func_get_args());
 
-        return pack('c', HessianConstants::VERSION_START) . HessianConstants::VERSION;
+        return pack('c', HessianConstants::HEADER) . HessianConstants::VERSION;
     }
 
     /**

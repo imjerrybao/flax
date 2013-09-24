@@ -1,14 +1,9 @@
 <?php
 namespace Icecave\Flax\Message;
 
-use Icecave\Chrono\DateTime;
-use Icecave\Collections\Map;
-use Icecave\Collections\Stack;
-use Icecave\Collections\Vector;
 use Icecave\Flax\Exception\DecodeException;
 use Icecave\Flax\Serialization\Decoder as SerializationDecoder;
 use Icecave\Flax\TypeCheck\TypeCheck;
-use stdClass;
 
 /**
  * Streaming Hessian decoder.
@@ -61,7 +56,7 @@ class Decoder
     /**
      * Attempt to finalize decoding.
      *
-     * @param mixed           &$value Assigned the the decoded message.
+     * @param mixed &$value Assigned the the decoded message.
      *
      * @return boolean True if the decoder has received a complete message, otherwise false.
      */
@@ -69,7 +64,7 @@ class Decoder
     {
         $this->typeCheck->tryFinalize(func_get_args());
 
-        if (DecoderState::BEGIN() !== $this->state) {
+        if (DecoderState::COMPLETE() !== $this->state) {
             return false;
         }
 
@@ -119,7 +114,7 @@ class Decoder
                 return $this->handleValue($byte);
         }
 
-        if (HessianConstants::VERSION_START !== $byte) {
+        if (HessianConstants::HEADER !== $byte) {
             throw new DecodeException('Invalid byte at start of message: 0x' . dechex($byte) . ' (state: ' . $this->state . ').');
         }
 
@@ -173,7 +168,7 @@ class Decoder
         $value = null;
         if ($this->serializationDecoder->tryFinalize($value)) {
             $this->value = array($this->state === DecoderState::RPC_REPLY(), $value);
-            $this->state = DecoderState::BEGIN();
+            $this->state = DecoderState::COMPLETE();
         }
     }
 

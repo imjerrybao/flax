@@ -3,12 +3,11 @@ namespace Icecave\Flax\Exception;
 
 use Exception;
 use Icecave\Flax\TypeCheck\TypeCheck;
-use LogicException;
 
 /**
  * Indicates an error while encoding a value.
  */
-class EncodeException extends LogicException
+class EncodeException extends Exception
 {
     /**
      * @param string         $message  The exception message.

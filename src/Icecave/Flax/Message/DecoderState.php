@@ -10,4 +10,5 @@ class DecoderState extends Enumeration
     const MESSAGE_TYPE = 2;
     const RPC_REPLY    = 3;
     const RPC_FAULT    = 4;
+    const COMPLETE     = 5;
 }
