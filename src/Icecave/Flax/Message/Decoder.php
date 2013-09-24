@@ -1,143 +1,185 @@
 <?php
 namespace Icecave\Flax\Message;
 
+use Icecave\Chrono\DateTime;
+use Icecave\Collections\Map;
+use Icecave\Collections\Stack;
+use Icecave\Collections\Vector;
+use Icecave\Flax\Exception\DecodeException;
+use Icecave\Flax\Serialization\Decoder as SerializationDecoder;
 use Icecave\Flax\TypeCheck\TypeCheck;
+use stdClass;
 
+/**
+ * Streaming Hessian decoder.
+ */
 class Decoder
 {
-    // public function __construct()
-    // {
-    //     $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
+    public function __construct()
+    {
+        $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
 
-    //     // $this->valueDecoder = new ValueDecoder;
+        $this->serializationDecoder = new SerializationDecoder;
 
-    //     $this->reset();
-    // }
+        $this->reset();
+    }
 
-    // public function reset()
-    // {
-    //     $this->buffer = '';
-    //     $this->state = ProtocolDecoderState::BEGIN();
-    // }
+    /**
+     * Reset the decoder.
+     *
+     * Clears all internal state and allows the decoder to decode a new value.
+     */
+    public function reset()
+    {
+        $this->typeCheck->reset(func_get_args());
 
-    // public function decode($buffer)
-    // {
-    //     $this->reset();
+        $this->serializationDecoder->reset();
+        $this->state = DecoderState::BEGIN();
+        $this->buffer = '';
+        $this->value = null;
+    }
 
-    //     $this->feed($buffer);
+    /**
+     * Feed Hessian data to the decoder.
+     *
+     * The buffer may contain an incomplete Hessian message.
+     *
+     * @param string $buffer The hessian message to decode.
+     */
+    public function feed($buffer)
+    {
+        $this->typeCheck->feed(func_get_args());
 
-    //     return $this->finalize();
-    // }
+        $length = strlen($buffer);
 
-    // public function feed($buffer)
-    // {
-    //     $this->typeCheck->feed(func_get_args());
+        for ($index = 0; $index < $length; ++$index) {
+            list(, $byte) = unpack('C', $buffer[$index]);
+            $this->feedByte($byte);
+        }
+    }
 
-    //     $length = strlen($buffer);
+    /**
+     * Attempt to finalize decoding.
+     *
+     * @param mixed           &$value Assigned the the decoded message.
+     *
+     * @return boolean True if the decoder has received a complete message, otherwise false.
+     */
+    public function tryFinalize(&$value = null)
+    {
+        $this->typeCheck->tryFinalize(func_get_args());
 
-    //     for ($index = 0; $index < $length; ++$buffer) {
-    //         $this->feedByte($buffer[$index]);
-    //     }
-    // }
+        if (DecoderState::BEGIN() !== $this->state) {
+            return false;
+        }
 
-    // public function finalize()
-    // {
-    //     if (ProtocolDecoderState::COMPLETE() !== $this->state) {
-    //         throw new Exception\DecodeException('Incomplete response.');
-    //     }
+        $value = $this->value;
+        $this->reset();
 
-    //     $result = array($this->responseIsFault, $this->responseValue);
+        return true;
+    }
 
-    //     $this->reset();
+    /**
+     * Finalize decoding and return the decoded message.
+     *
+     * @return mixed           The decoded message.
+     * @throws DecodeException If the decoder has not yet received a full Hessian message.
+     */
+    public function finalize()
+    {
+        $this->typeCheck->finalize(func_get_args());
 
-    //     return $result;
-    // }
+        if ($this->tryFinalize($value)) {
+            return $value;
+        }
 
-    // private function feedByte($byte)
-    // {
-    //     switch ($this->state) {
-    //         case ProtocolDecoderState::RESPONSE_TYPE():
-    //             return $this->doResponseType($byte);
-    //         case ProtocolDecoderState::RESPONSE_VALUE():
-    //             return $this->doResponseValue($byte);
-    //         case ProtocolDecoderState::COMPLETE():
-    //             return;
-    //     }
+        throw new DecodeException('Unexpected end of stream (state: ' . $this->state . ').');
+    }
 
-    //     return $this->doBegin($byte);
-    // }
+    /**
+     * Feed a single byte of Hessian data to the decoder.
+     *
+     * This is the main point-of-entry to the parser, responsible for delegating to the individual methods
+     * responsible for handling each decoder state ($this->handleXXX()).
+     *
+     * @param integer $byte
+     *
+     * @throws DecodeException if the given byte can not be decoded in the current state.
+     */
+    private function feedByte($byte)
+    {
+        switch ($this->state) {
+            case DecoderState::VERSION():
+                return $this->handleVersion($byte);
+            case DecoderState::MESSAGE_TYPE():
+                return $this->handleMessageType($byte);
+            case DecoderState::RPC_REPLY():
+                return $this->handleValue($byte);
+            case DecoderState::RPC_FAULT():
+                return $this->handleValue($byte);
+        }
 
-    // private function doVersion($byte)
-    // {
-    //     $this->buffer .= $byte;
+        if (HessianConstants::VERSION_START !== $byte) {
+            throw new DecodeException('Invalid byte at start of message: 0x' . dechex($byte) . ' (state: ' . $this->state . ').');
+        }
 
-    //     if (3 !== strlen($this->buffer)) {
-    //         return;
-    //     } elseif ($this->buffer !== "H\x02\x00") {
-    //         throw new Exception\DecodeException('Unsupported version: "' . $this->buffer . '".');
-    //     }
+        $this->state = DecoderState::VERSION();
+    }
 
-    //     $this->buffer = '';
-    //     $this->state = ProtocolDecoderState::RESPONSE_TYPE();
-    // }
+    /**
+     * Handle decoding the Hessian version.
+     *
+     * @param integer $byte
+     */
+    private function handleVersion($byte)
+    {
+        $this->buffer .= pack('c', $byte);
 
-    // private function doResponseType($byte)
-    // {
-    //     if ('R' === $byte) {
-    //         $this->responseIsFault = false;
-    //     } elseif ('F' === $byte) {
-    //         $this->responseIsFault = true;
-    //     } else {
-    //         throw new Exception\DecodeException('Invalid response.');
-    //     }
+        if (strlen(HessianConstants::VERSION) > strlen($this->buffer)) {
+            return;
+        } elseif ($this->buffer === HessianConstants::VERSION) {
+            $this->buffer = '';
+            $this->state = DecoderState::MESSAGE_TYPE();
+        } else {
+            throw new DecodeException('Unsupported Hessian version: 0x' . dechex($this->buffer) . '.');
+        }
+    }
 
-    //     $this->state = ProtocolDecoderState::RESPONSE_VALUE();
-    // }
+    /**
+     * Handle decoding the message type.
+     *
+     * @param integer $byte
+     */
+    private function handleMessageType($byte)
+    {
+        if (HessianConstants::MESSAGE_TYPE_REPLY === $byte) {
+            $this->state = DecoderState::RPC_REPLY();
+        } elseif (HessianConstants::MESSAGE_TYPE_FAULT === $byte) {
+            $this->state = DecoderState::RPC_FAULT();
+        } else {
+            throw new DecodeException('Unsupported message type: 0x' . dechex($this->buffer) . '.');
+        }
+    }
 
-    // private function doResponseValue($byte)
-    // {
-    //     $this->valueDecoder->feed($byte, $this->responseValue);
+    /**
+     * Handle decoding an RPC reply.
+     *
+     * @param integer $byte
+     */
+    private function handleValue($byte)
+    {
+        $this->serializationDecoder->feed(pack('c', $byte));
 
-    //         return;
-    //     }
-
-    //     $this->state = ProtocolDecoderState::COMPLETE();
-
-    //     if ($this->responseIsFault) {
-    //         $this->responseValue = $this->convertFaultResponseToException($this->responseValue);
-    //     }
-    // }
-
-    // private function convertFaultResponseToException($responseValue)
-    // {
-    //     if (!is_array($responseValue)) {
-    //         throw new Exception\DecodeException('Invalid response: expected fault response to be an array.');
-    //     } elseif (!array_key_exists('code', $responseValue)) {
-    //         throw new Exception\DecodeException('Invalid response: fault response does not contain a code.');
-    //     } elseif (!array_key_exists('message', $responseValue)) {
-    //         throw new Exception\DecodeException('Invalid response: fault response does not contain a message.');
-    //     }
-
-    //     switch ($responseValue['code']) {
-    //         case 'ProtocolException':
-    //             return new ProtocolException($responseValue['message']);
-    //         case 'NoSuchObjectException':
-    //             return new NoSuchObjectException($responseValue['message']);
-    //         case 'NoSuchMethodException':
-    //             return new NoSuchMethodException($responseValue['message']);
-    //         case 'RequireHeaderException':
-    //             return new RequireHeaderException($responseValue['message']);
-    //         case 'ServiceException':
-    //             return new ServiceException($responseValue['message']);
-    //     }
-
-    //     throw new Exception\DecodeException('Invalid response: fault response specified unsupported code: "' . $this->responseValue['code'] . '".');
-    // }
+        $value = null;
+        if ($this->serializationDecoder->tryFinalize($value)) {
+            $this->value = array($this->state === DecoderState::RPC_REPLY(), $value);
+            $this->state = DecoderState::BEGIN();
+        }
+    }
 
     private $typeCheck;
-    private $valueDecoder;
-    private $buffer;
+    private $serializationDecoder;
     private $state;
-    private $responseValue;
-    private $isComplete;
+    private $buffer;
+    private $value;
 }

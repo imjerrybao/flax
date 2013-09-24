@@ -18,6 +18,10 @@ class Decoder
     {
         $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
 
+        $this->stack = new Stack;
+        $this->classDefinitions = new Vector;
+        $this->references = new Vector;
+
         $this->reset();
     }
 
@@ -30,9 +34,9 @@ class Decoder
     {
         $this->typeCheck->reset(func_get_args());
 
-        $this->stack = new Stack;
-        $this->classDefinitions = new Vector;
-        $this->references = new Vector;
+        $this->stack->clear();
+        $this->classDefinitions->clear();
+        $this->references->clear();
         $this->currentContext = null;
         $this->value = null;
     }
@@ -57,6 +61,27 @@ class Decoder
     }
 
     /**
+     * Attempt to finalize decoding.
+     *
+     * @param mixed           &$value Assigned the the decoded value.
+     *
+     * @return boolean True if the decoder has received a complete value, otherwise false.
+     */
+    public function tryFinalize(&$value = null)
+    {
+        $this->typeCheck->tryFinalize(func_get_args());
+
+        if (!$this->stack->isEmpty()) {
+            return false;
+        }
+
+        $value = $this->value;
+        $this->reset();
+
+        return true;
+    }
+
+    /**
      * Finalize decoding and return the decoded value.
      *
      * @return mixed           The decoded value.
@@ -66,14 +91,11 @@ class Decoder
     {
         $this->typeCheck->finalize(func_get_args());
 
-        if (!$this->stack->isEmpty()) {
-            throw new DecodeException('Unexpected end of stream (state: ' . $this->state() . ').');
+        if ($this->tryFinalize($value)) {
+            return $value;
         }
 
-        $value = $this->value;
-        $this->reset();
-
-        return $value;
+        throw new DecodeException('Unexpected end of stream (state: ' . $this->state() . ').');
     }
 
     /**
@@ -1108,7 +1130,7 @@ class Decoder
      *
      * @return DecoderState
      */
-    private function state()
+    public function state()
     {
         if ($this->stack->isEmpty()) {
             return DecoderState::BEGIN();

@@ -14,9 +14,9 @@
     "require": {
         "php": ">=5.3",
         "eloquent/enumeration": "~3",
+        "guzzle/http": "~3",
         "icecave/chrono": "~0.2.0",
-        "icecave/collections": "~0.8.0",
-        "kriswallsmith/buzz": "~0.10.0"
+        "icecave/collections": "~0.8.0"
     },
     "require-dev": {
         "eloquent/typhoon": "~0.9.0",

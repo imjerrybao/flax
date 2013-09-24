@@ -5,4 +5,10 @@ include __DIR__ . '/../vendor/autoload.php';
 $f = new Icecave\Flax\HessianClientFactory;
 $c = $f->connect('http://hessian.caucho.com/test/test');
 
-$c->replyTrue();
+try {
+    // var_dump($c->replyObject_0());
+    var_dump($c->replyObject_1());
+    // var_dump($c->replObject_2());
+} catch (Icecave\Flax\Exception\RPCFaultException $e) {
+    var_dump($e->properties()->elements());
+}

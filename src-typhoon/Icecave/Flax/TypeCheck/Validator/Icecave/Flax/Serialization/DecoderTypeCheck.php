@@ -36,6 +36,14 @@ class DecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
+    public function tryFinalize(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount > 1) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+    }
+
     public function finalize(array $arguments)
     {
         if (\count($arguments) > 0) {

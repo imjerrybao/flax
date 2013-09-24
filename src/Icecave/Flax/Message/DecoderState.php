@@ -5,8 +5,9 @@ use Eloquent\Enumeration\Enumeration;
 
 class DecoderState extends Enumeration
 {
-    const VERSION = 0;
-    const RESPONSE_TYPE = 1;
-    const RESPONSE_VALUE = 2;
-    const COMPLETE = 3;
+    const BEGIN        = 0;
+    const VERSION      = 1;
+    const MESSAGE_TYPE = 2;
+    const RPC_REPLY    = 3;
+    const RPC_FAULT    = 4;
 }

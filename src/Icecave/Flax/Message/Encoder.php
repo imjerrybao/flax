@@ -27,7 +27,7 @@ class Encoder
     {
         $this->typeCheck->encodeVersion(func_get_args());
 
-        return HessianConstants::VERSION;
+        return pack('c', HessianConstants::VERSION_START) . HessianConstants::VERSION;
     }
 
     /**
@@ -40,7 +40,7 @@ class Encoder
     {
         $this->typeCheck->encodeCall(func_get_args());
 
-        $buffer  = pack('c', HessianConstants::CALL);
+        $buffer  = pack('c', HessianConstants::MESSAGE_TYPE_CALL);
         $buffer .= $this->serializationEncoder->encode($methodName);
         $buffer .= $this->serializationEncoder->encode(count($arguments));
 
