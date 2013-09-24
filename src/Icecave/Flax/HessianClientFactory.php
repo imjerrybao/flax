@@ -11,7 +11,7 @@ class HessianClientFactory
      */
     public function create($url)
     {
-        TypeCheck::get(__CLASS__)->connect(func_get_args());
+        TypeCheck::get(__CLASS__)->create(func_get_args());
 
         $httpClient = new Client($url);
         $httpClient->setUserAgent(

@@ -112,6 +112,8 @@ class Decoder
                 return $this->handleValue($byte);
             case DecoderState::RPC_FAULT():
                 return $this->handleValue($byte);
+            case DecoderState::COMPLETE():
+                throw new DecodeException('Decoder has not been reset.');
         }
 
         if (HessianConstants::HEADER !== $byte) {
@@ -136,7 +138,7 @@ class Decoder
             $this->buffer = '';
             $this->state = DecoderState::MESSAGE_TYPE();
         } else {
-            throw new DecodeException('Unsupported Hessian version: 0x' . dechex($this->buffer) . '.');
+            throw new DecodeException('Unsupported Hessian version: 0x' . bin2hex($this->buffer) . '.');
         }
     }
 
@@ -152,7 +154,7 @@ class Decoder
         } elseif (HessianConstants::MESSAGE_TYPE_FAULT === $byte) {
             $this->state = DecoderState::RPC_FAULT();
         } else {
-            throw new DecodeException('Unsupported message type: 0x' . dechex($this->buffer) . '.');
+            throw new DecodeException('Unsupported message type: 0x' . dechex($byte) . '.');
         }
     }
 
