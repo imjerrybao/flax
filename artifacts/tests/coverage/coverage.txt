@@ -1,21 +1,25 @@
 
 
 Code Coverage Report 
-  2013-09-24 11:44:34
+  2013-09-24 11:58:35
 
  Summary: 
-  Classes: 90.00% (18/20)
-  Methods: 92.13% (117/127)
-  Lines:   91.93% (832/905)
+  Classes: 100.00% (20/20)
+  Methods: 100.00% (127/127)
+  Lines:   100.00% (907/907)
 
 \Icecave\Flax::HessianClient
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 48/ 48)
+\Icecave\Flax::HessianClientFactory
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  9/  9)
 \Icecave\Flax\Exception::AbstractHessianFaultException
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  9/  9)
 \Icecave\Flax\Exception::DecodeException
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
 \Icecave\Flax\Exception::EncodeException
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
+\Icecave\Flax\Message::Decoder
+  Methods: 100.00% ( 9/ 9)   Lines: 100.00% ( 66/ 66)
 \Icecave\Flax\Message::Encoder
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 16/ 16)
 \Icecave\Flax\Serialization::Decoder
