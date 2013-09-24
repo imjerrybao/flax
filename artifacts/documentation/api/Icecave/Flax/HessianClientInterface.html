@@ -42,10 +42,20 @@
             </tr>
                     <tr>
                 <td class="type">
-                    
+                    mixed
                 </td>
                 <td class="last">
-                    <a href="#method_invoke">invoke</a>(string $name, array $arguments = array())
+                    <a href="#method_invoke">invoke</a>($name)
+                    <p>Invoke a Hessian operation.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_invokeArray">invokeArray</a>(string $name, array $arguments = array())
                     <p>Invoke a Hessian operation.</p>
                 </td>
                 <td></td>
@@ -87,9 +97,55 @@
     </div>
 
                 <h3 id="method_invoke">
-        <div class="location">at line 20</div>
-        <code>            public            
-    <strong>invoke</strong>(string $name, array $arguments = array())</code>
+        <div class="location">at line 23</div>
+        <code>            public            mixed
+    <strong>invoke</strong>($name)</code>
+    </h3>
+    <div class="details">
+        <p>Invoke a Hessian operation.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$name</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>The result of the Hessian call.</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Exception\AbstractHessianFaultException">AbstractHessianFaultException</abbr></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_invokeArray">
+        <div class="location">at line 34</div>
+        <code>            public            mixed
+    <strong>invokeArray</strong>(string $name, array $arguments = array())</code>
     </h3>
     <div class="details">
         <p>Invoke a Hessian operation.</p>
@@ -112,7 +168,26 @@
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>The result of the Hessian call.</td>
+        </tr>
+    </table>
+
             
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Exception\AbstractHessianFaultException">AbstractHessianFaultException</abbr></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
             
                     </div>
     </div>

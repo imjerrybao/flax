@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>Icecave\Flax\Exception\RPCFaultException | Flax API</title>
+        <title>Icecave\Flax\Exception\ServiceException | Flax API</title>
                     <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,16 +19,11 @@
         <div id="title">Flax API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../../Icecave/Flax/Exception.html">Icecave\Flax\Exception</a>\RPCFaultException</h1>
+    <h1><a href="../../../Icecave/Flax/Exception.html">Icecave\Flax\Exception</a>\ServiceException</h1>
     </div>
         <div class="content">
-                <p>class    <strong>RPCFaultException</strong>        extends <a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></p>
+                <p>class    <strong>ServiceException</strong>        extends <a href="../../../Icecave/Flax/Exception/AbstractHessianFaultException.html"><abbr title="Icecave\Flax\Exception\AbstractHessianFaultException">AbstractHessianFaultException</abbr></a></p>
 
-            <div class="description">
-            <p>Indicates that a fault occurred while making a remote procedure call.</p>
-            <p>
-</p>
-        </div>
     
     
     
@@ -44,18 +39,18 @@
                     <p>
 </p>
                 </td>
-                <td></td>
+                <td><small>from&nbsp;<a href="../../../Icecave/Flax/Exception/AbstractHessianFaultException.html#method___construct"><abbr title="Icecave\Flax\Exception\AbstractHessianFaultException">AbstractHessianFaultException</abbr></a></small></td>
             </tr>
                     <tr>
                 <td class="type">
-                    
+                    <abbr title="Icecave\Collections\Map">Map</abbr>
                 </td>
                 <td class="last">
                     <a href="#method_properties">properties</a>()
                     <p>
 </p>
                 </td>
-                <td></td>
+                <td><small>from&nbsp;<a href="../../../Icecave/Flax/Exception/AbstractHessianFaultException.html#method_properties"><abbr title="Icecave\Flax\Exception\AbstractHessianFaultException">AbstractHessianFaultException</abbr></a></small></td>
             </tr>
             </table>
 
@@ -63,7 +58,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 18</div>
+        <div class="location">in <a href="../../../Icecave/Flax/Exception/AbstractHessianFaultException.html#method___construct"><abbr title="Icecave\Flax\Exception\AbstractHessianFaultException">AbstractHessianFaultException</abbr></a> at line 14</div>
         <code>            public            
     <strong>__construct</strong>(<abbr title="Icecave\Collections\Map">Map</abbr> $properties, <a href="http://php.net/Exception"><abbr title="Exception">Exception</abbr></a> $previous = null)</code>
     </h3>
@@ -79,8 +74,7 @@
                     <tr>
                 <td><abbr title="Icecave\Collections\Map">Map</abbr></td>
                 <td>$properties</td>
-                <td>
-</td>
+                <td>Properties of the fault.</td>
             </tr>
                     <tr>
                 <td><a href="http://php.net/Exception"><abbr title="Exception">Exception</abbr></a></td>
@@ -96,8 +90,8 @@
     </div>
 
                 <h3 id="method_properties">
-        <div class="location">at line 27</div>
-        <code>            public            
+        <div class="location">in <a href="../../../Icecave/Flax/Exception/AbstractHessianFaultException.html#method_properties"><abbr title="Icecave\Flax\Exception\AbstractHessianFaultException">AbstractHessianFaultException</abbr></a> at line 30</div>
+        <code>            public            <abbr title="Icecave\Collections\Map">Map</abbr>
     <strong>properties</strong>()</code>
     </h3>
     <div class="details">
@@ -107,6 +101,15 @@
 </p>
         <div class="tags">
             
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Icecave\Collections\Map">Map</abbr></td>
+            <td>Properties of the fault.</td>
+        </tr>
+    </table>
+
             
             
                     </div>
