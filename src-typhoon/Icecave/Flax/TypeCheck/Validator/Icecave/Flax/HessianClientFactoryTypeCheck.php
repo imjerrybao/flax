@@ -3,7 +3,7 @@ namespace Icecave\Flax\TypeCheck\Validator\Icecave\Flax;
 
 class HessianClientFactoryTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
 {
-    public function connect(array $arguments)
+    public function create(array $arguments)
     {
         $argumentCount = \count($arguments);
         if ($argumentCount < 1) {

@@ -71,14 +71,4 @@ class HessianClientTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
-    public function createException(array $arguments)
-    {
-        $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('properties', 0, 'Icecave\\Collections\\Map');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
-        }
-    }
-
 }

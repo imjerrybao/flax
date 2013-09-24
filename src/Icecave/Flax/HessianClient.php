@@ -3,7 +3,6 @@ namespace Icecave\Flax;
 
 use Guzzle\Http\ClientInterface;
 use Guzzle\Stream\PhpStreamRequestFactory;
-use Icecave\Collections\Map;
 use Icecave\Flax\Exception\AbstractHessianFaultException;
 use Icecave\Flax\Exception\DecodeException;
 use Icecave\Flax\Exception\NoSuchMethodException;
@@ -113,32 +112,20 @@ class HessianClient implements HessianClientInterface
             return $value;
         }
 
-        throw $this->createException($value);
-    }
-
-    /**
-     * @param Map $properties
-     *
-     * @return AbstractHessianFaultException
-     */
-    protected function createException(Map $properties)
-    {
-        $this->typeCheck->createException(func_get_args());
-
-        switch ($properties['code']) {
+        switch ($value['code']) {
             case 'NoSuchMethodException':
-                return new NoSuchMethodException($properties);
+                throw new NoSuchMethodException($value);
             case 'NoSuchObjectException':
-                return new NoSuchObjectException($properties);
+                throw new NoSuchObjectException($value);
             case 'ProtocolException':
-                return new ProtocolException($properties);
+                throw new ProtocolException($value);
             case 'RequireHeaderException':
-                return new RequireHeaderException($properties);
+                throw new RequireHeaderException($value);
             case 'ServiceException':
-                return new ServiceException($properties);
+                throw new ServiceException($value);
         }
 
-        throw new DecodeException('Unknown exception code: ' . $properties['code'] . '.');
+        throw new DecodeException('Unknown exception code: ' . $value['code'] . '.');
     }
 
     private $typeCheck;

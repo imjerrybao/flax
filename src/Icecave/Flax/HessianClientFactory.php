@@ -9,7 +9,7 @@ class HessianClientFactory
     /**
      * @param string $url
      */
-    public function connect($url)
+    public function create($url)
     {
         TypeCheck::get(__CLASS__)->connect(func_get_args());
 
