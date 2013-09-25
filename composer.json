@@ -16,7 +16,9 @@
         "eloquent/enumeration": "~3",
         "guzzle/http": "~3",
         "icecave/chrono": "~0.2.0",
-        "icecave/collections": "~0.8.0"
+        "icecave/collections": "~0.8.0",
+        "icecave/isolator": "~2",
+        "psr/log": "~1"
     },
     "require-dev": {
         "eloquent/liberator": "~1",

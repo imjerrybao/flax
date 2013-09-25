@@ -1,8 +1,10 @@
 <?php
 namespace Icecave\Flax;
 
+use Exception;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Stream\PhpStreamRequestFactory;
+use Icecave\Collections\Map;
 use Icecave\Flax\Exception\AbstractHessianFaultException;
 use Icecave\Flax\Exception\DecodeException;
 use Icecave\Flax\Exception\NoSuchMethodException;
@@ -13,22 +15,34 @@ use Icecave\Flax\Exception\ServiceException;
 use Icecave\Flax\Message\Decoder;
 use Icecave\Flax\Message\Encoder;
 use Icecave\Flax\TypeCheck\TypeCheck;
+use Icecave\Isolator\Isolator;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-class HessianClient implements HessianClientInterface
+class HessianClient implements HessianClientInterface, LoggerAwareInterface
 {
     /**
-     * @param ClientInterface              $httpClient
-     * @param PhpStreamRequestFactory|null $streamFactory
-     * @param Encoder|null                 $encoder
-     * @param Decoder|null                 $decoder
+     * @param ClientInterface              $httpClient    The HTTP client used to make the request.
+     * @param LoggerInterface|null         $logger        A PSR-3 logger to log requests against, or null to disable logging.
+     * @param PhpStreamRequestFactory|null $streamFactory The stream factory used to create stream-based HTTP requests, or null to use the default.
+     * @param Encoder|null                 $encoder       The Hessian message encoder, or null to use the default.
+     * @param Decoder|null                 $decoder       The hessian message decoder, or null to use the default.
+     * @param Isolator|null                $isolator
      */
     public function __construct(
         ClientInterface $httpClient,
+        LoggerInterface $logger = null,
         PhpStreamRequestFactory $streamFactory = null,
         Encoder $encoder = null,
-        Decoder $decoder = null
+        Decoder $decoder = null,
+        Isolator $isolator = null
     ) {
         $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
+
+        if (null === $logger) {
+            $logger = new NullLogger;
+        }
 
         if (null === $streamFactory) {
             $streamFactory = new PhpStreamRequestFactory;
@@ -43,9 +57,23 @@ class HessianClient implements HessianClientInterface
         }
 
         $this->httpClient = $httpClient;
+        $this->logger = $logger;
         $this->streamFactory = $streamFactory;
         $this->encoder = $encoder;
         $this->decoder = $decoder;
+        $this->isolator = Isolator::get($isolator);
+    }
+
+    /**
+     * Sets a logger instance on the object.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->typeCheck->setLogger(func_get_args());
+
+        $this->logger = $logger;
     }
 
     /**
@@ -92,6 +120,72 @@ class HessianClient implements HessianClientInterface
     {
         $this->typeCheck->invokeArray(func_get_args());
 
+        $typeName = function ($value) {
+            if (is_object($value)) {
+                return get_class($value);
+            }
+
+            return gettype($value);
+        };
+
+        $methodDescription = sprintf(
+            '%s(%s)',
+            $name,
+            implode(
+                ', ',
+                array_map($typeName, $arguments)
+            )
+        );
+
+        try {
+            $time = $this->isolator->microtime(true);
+            list($reply, $fault) = $this->doRequest($name, $arguments);
+            $time = $this->isolator->microtime(true) - $time;
+        } catch (Exception $e) {
+            $this->logger->error(
+                'Error occurred while invoking "' . $methodDescription . '".',
+                array(
+                    'arguments' => $arguments,
+                    'exception' => $e
+                )
+            );
+
+            throw $e;
+        }
+
+        if ($fault) {
+            $this->logger->debug(
+                'Invoked "' . $methodDescription . '" in ' . $time . ' second(s), with "' . $reply['code'] . '" fault: ' . $fault->getMessage(),
+                array(
+                    'arguments' => $arguments,
+                    'fault' => $reply
+                )
+            );
+
+            throw $fault;
+        }
+
+        $this->logger->debug(
+            'Invoked "' . $methodDescription . '" in ' . $time . ' second(s), with "' . $typeName($reply) . '" reply.',
+            array(
+                'arguments' => $arguments,
+                'reply' => $reply
+            )
+        );
+
+        return $reply;
+    }
+
+    /**
+     * @param string $name
+     * @param array  $arguments
+     *
+     * @return tuple<mixed, Exception|null>
+     */
+    protected function doRequest($name, array $arguments)
+    {
+        $this->typeCheck->doRequest(func_get_args());
+
         $this->encoder->reset();
         $this->decoder->reset();
 
@@ -109,27 +203,44 @@ class HessianClient implements HessianClientInterface
         list($success, $value) = $this->decoder->finalize();
 
         if ($success) {
-            return $value;
+            return array($value, null);
+        } else {
+            return array($value, $this->createFaultException($value));
+        }
+    }
+
+    /**
+     * @param Map $properties
+     *
+     * @return AbstractHessianFaultException
+     */
+    protected function createFaultException(Map $properties)
+    {
+        $this->typeCheck->createFaultException(func_get_args());
+
+        if (!$properties->hasKey('code')) {
+            throw new DecodeException('Encountered Hessian fault with no fault code.');
         }
 
-        switch ($value['code']) {
+        switch ($properties['code']) {
             case 'NoSuchMethodException':
-                throw new NoSuchMethodException($value);
+                return new NoSuchMethodException($properties);
             case 'NoSuchObjectException':
-                throw new NoSuchObjectException($value);
+                return new NoSuchObjectException($properties);
             case 'ProtocolException':
-                throw new ProtocolException($value);
+                return new ProtocolException($properties);
             case 'RequireHeaderException':
-                throw new RequireHeaderException($value);
+                return new RequireHeaderException($properties);
             case 'ServiceException':
-                throw new ServiceException($value);
+                return new ServiceException($properties);
         }
 
-        throw new DecodeException('Unknown exception code: ' . $value['code'] . '.');
+        throw new DecodeException('Unknown Hessian fault code: ' . $properties['code'] . '.');
     }
 
     private $typeCheck;
     private $httpClient;
+    private $logger;
     private $streamFactory;
     private $encoder;
     private $decoder;
