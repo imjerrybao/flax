@@ -24,7 +24,6 @@ var tree = [["Icecave",,"",
                 [        ]],["HessianClient","Icecave\/Flax\/HessianClient.html","",
                 [        ]],["HessianClientFactory","Icecave\/Flax\/HessianClientFactory.html","",
                 [        ]],["HessianClientInterface","Icecave\/Flax\/HessianClientInterface.html","",
-                [        ]],["Object","Icecave\/Flax\/Object.html","",
                 [        ]],["PackageInfo","Icecave\/Flax\/PackageInfo.html","",
                 [        ]]        ]]        ]]        ]
 
