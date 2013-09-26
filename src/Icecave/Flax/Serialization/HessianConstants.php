@@ -42,7 +42,7 @@ class HessianConstants extends Enumeration
     const INT32_1_END    = 0xbf;
     const INT32_1_OFFSET = 0x90;
     const INT32_1_MIN    = -0x10;
-    const INT32_1_MAX    = +0x3f;
+    const INT32_1_MAX    = +0x2f;
 
     // xc0 - xcf : two-octet compact int (-x800 to x7ff)
     const INT32_2_START  = 0xc0;
@@ -59,7 +59,9 @@ class HessianConstants extends Enumeration
     const INT32_3_MAX    = +0x03ffff;
 
     // x49       : 32-bit signed integer ('I')
-    const INT32_4 = 0x49;
+    const INT32_4     = 0x49;
+    const INT32_4_MIN = -0x80000000;
+    const INT32_4_MAX = +0x7fffffff;
 
     // xd8 - xef : one-octet compact long (-x8 to xf, xe0 is 0)
     const INT64_1_START  = 0xd8;

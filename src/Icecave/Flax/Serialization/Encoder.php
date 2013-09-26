@@ -164,7 +164,7 @@ class Encoder
             );
 
         // 4-bytes ...
-        } elseif (!(HessianConstants::INT64_HIGH_MASK & $value)) {
+        } elseif (HessianConstants::INT32_4_MIN <= $value && $value <= HessianConstants::INT32_4_MAX) {
             return pack('cN', HessianConstants::INT32_4, $value);
         }
 

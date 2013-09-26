@@ -89,9 +89,13 @@ abstract class TestVectors
                 "\xcf\xff",
                 2047,
             ),
-            'integer - 2 octet midway' => array(
+            'integer - 2 octet midway 1' => array(
                 "\xc7\x00",
                 -256,
+            ),
+            'integer - 2 octet midway 2' => array(
+                "\xc8\x30",
+                0x30,
             ),
             'integer - 3 octet min' => array(
                 "\xd0\x00\x00",
@@ -105,9 +109,13 @@ abstract class TestVectors
                 "\xd3\xf0\x60",
                 -4000,
             ),
-            'integer - 4 octet' => array(
+            'integer - 4 octet 1' => array(
                 "I\x10\x20\x30\x40",
                 0x10203040,
+            ),
+            'integer - 4 octet 2' => array(
+                "I\xff\xfb\xff\xff",
+                -0x40001,
             ),
 
             ////////////////////
