@@ -2,9 +2,12 @@
 namespace Icecave\Flax;
 
 use Exception;
-use Icecave\Collections\Vector;
+use Guzzle\Common\Exception\GuzzleException;
 use Icecave\Chrono\DateTime;
+use Icecave\Collections\Map;
+use Icecave\Collections\Vector;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
 class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
 {
@@ -22,15 +25,19 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
      * @group large
      * @dataProvider argumentTestData
      */
-    public function testArgument($name, $argument, $output = true)
+    public function testArgument($name, $argument, $skipTest = false)
     {
+        if ($skipTest) {
+            $this->markTestSkipped();
+        }
+
         try {
             $response = self::$client->invoke($name, $argument);
-        } catch (Exception $e) {
+        } catch (GuzzleException $e) {
             $this->markTestSkipped($e->getMessage());
         }
 
-        if ($response !== $output) {
+        if ($response !== true) {
             $encoder = new Serialization\Encoder;
             $encoding = trim(
                 preg_replace(
@@ -41,12 +48,31 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
             );
             $this->fail($response . PHP_EOL . 'Flax Encoding: ' . $encoding);
         } else {
-            $this->assertTrue(true);
+            $this->assertTrue($response);
         }
     }
 
     public function argumentTestData()
     {
+        // Filthy hack ...
+        if (!getenv('TRAVIS')) {
+            return array(
+                array(
+                    'Integration tests skipped outside Travis CI.',
+                    null,
+                    true,
+                )
+            );
+        }
+
+        $circularReference = new stdClass;
+        $circularReference->_first = 'a';
+        $circularReference->_rest  = $circularReference;
+        $circularReference = new Object(
+            'com.caucho.hessian.test.TestCons',
+            $circularReference
+        );
+
         return array(
 
             array(
@@ -136,39 +162,6 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
             ),
 
             ////////////
-            // binary //
-            ////////////
-
-            array(
-                'argBinary_0',
-                new Binary,
-            ),
-            array(
-                'argBinary_1',
-                new Binary($this->generateData(1)),
-            ),
-            array(
-                'argBinary_15',
-                new Binary($this->generateData(15)),
-            ),
-            array(
-                'argBinary_16',
-                new Binary($this->generateData(16)),
-            ),
-            array(
-                'argBinary_1023',
-                new Binary($this->generateData(1023)),
-            ),
-            array(
-                'argBinary_1024',
-                new Binary($this->generateData(1024)),
-            ),
-            array(
-                'argBinary_65536',
-                new Binary($this->generateData(65536)),
-            ),
-
-            ////////////
             // double //
             ////////////
 
@@ -243,6 +236,72 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
             ),
 
             ////////////
+            // string //
+            ////////////
+
+            array(
+                'argString_0',
+                '',
+            ),
+            array(
+                'argString_1',
+                $this->generateString(1),
+            ),
+            array(
+                'argString_31',
+                $this->generateString(31),
+            ),
+            array(
+                'argString_32',
+                $this->generateString(32),
+            ),
+            array(
+                'argString_1023',
+                $this->generateString(1023),
+            ),
+            array(
+                'argString_1024',
+                $this->generateString(1024),
+            ),
+            array(
+                'argString_65536',
+                $this->generateString(65536),
+            ),
+
+            ////////////
+            // binary //
+            ////////////
+
+            array(
+                'argBinary_0',
+                new Binary,
+            ),
+            array(
+                'argBinary_1',
+                new Binary($this->generateString(1)),
+            ),
+            array(
+                'argBinary_15',
+                new Binary($this->generateString(15)),
+            ),
+            array(
+                'argBinary_16',
+                new Binary($this->generateString(16)),
+            ),
+            array(
+                'argBinary_1023',
+                new Binary($this->generateString(1023)),
+            ),
+            array(
+                'argBinary_1024',
+                new Binary($this->generateString(1024)),
+            ),
+            array(
+                'argBinary_65536',
+                new Binary($this->generateString(65536)),
+            ),
+
+            ////////////
             // vector //
             ////////////
 
@@ -262,15 +321,75 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
                 'argUntypedFixedList_8',
                 Vector::create('1', '2', '3', '4', '5', '6', '7', '8'),
             ),
+
+            /////////
+            // map //
+            /////////
+
+            array(
+                'argUntypedMap_0',
+                Map::create(),
+            ),
+            array(
+                'argUntypedMap_1',
+                Map::create(array('a', 0)),
+            ),
+            array(
+                'argUntypedMap_2',
+                Map::create(array(0, 'a'), array(1, 'b')),
+            ),
+            array(
+                'argUntypedMap_3',
+                Map::create(array(array('a'), 0)),
+                version_compare(PHP_VERSION, '5.5.0') <= 0
+            ),
+
+            ////////////
+            // object //
+            ////////////
+
+            array(
+                'argObject_0',
+                new Object('com.caucho.hessian.test.A0', new stdClass),
+            ),
+            array(
+                'argObject_1',
+                new Object('com.caucho.hessian.test.TestObject', (object) array('_value' => 0)),
+            ),
+            array(
+                'argObject_2',
+                array(
+                    new Object('com.caucho.hessian.test.TestObject', (object) array('_value' => 0)),
+                    new Object('com.caucho.hessian.test.TestObject', (object) array('_value' => 1)),
+                )
+            ),
+            array(
+                'argObject_2a',
+                array(
+                    $object = new Object('com.caucho.hessian.test.TestObject', (object) array('_value' => 0)),
+                    $object,
+                )
+            ),
+            array(
+                'argObject_2b',
+                array(
+                    new Object('com.caucho.hessian.test.TestObject', (object) array('_value' => 0)),
+                    new Object('com.caucho.hessian.test.TestObject', (object) array('_value' => 0)),
+                )
+            ),
+            array(
+                'argObject_3',
+                $circularReference
+            ),
         );
     }
 
-    private function generateData($length)
+    private function generateString($length)
     {
         $result = '';
 
-        if ($length <= 16) {
-            $result .= '012345678901234567890';
+        if ($length <= 32) {
+            $result .= '0123456789012345678901234567890123456789';
         } elseif ($length <= 1025) {
             for ($i = 0; $i < 16; ++$i) {
                 $result .= intval($i / 10);

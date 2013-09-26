@@ -4,7 +4,7 @@ namespace Icecave\Flax;
 use Icecave\Flax\TypeCheck\TypeCheck;
 
 /**
- * Represents a string is serialized as a binary value.
+ * A wrapper around string that forces the Hessian encoder to treat it as a binary value.
  */
 class Binary
 {

@@ -9,6 +9,7 @@ use Icecave\Collections\Map;
 use Icecave\Collections\SequenceInterface;
 use Icecave\Flax\Binary;
 use Icecave\Flax\Exception\EncodeException;
+use Icecave\Flax\Object;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
 
@@ -336,6 +337,13 @@ class Encoder
             return $this->encodeBinary($value->data());
         }
 
+        if ($value instanceof Object) {
+            $className = $value->className();
+            $value = $value->object();
+        } else {
+            $className = get_class($value);
+        }
+
         $ref = null;
         if ($this->findReference($value, $ref)) {
             return $this->encodeReference($ref);
@@ -343,8 +351,10 @@ class Encoder
             return $this->encodeVector($value);
         } elseif ($value instanceof AssociativeInterface) {
             return $this->encodeMap($value);
-        } elseif ('stdClass' === get_class($value)) {
+        } elseif ($value instanceof Object) {
             return $this->encodeStdClass($value);
+        } elseif ('stdClass' === get_class($value)) {
+            return $this->encodeStdClass($value, $className);
         }
 
         throw new EncodeException('Can not encode object of type "' . get_class($value) . '".');
@@ -352,10 +362,11 @@ class Encoder
 
     /**
      * @param stdClass $value
+     * @param string   $className
      *
      * @return string
      */
-    private function encodeStdClass(stdClass $value)
+    private function encodeStdClass(stdClass $value, $className)
     {
         $sortedProperties = (array) $value;
         ksort($sortedProperties);
@@ -364,7 +375,7 @@ class Encoder
 
         $defId = null;
         if (!$this->findClassDefinition($value, $defId)) {
-            $buffer .= $this->encodeClassDefinition('stdClass', array_keys($sortedProperties));
+            $buffer .= $this->encodeClassDefinition($className, array_keys($sortedProperties));
         }
 
         if ($defId <= HessianConstants::OBJECT_INSTANCE_COMPACT_LIMIT) {

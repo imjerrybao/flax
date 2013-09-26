@@ -773,7 +773,7 @@ class DecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
         }
     }
 
-    public function handleStringOrBinarySize(array $arguments)
+    public function handleStringSize(array $arguments)
     {
         $argumentCount = \count($arguments);
         if ($argumentCount < 2) {
@@ -859,6 +859,28 @@ class DecoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
             throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
         } elseif ($argumentCount > 1) {
             throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        }
+        $value = $arguments[0];
+        if (!\is_int($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'byte',
+                0,
+                $arguments[0],
+                'integer'
+            );
+        }
+    }
+
+    public function handleBinarySize(array $arguments)
+    {
+        $argumentCount = \count($arguments);
+        if ($argumentCount < 2) {
+            if ($argumentCount < 1) {
+                throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('byte', 0, 'integer');
+            }
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('nextState', 1, 'Icecave\\Flax\\Serialization\\DecoderState');
+        } elseif ($argumentCount > 2) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
         }
         $value = $arguments[0];
         if (!\is_int($value)) {

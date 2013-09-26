@@ -234,10 +234,22 @@ class EncoderTypeCheck extends \Icecave\Flax\TypeCheck\AbstractValidator
     public function encodeStdClass(array $arguments)
     {
         $argumentCount = \count($arguments);
-        if ($argumentCount < 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'stdClass');
-        } elseif ($argumentCount > 1) {
-            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(1, $arguments[1]);
+        if ($argumentCount < 2) {
+            if ($argumentCount < 1) {
+                throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('value', 0, 'stdClass');
+            }
+            throw new \Icecave\Flax\TypeCheck\Exception\MissingArgumentException('className', 1, 'string');
+        } elseif ($argumentCount > 2) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentException(2, $arguments[2]);
+        }
+        $value = $arguments[1];
+        if (!\is_string($value)) {
+            throw new \Icecave\Flax\TypeCheck\Exception\UnexpectedArgumentValueException(
+                'className',
+                1,
+                $arguments[1],
+                'string'
+            );
         }
     }
 

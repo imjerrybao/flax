@@ -2,6 +2,7 @@
 namespace Icecave\Flax\Serialization;
 
 use Exception;
+use Icecave\Flax\Object;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 
@@ -244,6 +245,26 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
         // This class def should be the 16th (0xa0) ...
         $this->assertSameBinary("C\x08stdClass\x90O\xa0", $this->encoder->encode(new stdClass));
+    }
+
+    public function testEncodeObjectWithCircularReference()
+    {
+        $object = new stdClass;
+        $object->a = null;
+        $object->b = $object;
+
+        $this->assertSameBinary("C\x08stdClass\x92\x01a\x01b\x60NQ\x90", $this->encoder->encode($object));
+    }
+
+    public function testEncodeObjectWithCircularReferenceInWrapper()
+    {
+        $object = new stdClass;
+        $object->a = null;
+        $object->b = $object;
+
+        $object = new Object('foo', $object);
+
+        $this->assertSameBinary("C\x03foo\x92\x01a\x01b\x60NQ\x90", $this->encoder->encode($object));
     }
 
     public function testEncodeUnsupportedObject()

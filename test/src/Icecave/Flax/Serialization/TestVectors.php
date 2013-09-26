@@ -6,6 +6,7 @@ use Icecave\Chrono\DateTime;
 use Icecave\Collections\Map;
 use Icecave\Collections\Vector;
 use Icecave\Flax\Binary;
+use Icecave\Flax\Object;
 use stdClass;
 
 abstract class TestVectors
@@ -313,6 +314,15 @@ abstract class TestVectors
             'array - map' => array(
                 "\x48\x9a\x91\x9f\x92\x5a",
                 array(10 => 1, 15 => 2),
+            ),
+
+            ////////////
+            // object //
+            ////////////
+
+            'object - custom name' => array(
+                "\x43\x07foo.bar\x92\x03bar\x03foo\x60\x92\x91",
+                new Object('foo.bar', (object) array('foo' => 1, 'bar' => 2)),
             ),
         );
 
