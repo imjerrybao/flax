@@ -177,6 +177,18 @@ abstract class TestVectors
                 "\x5f\x47\x2f\xc8\x00",
                 45000.00,
             ),
+            'double - 4 octet float (0.001)' => array(
+                "\x5f\x00\x00\x00\x01",
+                0.001,
+            ),
+            'double - 4 octet float (-0.001)' => array(
+                "\x5f\xff\xff\xff\xff",
+                -0.001,
+            ),
+            'double - 4 octet float (65.536)' => array(
+                "\x5f\x00\x01\x00\x00",
+                65.536,
+            ),
             'double - 8 octet' => array(
                 "D\x40\x28\x80\xa1\xbe\x2b\x49\x5a",
                 12.251234,
