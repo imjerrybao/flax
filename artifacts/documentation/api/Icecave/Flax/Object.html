@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>Icecave\Flax\Binary | Flax API</title>
+        <title>Icecave\Flax\Object | Flax API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,13 +19,13 @@
         <div id="title">Flax API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../Icecave/Flax.html">Icecave\Flax</a>\Binary</h1>
+    <h1><a href="../../Icecave/Flax.html">Icecave\Flax</a>\Object</h1>
     </div>
         <div class="content">
-                <p>class    <strong>Binary</strong></p>
+                <p>class    <strong>Object</strong></p>
 
             <div class="description">
-            <p>A wrapper around string that forces the Hessian encoder to treat it as a binary value.</p>
+            <p>A wrapper around an object that allows you to overide the class name used during Hessian serialization.</p>
             <p>
 </p>
         </div>
@@ -40,7 +40,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(string $data = &#039;&#039;)
+                    <a href="#method___construct">__construct</a>(string $className, object $object)
                     <p>
 </p>
                 </td>
@@ -51,8 +51,18 @@
                     string
                 </td>
                 <td class="last">
-                    <a href="#method_data">data</a>()
-                    <p>Get the binary data.</p>
+                    <a href="#method_className">className</a>()
+                    <p>Get the class name to use for serialization.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_object">object</a>()
+                    <p>Get the internal obejct.</p>
                 </td>
                 <td></td>
             </tr>
@@ -62,9 +72,9 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 14</div>
+        <div class="location">at line 15</div>
         <code>            public            
-    <strong>__construct</strong>(string $data = &#039;&#039;)</code>
+    <strong>__construct</strong>(string $className, object $object)</code>
     </h3>
     <div class="details">
         <p>
@@ -77,8 +87,13 @@
                     <table>
                     <tr>
                 <td>string</td>
-                <td>$data</td>
-                <td>The binary data.</td>
+                <td>$className</td>
+                <td>The class name to use for serialization.</td>
+            </tr>
+                    <tr>
+                <td>object</td>
+                <td>$object</td>
+                <td>The actual object to serialize.</td>
             </tr>
             </table>
 
@@ -88,13 +103,13 @@
                     </div>
     </div>
 
-                <h3 id="method_data">
-        <div class="location">at line 26</div>
+                <h3 id="method_className">
+        <div class="location">at line 28</div>
         <code>            public            string
-    <strong>data</strong>()</code>
+    <strong>className</strong>()</code>
     </h3>
     <div class="details">
-        <p>Get the binary data.</p>
+        <p>Get the class name to use for serialization.</p>
         <p>
 </p>
         <div class="tags">
@@ -104,7 +119,32 @@
                     <table>
         <tr>
             <td>string</td>
-            <td>The binary data.</td>
+            <td>The class name to use for serialization.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_object">
+        <div class="location">at line 40</div>
+        <code>            public            string
+    <strong>object</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the internal obejct.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>The internal object.</td>
         </tr>
     </table>
 
