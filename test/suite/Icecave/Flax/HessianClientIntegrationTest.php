@@ -2,8 +2,8 @@
 namespace Icecave\Flax;
 
 use Exception;
-use Exception;
 use Icecave\Collections\Vector;
+use Icecave\Chrono\DateTime;
 use PHPUnit_Framework_TestCase;
 
 class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
@@ -18,6 +18,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
 
     /**
      * @group integration
+     * @group exclude-by-default
      * @group large
      * @dataProvider argumentTestData
      */
@@ -25,10 +26,22 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
     {
         try {
             $response = self::$client->invoke($name, $argument);
-
-            $this->assertEquals($output, $response);
         } catch (Exception $e) {
             $this->markTestSkipped($e->getMessage());
+        }
+
+        if ($response !== $output) {
+            $encoder = new Serialization\Encoder;
+            $encoding = trim(
+                preg_replace(
+                    '/(..)/',
+                    ' \1',
+                    bin2hex($encoder->encode($argument))
+                )
+            );
+            $this->fail($response . PHP_EOL . 'Flax Encoding: ' . $encoding);
+        } else {
+            $this->assertTrue(true);
         }
     }
 
@@ -156,6 +169,80 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
             ),
 
             ////////////
+            // double //
+            ////////////
+
+            array(
+                'argDouble_0_0',
+                0.0,
+            ),
+            array(
+                'argDouble_1_0',
+                1.0,
+            ),
+            array(
+                'argDouble_2_0',
+                2.0,
+            ),
+            array(
+                'argDouble_127_0',
+                127.0,
+            ),
+            array(
+                'argDouble_m128_0',
+                -128.0,
+            ),
+            array(
+                'argDouble_128_0',
+                128.0,
+            ),
+            array(
+                'argDouble_m129_0',
+                -129.0,
+            ),
+            array(
+                'argDouble_32767_0',
+                32767.0,
+            ),
+            array(
+                'argDouble_m32768_0',
+                -32768.0,
+            ),
+            array(
+                'argDouble_0_001',
+                0.001,
+            ),
+            array(
+                'argDouble_m0_001',
+                -0.001,
+            ),
+            array(
+                'argDouble_65_536',
+                65.536,
+            ),
+            array(
+                'argDouble_3_14159',
+                3.14159,
+            ),
+
+            ///////////////
+            // timestamp //
+            ///////////////
+
+            array(
+                'argDate_0',
+                DateTime::fromUnixTime(0),
+            ),
+            array(
+                'argDate_1',
+                new DateTime(1998, 5, 8, 9, 51, 31), // The docs state 7:51, but this is incorrect - http://massapi.com/source/resin-4.0.20/modules/hessian/src/com/caucho/hessian/test/TestHessian2Servlet.java.html
+            ),
+            array(
+                'argDate_2',
+                new DateTime(1998, 5, 8, 9, 51),
+            ),
+
+            ////////////
             // vector //
             ////////////
 
@@ -175,7 +262,6 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
                 'argUntypedFixedList_8',
                 Vector::create('1', '2', '3', '4', '5', '6', '7', '8'),
             ),
-
         );
     }
 
