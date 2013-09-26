@@ -5,6 +5,7 @@ use DateTime as NativeDateTime;
 use Icecave\Chrono\DateTime;
 use Icecave\Collections\Map;
 use Icecave\Collections\Vector;
+use Icecave\Flax\Binary;
 use stdClass;
 
 abstract class TestVectors
@@ -45,6 +46,19 @@ abstract class TestVectors
             'string - compact - unicode' => array(
                 "\x01\xc3\x83",
                 "\xc3\x83",
+            ),
+
+            ////////////
+            // binary //
+            ////////////
+
+            'binary - compact - empty' => array(
+                "\x20",
+                new Binary,
+            ),
+            'binary - compact - hello' => array(
+                "\x25hello",
+                new Binary("hello"),
             ),
 
             ////////////////////
@@ -337,33 +351,25 @@ abstract class TestVectors
             // binary //
             ////////////
 
-            'binary - compact - empty' => array(
-                "\x20",
-                "",
-            ),
-            'binary - compact - hello' => array(
-                "\x25hello",
-                "hello",
-            ),
             'binary - empty' => array(
                 "\x34\x00",
-                "",
+                new Binary,
             ),
             'binary - hello' => array(
                 "\x34\x05hello",
-                "hello",
+                new Binary("hello"),
             ),
             'binary - chunked - empty' => array(
                 "\x42\x00\x00",
-                "",
+                new Binary,
             ),
             'binary - chunked - single' => array(
                 "\x42\x00\x05hello",
-                "hello",
+                new Binary("hello"),
             ),
             'binary - chunked - multiple' => array(
                 "\x41\x00\x05hello\x41\x00\x07, world\x42\x00\x01!",
-                "hello, world!",
+                new Binary("hello, world!"),
             ),
 
             ////////////////////

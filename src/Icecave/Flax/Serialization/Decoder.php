@@ -5,6 +5,7 @@ use Icecave\Chrono\DateTime;
 use Icecave\Collections\Map;
 use Icecave\Collections\Stack;
 use Icecave\Collections\Vector;
+use Icecave\Flax\Binary;
 use Icecave\Flax\Exception\DecodeException;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
@@ -114,29 +115,29 @@ class Decoder
     {
         switch ($this->currentContext->state) {
             case DecoderState::STRING_SIZE():
-                return $this->handleStringOrBinarySize($byte, DecoderState::STRING_DATA());
+                return $this->handleStringSize($byte, DecoderState::STRING_DATA());
             case DecoderState::STRING_DATA():
                 return $this->handleStringData($byte);
             case DecoderState::STRING_CHUNK_SIZE():
-                return $this->handleStringOrBinarySize($byte, DecoderState::STRING_CHUNK_DATA());
+                return $this->handleStringSize($byte, DecoderState::STRING_CHUNK_DATA());
             case DecoderState::STRING_CHUNK_DATA():
                 return $this->handleStringChunkData($byte);
             case DecoderState::STRING_CHUNK_FINAL_SIZE():
-                return $this->handleStringOrBinarySize($byte, DecoderState::STRING_CHUNK_FINAL_DATA());
+                return $this->handleStringSize($byte, DecoderState::STRING_CHUNK_FINAL_DATA());
             case DecoderState::STRING_CHUNK_FINAL_DATA():
                 return $this->handleStringChunkFinalData($byte);
             case DecoderState::STRING_CHUNK_CONTINUATION():
                 return $this->handleStringChunkContinuation($byte);
             case DecoderState::BINARY_SIZE():
-                return $this->handleStringOrBinarySize($byte, DecoderState::BINARY_DATA());
+                return $this->handleBinarySize($byte, DecoderState::BINARY_DATA());
             case DecoderState::BINARY_DATA():
                 return $this->handleBinaryData($byte);
             case DecoderState::BINARY_CHUNK_SIZE():
-                return $this->handleStringOrBinarySize($byte, DecoderState::BINARY_CHUNK_DATA());
+                return $this->handleBinarySize($byte, DecoderState::BINARY_CHUNK_DATA());
             case DecoderState::BINARY_CHUNK_DATA():
                 return $this->handleBinaryChunkData($byte);
             case DecoderState::BINARY_CHUNK_FINAL_SIZE():
-                return $this->handleStringOrBinarySize($byte, DecoderState::BINARY_CHUNK_FINAL_DATA());
+                return $this->handleBinarySize($byte, DecoderState::BINARY_CHUNK_FINAL_DATA());
             case DecoderState::BINARY_CHUNK_FINAL_DATA():
                 return $this->handleBinaryChunkFinalData($byte);
             case DecoderState::BINARY_CHUNK_CONTINUATION():
@@ -415,7 +416,7 @@ class Decoder
     private function startCompactBinary($byte)
     {
         if (HessianConstants::BINARY_COMPACT_START === $byte) {
-            $this->emitValue('');
+            $this->emitValue(new Binary);
         } else {
             $this->pushState(DecoderState::BINARY_DATA());
             $this->currentContext->expectedSize = $byte - HessianConstants::BINARY_COMPACT_START;
@@ -848,12 +849,12 @@ class Decoder
     }
 
     /**
-     * Handle decoding a 16-bit (short) string or binary buffer size.
+     * Handle decoding a 16-bit (short) string size.
      *
      * @param integer      $byte
      * @param DecoderState $nextState
      */
-    private function handleStringOrBinarySize($byte, DecoderState $nextState)
+    private function handleStringSize($byte, DecoderState $nextState)
     {
         $this->currentContext->expectedSize = $this->appendInt16Data($byte, false);
 
@@ -922,6 +923,24 @@ class Decoder
     }
 
     /**
+     * Handle decoding a 16-bit (short) binary buffer size.
+     *
+     * @param integer      $byte
+     * @param DecoderState $nextState
+     */
+    private function handleBinarySize($byte, DecoderState $nextState)
+    {
+        $this->currentContext->expectedSize = $this->appendInt16Data($byte, false);
+
+        if (0 === $this->currentContext->expectedSize) {
+            $this->popStateAndEmitValue(new Binary);
+        } elseif (null !== $this->currentContext->expectedSize) {
+            $this->currentContext->buffer = '';
+            $this->currentContext->state = $nextState;
+        }
+    }
+
+    /**
      * Handle decoding a binary buffer.
      *
      * @param integer $byte
@@ -929,7 +948,9 @@ class Decoder
     private function handleBinaryData($byte)
     {
         if ($this->appendBinaryData($byte)) {
-            $this->popStateAndEmitBuffer();
+            $this->popStateAndEmitValue(
+                new Binary($this->currentContext->buffer)
+            );
         }
     }
 
@@ -957,7 +978,9 @@ class Decoder
         if ($this->appendBinaryData($byte)) {
             $this->currentContext->result .= $this->currentContext->buffer;
             $this->currentContext->buffer = '';
-            $this->popStateAndEmitResult();
+            $this->popStateAndEmitValue(
+                new Binary($this->currentContext->result)
+            );
         }
     }
 

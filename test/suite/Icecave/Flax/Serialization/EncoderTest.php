@@ -5,7 +5,7 @@ use Exception;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 
-class ValueEncoderTest extends PHPUnit_Framework_TestCase
+class EncoderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {

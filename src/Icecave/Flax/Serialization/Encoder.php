@@ -7,6 +7,7 @@ use Icecave\Collections\AssociativeInterface;
 use Icecave\Collections\Collection;
 use Icecave\Collections\Map;
 use Icecave\Collections\SequenceInterface;
+use Icecave\Flax\Binary;
 use Icecave\Flax\Exception\EncodeException;
 use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
@@ -331,6 +332,8 @@ class Encoder
             return $this->encodeTimestamp($value->getTimestamp() * 1000);
         } elseif ($value instanceof TimePointInterface) {
             return $this->encodeTimestamp($value->unixTime() * 1000);
+        } elseif ($value instanceof Binary) {
+            return $this->encodeBinary($value->data());
         }
 
         $ref = null;
