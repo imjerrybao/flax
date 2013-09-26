@@ -73,6 +73,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
                     if ($element instanceof Object) {
                         return $element->object();
                     }
+
                     return $element;
                 }
             );
