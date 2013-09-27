@@ -170,11 +170,11 @@ abstract class TestVectors
                 -1000.0,
             ),
             'double - 4 octet float' => array(
-                "\x5f\x41\x44\x00\x00",
+                "\x5f\x00\x00\x2f\xda",
                 12.25,
             ),
             'double - 4 octet float (whole)' => array(
-                "\x5f\x47\x2f\xc8\x00",
+                "\x5f\x02\xae\xa5\x40",
                 45000.00,
             ),
             'double - 4 octet float (0.001)' => array(
@@ -192,6 +192,10 @@ abstract class TestVectors
             'double - 8 octet' => array(
                 "D\x40\x28\x80\xa1\xbe\x2b\x49\x5a",
                 12.251234,
+            ),
+            'double - 8 octet (pi)' => array(
+                "D\x40\x09\x21\xf9\xf0\x1b\x86\x6e",
+                3.14159,
             ),
 
             ///////////////
@@ -376,6 +380,14 @@ abstract class TestVectors
                 "\x52\x00\x06he\xcc\x88llo\x52\x00\x07, world\x53\x00\x01!",
                 "he\xcc\x88llo, world!",
             ),
+            'string - chunked - ending with compact string' => array(
+                "\x52\x00\x06he\xcc\x88llo\x52\x00\x07, world\x01!",
+                "he\xcc\x88llo, world!",
+            ),
+            'string - chunked - ending with regular string' => array(
+                "\x52\x00\x06he\xcc\x88llo\x52\x00\x07, world\x30\x01!",
+                "he\xcc\x88llo, world!",
+            ),
 
             ////////////
             // binary //
@@ -399,6 +411,14 @@ abstract class TestVectors
             ),
             'binary - chunked - multiple' => array(
                 "\x41\x00\x05hello\x41\x00\x07, world\x42\x00\x01!",
+                new Binary("hello, world!"),
+            ),
+            'binary - chunked - ending with compact binary' => array(
+                "\x41\x00\x05hello\x41\x00\x07, world\x21!",
+                new Binary("hello, world!"),
+            ),
+            'binary - chunked - ending with regular binary' => array(
+                "\x41\x00\x05hello\x41\x00\x07, world\x34\x01!",
                 new Binary("hello, world!"),
             ),
 

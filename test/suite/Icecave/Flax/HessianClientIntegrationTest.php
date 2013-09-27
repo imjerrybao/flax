@@ -24,7 +24,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
      * @group integration
      * @group exclude-by-default
      * @group large
-     * @dataProvider getTestData
+     * @dataProvider argumentTestVectors
      */
     public function testArgument($name, $argument, $skipTest = false)
     {
@@ -53,11 +53,16 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function argumentTestVectors()
+    {
+        return $this->prepareTestVectors($this->commonTestVectors());
+    }
+
     /**
      * @group integration
      * @group exclude-by-default
      * @group large
-     * @dataProvider getTestData
+     * @dataProvider replyTestVectors
      */
     public function testReply($name, $output, $skipTest = false)
     {
@@ -97,19 +102,78 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($output, $result);
     }
 
-    public function getTestData()
+    public function replyTestVectors()
     {
-        // Filthy hack ...
-        if (!getenv('TRAVIS')) {
-            return array(
-                array(
-                    'Integration tests skipped outside Travis CI.',
-                    null,
-                    true,
-                )
-            );
-        }
+        $data = array(
 
+            //////////
+            // long //
+            //////////
+
+            array(
+                'Long_0',
+                0,
+            ),
+            array(
+                'Long_1',
+                1,
+            ),
+            array(
+                'Long_0x7ff',
+                0x7ff,
+            ),
+            array(
+                'Long_m0x800',
+                -0x800,
+            ),
+            array(
+                'Long_0x800',
+                0x800,
+            ),
+            array(
+                'Long_0x3ffff',
+                0x3ffff,
+            ),
+            array(
+                'Long_m0x801',
+                -0x801,
+            ),
+            array(
+                'Long_m0x40000',
+                -0x40000,
+            ),
+            array(
+                'Long_0x40000',
+                0x40000,
+            ),
+            array(
+                'Long_0x7fffffff',
+                0x7fffffff,
+            ),
+            array(
+                'Long_m0x40001',
+                -0x40001,
+            ),
+            array(
+                'Long_m0x80000000',
+                -0x80000000,
+            ),
+            array(
+                'Long_m0x80000000',
+                -0x80000000,
+            ),
+        );
+
+        return $this->prepareTestVectors(
+            array_merge(
+                $this->commonTestVectors(),
+                $data
+            )
+        );
+    }
+
+    public function commonTestVectors()
+    {
         $circularReference = new stdClass;
         $circularReference->_first = 'a';
         $circularReference->_rest  = $circularReference;
@@ -427,6 +491,27 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
                 $circularReference
             ),
         );
+    }
+
+    private function prepareTestVectors(array $data)
+    {
+        if (!getenv('FLAX_INTEGERATION_TESTS')) {
+            return array(
+                array(
+                    'Integration tests skipped, set FLAX_INTEGERATION_TESTS environment variable to enable.',
+                    null,
+                    true,
+                )
+            );
+        }
+
+        $namedData = array();
+
+        foreach ($data as $arguments) {
+            $namedData[$arguments[0]] = $arguments;
+        }
+
+        return $namedData;
     }
 
     private function generateString($length)

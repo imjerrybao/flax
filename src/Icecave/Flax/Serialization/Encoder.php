@@ -247,11 +247,9 @@ class Encoder
             }
         }
 
-        $bytes = pack('f', $value);
-        $unpacked = current(unpack('f', $bytes));
-
-        if ($value === $unpacked) {
-            return pack('c', HessianConstants::DOUBLE_4) . Utility::convertEndianness($bytes);
+        $integer = $value * 1000;
+        if (0.0 == fmod($integer, 1)) {
+            return pack('c', HessianConstants::DOUBLE_4) . Utility::convertEndianness(pack('l', $integer));
         }
 
         return pack('c', HessianConstants::DOUBLE_8) . Utility::convertEndianness(pack('d', $value));
@@ -351,8 +349,6 @@ class Encoder
             return $this->encodeVector($value);
         } elseif ($value instanceof AssociativeInterface) {
             return $this->encodeMap($value);
-        } elseif ($value instanceof Object) {
-            return $this->encodeStdClass($value);
         } elseif ('stdClass' === get_class($value)) {
             return $this->encodeStdClass($value, $className);
         }

@@ -111,8 +111,8 @@ class DecoderTest extends PHPUnit_Framework_TestCase
 
     public function testFeedFailureWithInvalidBinaryContinuation()
     {
-        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of binary chunk: 0x20 (state: BINARY_CHUNK_CONTINUATION).');
-        $this->decoder->feed("\x41\x00\x05hello\x20");
+        $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Invalid byte at start of binary chunk: 0x1 (state: BINARY_CHUNK_CONTINUATION).');
+        $this->decoder->feed("\x41\x00\x05hello\x01");
     }
 
     public function testFeedFailureWithInvalidVectorSize()

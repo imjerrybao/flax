@@ -19,3 +19,9 @@ install:
   - ./.travis.install
 script:
   - ./vendor/bin/archer travis:build
+
+matrix:
+  include:
+    - php: 5.5
+      env:
+        - FLAX_INTEGERATION_TESTS=1

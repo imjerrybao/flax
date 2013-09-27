@@ -7,21 +7,19 @@ class DecoderState extends Enumeration
 {
     const BEGIN = 0;
 
-    const STRING_SIZE               = 10;
-    const STRING_DATA               = 11;
-    const STRING_CHUNK_SIZE         = 12;
-    const STRING_CHUNK_DATA         = 13;
+    const STRING                    = 10;
+    const STRING_SIZE               = 11;
+    const STRING_DATA               = 12;
+    const STRING_CHUNK_SIZE         = 13;
     const STRING_CHUNK_FINAL_SIZE   = 14;
-    const STRING_CHUNK_FINAL_DATA   = 15;
-    const STRING_CHUNK_CONTINUATION = 16;
+    const STRING_CHUNK_CONTINUATION = 15;
 
-    const BINARY_SIZE               = 20;
-    const BINARY_DATA               = 21;
-    const BINARY_CHUNK_SIZE         = 22;
-    const BINARY_CHUNK_DATA         = 23;
+    const BINARY                    = 20;
+    const BINARY_SIZE               = 21;
+    const BINARY_DATA               = 22;
+    const BINARY_CHUNK_SIZE         = 23;
     const BINARY_CHUNK_FINAL_SIZE   = 24;
-    const BINARY_CHUNK_FINAL_DATA   = 25;
-    const BINARY_CHUNK_CONTINUATION = 26;
+    const BINARY_CHUNK_CONTINUATION = 25;
 
     const DOUBLE_1 = 30;
     const DOUBLE_2 = 31;
