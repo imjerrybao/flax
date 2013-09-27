@@ -450,7 +450,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
             array(
                 'UntypedMap_3',
                 Map::create(array(Vector::create('a'), 0)),
-                version_compare(PHP_VERSION, '5.5.0') <= 0
+                version_compare(PHP_VERSION, '5.5.0') < 0
             ),
 
             ////////////
