@@ -12,16 +12,10 @@ php: ["5.3", "5.4", "5.5"]
 
 env:
   global:
-    - ARCHER_PUBLISH_VERSION=5.4
+    - ARCHER_PUBLISH_VERSION=5.5
     - secure: "lu5N3FUQ4L6IMWTfpnjIIuyLFlQblP52a1zsFyWPGtYAvykDIaOrUDP7Pta/L7uucwgNtJN+nXZYAJnevHLbyUPE7x0ScZXH+JgKzNwCbHOrrwDElc5m/lRgOyZ/XlcZyR77D0uU93zxIZNo1TKX8j01KHoRBFrOrQwhk2lW5FE="
 
 install:
   - ./.travis.install
 script:
   - ./vendor/bin/archer travis:build
-
-matrix:
-  include:
-    - php: 5.5
-      env:
-        - FLAX_INTEGERATION_TESTS=1
