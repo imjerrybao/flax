@@ -1,8 +1,6 @@
 <?php
 namespace Icecave\Flax\Serialization;
 
-use Icecave\Flax\TypeCheck\TypeCheck;
-
 abstract class Utility
 {
     /**
@@ -10,8 +8,6 @@ abstract class Utility
      */
     public static function isBigEndian()
     {
-        TypeCheck::get(__CLASS__)->isBigEndian(func_get_args());
-
         return pack('S', 0x1020) === pack('n', 0x1020);
     }
 
@@ -22,8 +18,6 @@ abstract class Utility
      */
     public static function convertEndianness($buffer)
     {
-        TypeCheck::get(__CLASS__)->convertEndianness(func_get_args());
-
         return self::isBigEndian()
             ? $buffer
             : strrev($buffer);
@@ -36,8 +30,6 @@ abstract class Utility
      */
     public static function packInt64($value)
     {
-        TypeCheck::get(__CLASS__)->packInt64(func_get_args());
-
         $hi = (0xffffffff00000000 & $value) >> 32;
         $lo = (0x00000000ffffffff & $value);
 
@@ -51,8 +43,6 @@ abstract class Utility
      */
     public static function unpackInt64($bytes)
     {
-        TypeCheck::get(__CLASS__)->unpackInt64(func_get_args());
-
         list(, $hi, $lo) = unpack('N2', $bytes);
 
         return ($hi << 32) | $lo;
@@ -65,8 +55,6 @@ abstract class Utility
      */
     public static function byteToUnsigned($byte)
     {
-        TypeCheck::get(__CLASS__)->byteToUnsigned(func_get_args());
-
         list(, $value) = unpack('C', pack('c', $byte));
 
         return $value;
@@ -79,8 +67,6 @@ abstract class Utility
      */
     public static function byteToSigned($byte)
     {
-        TypeCheck::get(__CLASS__)->byteToSigned(func_get_args());
-
         list(, $value) = unpack('c', pack('C', $byte));
 
         return $value;

@@ -1,8 +1,6 @@
 <?php
 namespace Icecave\Flax;
 
-use Icecave\Flax\TypeCheck\TypeCheck;
-
 /**
  * A wrapper around an object that allows you to overide the class name used during Hessian serialization.
  */
@@ -14,8 +12,6 @@ class Object
      */
     public function __construct($className, $object)
     {
-        $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
-
         $this->className = $className;
         $this->object = $object;
     }
@@ -27,8 +23,6 @@ class Object
      */
     public function className()
     {
-        $this->typeCheck->object(func_get_args());
-
         return $this->className;
     }
 
@@ -39,12 +33,9 @@ class Object
      */
     public function object()
     {
-        $this->typeCheck->object(func_get_args());
-
         return $this->object;
     }
 
-    private $typeCheck;
     private $className;
     private $object;
 }

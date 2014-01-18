@@ -4,7 +4,7 @@ namespace Icecave\Flax\Exception;
 use Exception;
 use PHPUnit_Framework_TestCase;
 
-class ExceptionExceptionTest extends PHPUnit_Framework_TestCase
+class EncodeExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testException()
     {

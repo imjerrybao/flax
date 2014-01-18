@@ -14,7 +14,6 @@ use Icecave\Flax\Exception\RequireHeaderException;
 use Icecave\Flax\Exception\ServiceException;
 use Icecave\Flax\Message\Decoder;
 use Icecave\Flax\Message\Encoder;
-use Icecave\Flax\TypeCheck\TypeCheck;
 use Icecave\Isolator\Isolator;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -38,8 +37,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
         Decoder $decoder = null,
         Isolator $isolator = null
     ) {
-        $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
-
         if (null === $logger) {
             $logger = new NullLogger;
         }
@@ -71,8 +68,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
      */
     public function setLogger(LoggerInterface $logger)
     {
-        $this->typeCheck->setLogger(func_get_args());
-
         $this->logger = $logger;
     }
 
@@ -84,8 +79,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
      */
     public function __call($name, array $arguments)
     {
-        $this->typeCheck->validateCall(func_get_args());
-
         return $this->invokeArray($name, $arguments);
     }
 
@@ -100,8 +93,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
      */
     public function invoke($name)
     {
-        $this->typeCheck->invoke(func_get_args());
-
         $arguments = array_slice(func_get_args(), 1);
 
         return $this->invokeArray($name, $arguments);
@@ -118,8 +109,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
      */
     public function invokeArray($name, array $arguments = array())
     {
-        $this->typeCheck->invokeArray(func_get_args());
-
         $typeName = function ($value) {
             if (is_object($value)) {
                 return get_class($value);
@@ -184,8 +173,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
      */
     protected function doRequest($name, array $arguments)
     {
-        $this->typeCheck->doRequest(func_get_args());
-
         $this->encoder->reset();
         $this->decoder->reset();
 
@@ -216,8 +203,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
      */
     protected function createFaultException(Map $properties)
     {
-        $this->typeCheck->createFaultException(func_get_args());
-
         if (!$properties->hasKey('code')) {
             throw new DecodeException('Encountered Hessian fault with no fault code.');
         }
@@ -238,7 +223,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
         throw new DecodeException('Unknown Hessian fault code: ' . $properties['code'] . '.');
     }
 
-    private $typeCheck;
     private $httpClient;
     private $logger;
     private $streamFactory;

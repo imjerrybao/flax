@@ -22,7 +22,6 @@
     },
     "require-dev": {
         "eloquent/liberator": "~1",
-        "eloquent/typhoon": "~0.9.0",
         "icecave/archer": "~1"
     },
     "suggest": {
@@ -30,15 +29,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Icecave\\Flax": "src",
-            "Icecave\\Flax\\TypeCheck": "src-typhoon"
-        }
-    },
-    "extra": {
-        "typhoon": {
-            "output-path": "src-typhoon",
-            "validator-namespace": "Icecave\\Flax\\TypeCheck",
-            "use-native-callable": false
+            "Icecave\\Flax": "src"
         }
     }
 }

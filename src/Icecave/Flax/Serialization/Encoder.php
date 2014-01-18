@@ -10,15 +10,12 @@ use Icecave\Collections\SequenceInterface;
 use Icecave\Flax\Binary;
 use Icecave\Flax\Exception\EncodeException;
 use Icecave\Flax\Object;
-use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
 
 class Encoder
 {
     public function __construct()
     {
-        $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
-
         $this->nextReferenceId = 0;
         $this->references = new Map(
             null,
@@ -34,8 +31,6 @@ class Encoder
 
     public function reset()
     {
-        $this->typeCheck->reset(func_get_args());
-
         $this->nextReferenceId = 0;
         $this->references->clear();
         $this->classDefinitions->clear();
@@ -49,8 +44,6 @@ class Encoder
      */
     public function encode($value)
     {
-        $this->typeCheck->encode(func_get_args());
-
         $type = gettype($value);
 
         switch ($type) {
@@ -80,8 +73,6 @@ class Encoder
      */
     public function encodeBinary($value)
     {
-        $this->typeCheck->encodeBinary(func_get_args());
-
         $length = strlen($value);
 
         if ($length <= HessianConstants::BINARY_COMPACT_LIMIT) {
@@ -123,8 +114,6 @@ class Encoder
      */
     public function encodeTimestamp($timestamp)
     {
-        $this->typeCheck->encodeTimestamp(func_get_args());
-
         if ($timestamp % HessianConstants::TIMESTAMP_MILLISECONDS_PER_MINUTE) {
             return pack('c', HessianConstants::TIMESTAMP_MILLISECONDS) . Utility::packInt64($timestamp);
         } else {
@@ -464,7 +453,6 @@ class Encoder
         return implode(',', array_keys($properties));
     }
 
-    private $typeCheck;
     private $nextReferenceId;
     private $references;
     private $classDefinitions;

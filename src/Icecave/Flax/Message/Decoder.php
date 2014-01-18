@@ -3,7 +3,6 @@ namespace Icecave\Flax\Message;
 
 use Icecave\Flax\Exception\DecodeException;
 use Icecave\Flax\Serialization\Decoder as SerializationDecoder;
-use Icecave\Flax\TypeCheck\TypeCheck;
 
 /**
  * Streaming Hessian decoder.
@@ -12,8 +11,6 @@ class Decoder
 {
     public function __construct()
     {
-        $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
-
         $this->serializationDecoder = new SerializationDecoder;
 
         $this->reset();
@@ -26,8 +23,6 @@ class Decoder
      */
     public function reset()
     {
-        $this->typeCheck->reset(func_get_args());
-
         $this->serializationDecoder->reset();
         $this->state = DecoderState::BEGIN();
         $this->buffer = '';
@@ -43,8 +38,6 @@ class Decoder
      */
     public function feed($buffer)
     {
-        $this->typeCheck->feed(func_get_args());
-
         $length = strlen($buffer);
 
         for ($index = 0; $index < $length; ++$index) {
@@ -62,8 +55,6 @@ class Decoder
      */
     public function tryFinalize(&$value = null)
     {
-        $this->typeCheck->tryFinalize(func_get_args());
-
         if (DecoderState::COMPLETE() !== $this->state) {
             return false;
         }
@@ -82,8 +73,6 @@ class Decoder
      */
     public function finalize()
     {
-        $this->typeCheck->finalize(func_get_args());
-
         if ($this->tryFinalize($value)) {
             return $value;
         }
@@ -174,7 +163,6 @@ class Decoder
         }
     }
 
-    private $typeCheck;
     private $serializationDecoder;
     private $state;
     private $buffer;

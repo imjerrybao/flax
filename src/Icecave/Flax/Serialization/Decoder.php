@@ -7,7 +7,6 @@ use Icecave\Collections\Stack;
 use Icecave\Collections\Vector;
 use Icecave\Flax\Binary;
 use Icecave\Flax\Exception\DecodeException;
-use Icecave\Flax\TypeCheck\TypeCheck;
 use stdClass;
 
 /**
@@ -17,8 +16,6 @@ class Decoder
 {
     public function __construct()
     {
-        $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
-
         $this->stack = new Stack;
         $this->classDefinitions = new Vector;
         $this->references = new Vector;
@@ -33,8 +30,6 @@ class Decoder
      */
     public function reset()
     {
-        $this->typeCheck->reset(func_get_args());
-
         $this->stack->clear();
         $this->classDefinitions->clear();
         $this->references->clear();
@@ -53,8 +48,6 @@ class Decoder
      */
     public function feed($buffer)
     {
-        $this->typeCheck->feed(func_get_args());
-
         $length = strlen($buffer);
 
         for ($index = 0; $index < $length; ++$index) {
@@ -72,8 +65,6 @@ class Decoder
      */
     public function tryFinalize(&$value = null)
     {
-        $this->typeCheck->tryFinalize(func_get_args());
-
         if ($this->currentContext->state !== DecoderState::COMPLETE()) {
             return false;
         }
@@ -92,8 +83,6 @@ class Decoder
      */
     public function finalize()
     {
-        $this->typeCheck->finalize(func_get_args());
-
         if ($this->tryFinalize($value)) {
             return $value;
         }
@@ -1362,7 +1351,6 @@ class Decoder
         return null;
     }
 
-    private $typeCheck;
     private $classDefinitions;
     private $objects;
     private $stack;

@@ -495,10 +495,10 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
 
     private function prepareTestVectors(array $data)
     {
-        if (!getenv('FLAX_INTEGERATION_TESTS')) {
+        if (!getenv('FLAX_INTEGRATION_TESTS')) {
             return array(
                 array(
-                    'Integration tests skipped, set FLAX_INTEGERATION_TESTS environment variable to enable.',
+                    'Integration tests skipped, set FLAX_INTEGRATION_TESTS environment variable to enable.',
                     null,
                     true,
                 )

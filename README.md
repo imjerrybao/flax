@@ -10,6 +10,6 @@
 * Read the [API documentation](http://icecavestudios.github.io/flax/artifacts/documentation/api/)
 
 <!-- references -->
-[Build Status]: https://travis-ci.org/IcecaveStudios/flax.png?branch=develop
-[Test Coverage]: https://coveralls.io/repos/IcecaveStudios/flax/badge.png?branch=develop
-[SemVer]: http://calm-shore-6115.herokuapp.com/?label=semver&value=0.0.0&color=red
+[Build Status]: http://b.adge.me/travis/IcecaveStudios/flax/develop.svg
+[Test Coverage]: http://b.adge.me/coveralls/IcecaveStudios/flax/develop.svg
+[SemVer]: http://b.adge.me/:semver-0.0.0-red.svg

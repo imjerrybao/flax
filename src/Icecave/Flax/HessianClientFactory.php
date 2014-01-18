@@ -2,7 +2,6 @@
 namespace Icecave\Flax;
 
 use Guzzle\Http\Client;
-use Icecave\Flax\TypeCheck\TypeCheck;
 
 class HessianClientFactory
 {
@@ -11,8 +10,6 @@ class HessianClientFactory
      */
     public function create($url)
     {
-        TypeCheck::get(__CLASS__)->create(func_get_args());
-
         $httpClient = new Client($url);
         $httpClient->setUserAgent(
             sprintf('Flax/%s', PackageInfo::VERSION)

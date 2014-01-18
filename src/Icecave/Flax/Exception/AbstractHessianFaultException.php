@@ -3,7 +3,6 @@ namespace Icecave\Flax\Exception;
 
 use Exception;
 use Icecave\Collections\Map;
-use Icecave\Flax\TypeCheck\TypeCheck;
 
 abstract class AbstractHessianFaultException extends Exception
 {
@@ -13,8 +12,6 @@ abstract class AbstractHessianFaultException extends Exception
      */
     public function __construct(Map $properties, Exception $previous = null)
     {
-        $this->typeCheck = TypeCheck::get(__CLASS__, func_get_args());
-
         $this->properties = $properties;
 
         parent::__construct(
@@ -29,11 +26,8 @@ abstract class AbstractHessianFaultException extends Exception
      */
     public function properties()
     {
-        $this->typeCheck->properties(func_get_args());
-
         return $this->properties;
     }
 
-    private $typeCheck;
     private $properties;
 }

@@ -2,7 +2,6 @@
 namespace Icecave\Flax\Exception;
 
 use Exception;
-use Icecave\Flax\TypeCheck\TypeCheck;
 
 /**
  * Indicates an error while decoding a serialized Hessian value.
@@ -15,8 +14,6 @@ class DecodeException extends Exception
      */
     public function __construct($message, Exception $previous = null)
     {
-        TypeCheck::get(__CLASS__, func_get_args());
-
         parent::__construct($message, 0, $previous);
     }
 }
