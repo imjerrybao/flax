@@ -10,6 +10,6 @@
 * Read the [API documentation](http://icecavestudios.github.io/flax/artifacts/documentation/api/)
 
 <!-- references -->
-[Build Status]: https://b.adge.me/travis/IcecaveStudios/flax/develop.svg
-[Test Coverage]: https://b.adge.me/coveralls/IcecaveStudios/flax/develop.svg
-[SemVer]: https://b.adge.me/:semver-0.0.0-red.svg
+[Build Status]: http://img.shields.io/travis/IcecaveStudios/flax/develop.svg
+[Test Coverage]: http://img.shields.io/coveralls/IcecaveStudios/flax/develop.svg
+[SemVer]: http://img.shields.io/:semver-0.0.0-red.svg
