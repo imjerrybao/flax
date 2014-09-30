@@ -6,7 +6,7 @@ use Guzzle\Common\Exception\GuzzleException;
 use Icecave\Chrono\DateTime;
 use Icecave\Collections\Map;
 use Icecave\Collections\Vector;
-use Icecave\Parity\ComparableInterface;
+use Icecave\Parity\Parity;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 
@@ -64,7 +64,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
      * @group large
      * @dataProvider replyTestVectors
      */
-    public function testReply($name, $output, $skipTest = false)
+    public function testReply($name, $output, $skipTest = false, $compareUsingParity = true)
     {
         if ($skipTest) {
             $this->markTestSkipped();
@@ -90,16 +90,13 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped($e->getMessage());
         }
 
-        if ($output instanceof ComparableInterface && $result instanceof ComparableInterface) {
-            if (0 === $output->compare($result)) {
-                $this->assertTrue(true);
-
-                return;
-            }
-
+        if ($compareUsingParity) {
+            $this->assertTrue(
+                Parity::isEqualTo($output, $result)
+            );
+        } else {
+            $this->assertEquals($output, $result);
         }
-
-        $this->assertEquals($output, $result);
     }
 
     public function replyTestVectors()
@@ -488,7 +485,9 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
             ),
             array(
                 'Object_3',
-                $circularReference
+                $circularReference,
+                false,
+                false
             ),
         );
     }

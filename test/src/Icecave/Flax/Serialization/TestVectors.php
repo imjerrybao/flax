@@ -285,7 +285,7 @@ abstract class TestVectors
             ),
             'object - compact' => array(
                 "\x43\x08stdClass\x92\x03bar\x03foo\x60\x92\x91",
-                (object) array('foo' => 1, 'bar' => 2),
+                (object) array('bar' => 2, 'foo' => 1),
             ),
             'object - compact - nested' => array(
                 "\x43\x08stdClass\x91\x05child\x60\x43\x08stdClass\x90\x61",
@@ -338,7 +338,7 @@ abstract class TestVectors
 
             'object - custom name' => array(
                 "\x43\x07foo.bar\x92\x03bar\x03foo\x60\x92\x91",
-                new Object('foo.bar', (object) array('foo' => 1, 'bar' => 2)),
+                new Object('foo.bar', (object) array('bar' => 2, 'foo' => 1)),
             ),
         );
 
@@ -568,7 +568,7 @@ abstract class TestVectors
             ),
             'object' => array(
                 "\x43\x08stdClass\x92\x03bar\x03foo\x4f\x90\x92\x91",
-                (object) array('foo' => 1, 'bar' => 2),
+                (object) array('bar' => 2, 'foo' => 1),
             ),
             'object - nested' => array(
                 "\x43\x08stdClass\x91\x05child\x4f\x90\x43\x08stdClass\x90\x4f\x91",

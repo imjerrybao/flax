@@ -3,7 +3,7 @@ namespace Icecave\Flax\Serialization;
 
 use Icecave\Collections\Map;
 use Icecave\Collections\Vector;
-use Icecave\Parity\ComparableInterface;
+use Icecave\Parity\Parity;
 use PHPUnit_Framework_TestCase;
 
 class DecoderTest extends PHPUnit_Framework_TestCase
@@ -25,15 +25,9 @@ class DecoderTest extends PHPUnit_Framework_TestCase
         $this->decoder->feed($input);
         $result = $this->decoder->finalize();
 
-        if ($output instanceof ComparableInterface && $result instanceof ComparableInterface) {
-            if (0 === $output->compare($result)) {
-                $this->assertTrue(true);
-
-                return;
-            }
-        }
-
-        $this->assertEquals($output, $result);
+        $this->assertTrue(
+            Parity::isEqualTo($output, $result)
+        );
     }
 
     public function testDecodeWithReference()

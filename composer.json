@@ -23,14 +23,15 @@
         "php": ">=5.3",
         "eloquent/enumeration": "~3",
         "guzzle/http": "~3",
-        "icecave/chrono": "~0.2.0",
-        "icecave/collections": "~0.8.0",
+        "icecave/chrono": "~1",
+        "icecave/collections": "~1",
         "icecave/isolator": "~2",
         "psr/log": "~1"
     },
     "require-dev": {
         "eloquent/liberator": "~1",
-        "icecave/archer": "~1"
+        "icecave/archer": "~1",
+        "icecave/parity": "~1"
     },
     "autoload": {
         "psr-4": {
