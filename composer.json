@@ -1,7 +1,15 @@
 {
     "name": "icecave/flax",
     "description": "A client library for the Hessian binary web services protocol.",
-    "keywords": ["hessian", "burlap", "binary", "protocol", "java", "webservice", "api"],
+    "keywords": [
+        "hessian",
+        "burlap",
+        "binary",
+        "protocol",
+        "java",
+        "webservice",
+        "api"
+    ],
     "homepage": "https://github.com/IcecaveStudios/flax",
     "license": "MIT",
     "authors": [
@@ -24,12 +32,14 @@
         "eloquent/liberator": "~1",
         "icecave/archer": "~1"
     },
-    "suggest": {
-        "eloquent/asplode": "Drop-in exception-based error handling."
-    },
     "autoload": {
         "psr-0": {
             "Icecave\\Flax": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "0.1.x-dev"
         }
     }
 }
