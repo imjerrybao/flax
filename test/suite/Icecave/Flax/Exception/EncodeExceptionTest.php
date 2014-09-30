@@ -8,7 +8,7 @@ class EncodeExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testException()
     {
-        $previous = new Exception;
+        $previous = new Exception();
         $exception = new EncodeException('The message.', $previous);
 
         $this->assertSame('The message.', $exception->getMessage());

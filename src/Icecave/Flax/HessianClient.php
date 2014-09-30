@@ -38,19 +38,19 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
         Isolator $isolator = null
     ) {
         if (null === $logger) {
-            $logger = new NullLogger;
+            $logger = new NullLogger();
         }
 
         if (null === $streamFactory) {
-            $streamFactory = new PhpStreamRequestFactory;
+            $streamFactory = new PhpStreamRequestFactory();
         }
 
         if (null === $encoder) {
-            $encoder = new Encoder;
+            $encoder = new Encoder();
         }
 
         if (null === $decoder) {
-            $decoder = new Decoder;
+            $decoder = new Decoder();
         }
 
         $this->httpClient = $httpClient;

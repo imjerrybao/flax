@@ -162,12 +162,12 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
 
     public function testInvokeArrayClassNameLogging()
     {
-        $result = $this->client->invokeArray('foo', array(new stdClass));
+        $result = $this->client->invokeArray('foo', array(new stdClass()));
 
         Phake::verify($this->logger)->debug(
             'Invoked "foo(stdClass)" in 0.5 second(s), with "string" reply.',
             array(
-                'arguments' => array(new stdClass),
+                'arguments' => array(new stdClass()),
                 'reply' => 'hello',
             )
         );

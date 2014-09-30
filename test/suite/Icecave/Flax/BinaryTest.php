@@ -12,7 +12,7 @@ class BinaryTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorDefaults()
     {
-        $binary = new Binary;
+        $binary = new Binary();
 
         $this->assertSame('', $binary->data());
     }

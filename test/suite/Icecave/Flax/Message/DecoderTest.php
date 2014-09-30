@@ -8,7 +8,7 @@ class DecoderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->decoder = new Decoder;
+        $this->decoder = new Decoder();
     }
 
     /**

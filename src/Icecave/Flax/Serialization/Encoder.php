@@ -26,7 +26,7 @@ class Encoder
                 );
             }
         );
-        $this->classDefinitions = new Map;
+        $this->classDefinitions = new Map();
     }
 
     public function reset()

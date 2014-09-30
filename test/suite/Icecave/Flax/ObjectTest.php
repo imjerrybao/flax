@@ -8,7 +8,7 @@ class ObjectTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->internal = new stdClass;
+        $this->internal = new stdClass();
         $this->object = new Object('foo', $this->internal);
     }
 

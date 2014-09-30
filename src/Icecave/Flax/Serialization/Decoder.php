@@ -16,9 +16,9 @@ class Decoder
 {
     public function __construct()
     {
-        $this->stack = new Stack;
-        $this->classDefinitions = new Vector;
-        $this->references = new Vector;
+        $this->stack = new Stack();
+        $this->classDefinitions = new Vector();
+        $this->references = new Vector();
 
         $this->reset();
     }
@@ -325,7 +325,7 @@ class Decoder
         $this->popState();
 
         if (0 === $value) {
-            $this->popStateAndEmitValue(new Vector);
+            $this->popStateAndEmitValue(new Vector());
         } else {
             $this->currentContext->expectedSize = $value;
         }
@@ -540,19 +540,19 @@ class Decoder
 
     private function startFixedLengthVector()
     {
-        $this->pushState(DecoderState::VECTOR_FIXED(), new Vector);
+        $this->pushState(DecoderState::VECTOR_FIXED(), new Vector());
         $this->pushState(DecoderState::VECTOR_SIZE());
     }
 
     private function startTypedVector()
     {
-        $this->pushState(DecoderState::VECTOR(), new Vector);
+        $this->pushState(DecoderState::VECTOR(), new Vector());
         $this->pushState(DecoderState::COLLECTION_TYPE());
     }
 
     private function startTypedFixedLengthVector()
     {
-        $this->pushState(DecoderState::VECTOR_FIXED(), new Vector);
+        $this->pushState(DecoderState::VECTOR_FIXED(), new Vector());
         $this->pushState(DecoderState::VECTOR_SIZE());
         $this->pushState(DecoderState::COLLECTION_TYPE());
     }
@@ -562,7 +562,7 @@ class Decoder
      */
     private function startCompactTypedFixedLengthVector($byte)
     {
-        $this->pushState(DecoderState::VECTOR_FIXED(), new Vector);
+        $this->pushState(DecoderState::VECTOR_FIXED(), new Vector());
         $this->currentContext->expectedSize = $byte - HessianConstants::VECTOR_TYPED_FIXED_COMPACT_START;
 
         $this->pushState(DecoderState::COLLECTION_TYPE());
@@ -574,16 +574,16 @@ class Decoder
     private function startCompactFixedLengthVector($byte)
     {
         if (HessianConstants::VECTOR_FIXED_COMPACT_START === $byte) {
-            $this->emitValue(new Vector);
+            $this->emitValue(new Vector());
         } else {
-            $this->pushState(DecoderState::VECTOR_FIXED(), new Vector);
+            $this->pushState(DecoderState::VECTOR_FIXED(), new Vector());
             $this->currentContext->expectedSize = $byte - HessianConstants::VECTOR_FIXED_COMPACT_START;
         }
     }
 
     private function startTypedMap()
     {
-        $this->pushState(DecoderState::MAP_KEY(), new Map);
+        $this->pushState(DecoderState::MAP_KEY(), new Map());
         $this->pushState(DecoderState::COLLECTION_TYPE());
     }
 
@@ -591,9 +591,9 @@ class Decoder
     {
         $this->pushState(DecoderState::CLASS_DEFINITION_NAME());
 
-        $def = new stdClass;
+        $def = new stdClass();
         $def->name = null;
-        $def->fields = new Vector;
+        $def->fields = new Vector();
 
         $this->currentContext->result = $def;
 
@@ -608,9 +608,9 @@ class Decoder
         $classDef = $this->classDefinitions[$classDefIndex];
 
         if ($classDef->fields->isEmpty()) {
-            $this->emitValue(new stdClass);
+            $this->emitValue(new stdClass());
         } else {
-            $this->pushState(DecoderState::OBJECT_INSTANCE_FIELD(), new stdClass);
+            $this->pushState(DecoderState::OBJECT_INSTANCE_FIELD(), new stdClass());
             $this->currentContext->definition = $classDef;
             $this->currentContext->nextKey = 0;
         }
@@ -864,7 +864,7 @@ class Decoder
         } elseif (HessianConstants::VECTOR_TYPED_FIXED === $byte) {
             $this->startTypedFixedLengthVector();
         } elseif (HessianConstants::VECTOR === $byte) {
-            $this->pushState(DecoderState::VECTOR(), new Vector);
+            $this->pushState(DecoderState::VECTOR(), new Vector());
         } elseif (HessianConstants::VECTOR_FIXED === $byte) {
             $this->startFixedLengthVector();
         } elseif (HessianConstants::VECTOR_TYPED_FIXED_COMPACT_START <= $byte && $byte <= HessianConstants::VECTOR_TYPED_FIXED_COMPACT_END) {
@@ -890,7 +890,7 @@ class Decoder
         if (HessianConstants::MAP_TYPED === $byte) {
             $this->startTypedMap();
         } elseif (HessianConstants::MAP === $byte) {
-            $this->pushState(DecoderState::MAP_KEY(), new Map);
+            $this->pushState(DecoderState::MAP_KEY(), new Map());
         } else {
             return false;
         }
@@ -1179,7 +1179,7 @@ class Decoder
      */
     private function pushState(DecoderState $state, $result = '')
     {
-        $context = new stdClass;
+        $context = new stdClass();
         $context->state = $state;
         $context->buffer = '';
         $context->result = $result;

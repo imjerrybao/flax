@@ -55,7 +55,7 @@ abstract class TestVectors
 
             'binary - compact - empty' => array(
                 "\x20",
-                new Binary,
+                new Binary(),
             ),
             'binary - compact - hello' => array(
                 "\x25hello",
@@ -281,7 +281,7 @@ abstract class TestVectors
 
             'object - compact - empty' => array(
                 "\x43\x08stdClass\x90\x60",
-                new stdClass,
+                new stdClass(),
             ),
             'object - compact' => array(
                 "\x43\x08stdClass\x92\x03bar\x03foo\x60\x92\x91",
@@ -289,7 +289,7 @@ abstract class TestVectors
             ),
             'object - compact - nested' => array(
                 "\x43\x08stdClass\x91\x05child\x60\x43\x08stdClass\x90\x61",
-                (object) array('child' => new stdClass),
+                (object) array('child' => new stdClass()),
             ),
         );
     }
@@ -395,7 +395,7 @@ abstract class TestVectors
 
             'binary - empty' => array(
                 "\x34\x00",
-                new Binary,
+                new Binary(),
             ),
             'binary - hello' => array(
                 "\x34\x05hello",
@@ -403,7 +403,7 @@ abstract class TestVectors
             ),
             'binary - chunked - empty' => array(
                 "\x42\x00\x00",
-                new Binary,
+                new Binary(),
             ),
             'binary - chunked - single' => array(
                 "\x42\x00\x05hello",
@@ -564,7 +564,7 @@ abstract class TestVectors
 
             'object - empty' => array(
                 "\x43\x08stdClass\x90\x4f\x90",
-                new stdClass,
+                new stdClass(),
             ),
             'object' => array(
                 "\x43\x08stdClass\x92\x03bar\x03foo\x4f\x90\x92\x91",
@@ -572,7 +572,7 @@ abstract class TestVectors
             ),
             'object - nested' => array(
                 "\x43\x08stdClass\x91\x05child\x4f\x90\x43\x08stdClass\x90\x4f\x91",
-                (object) array('child' => new stdClass),
+                (object) array('child' => new stdClass()),
             ),
         );
 

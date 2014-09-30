@@ -11,7 +11,7 @@ class Decoder
 {
     public function __construct()
     {
-        $this->serializationDecoder = new SerializationDecoder;
+        $this->serializationDecoder = new SerializationDecoder();
 
         $this->reset();
     }

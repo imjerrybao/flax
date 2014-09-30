@@ -15,7 +15,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         if (self::$client === null) {
-            $factory = new HessianClientFactory;
+            $factory = new HessianClientFactory();
             self::$client = $factory->create('http://hessian.caucho.com/test/test');
         }
     }
@@ -39,7 +39,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
         }
 
         if ($result !== true) {
-            $encoder = new Serialization\Encoder;
+            $encoder = new Serialization\Encoder();
             $encoding = trim(
                 preg_replace(
                     '/(..)/',
@@ -174,7 +174,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
 
     public function commonTestVectors()
     {
-        $circularReference = new stdClass;
+        $circularReference = new stdClass();
         $circularReference->_first = 'a';
         $circularReference->_rest  = $circularReference;
         $circularReference = new Object(
@@ -383,7 +383,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
 
             array(
                 'Binary_0',
-                new Binary,
+                new Binary(),
             ),
             array(
                 'Binary_1',
@@ -459,7 +459,7 @@ class HessianClientIntegrationTest extends PHPUnit_Framework_TestCase
 
             array(
                 'Object_0',
-                new Object('com.caucho.hessian.test.A0', new stdClass),
+                new Object('com.caucho.hessian.test.A0', new stdClass()),
             ),
             array(
                 'Object_1',

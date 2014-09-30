@@ -7,7 +7,7 @@ class Encoder
 {
     public function __construct()
     {
-        $this->serializationEncoder = new SerializationEncoder;
+        $this->serializationEncoder = new SerializationEncoder();
     }
 
     public function reset()

@@ -8,7 +8,7 @@ class HessianClientFactoryTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->factory = new HessianClientFactory;
+        $this->factory = new HessianClientFactory();
     }
 
     public function testCreate()

@@ -7,7 +7,7 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->encoder = new Encoder;
+        $this->encoder = new Encoder();
     }
 
     public function testEncodeVersion()

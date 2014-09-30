@@ -10,7 +10,7 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->encoder = new Encoder;
+        $this->encoder = new Encoder();
     }
 
     /**
@@ -179,11 +179,11 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
     public function testEncodeMultipleObjects()
     {
-        $value1 = new stdClass;
+        $value1 = new stdClass();
         $value1->foo = 1;
         $value1->bar = 2;
 
-        $value2 = new stdClass;
+        $value2 = new stdClass();
         $value2->baz = 3;
         $value2->faz = 4;
 
@@ -193,11 +193,11 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
     public function testEncodeMultipleObjectsSingleDefinition()
     {
-        $value1 = new stdClass;
+        $value1 = new stdClass();
         $value1->foo = 1;
         $value1->bar = 2;
 
-        $value2 = new stdClass;
+        $value2 = new stdClass();
         $value2->foo = 3;
         $value2->bar = 4;
 
@@ -207,11 +207,11 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
     public function testEncodeMultipleObjectsReference()
     {
-        $value1 = new stdClass;
+        $value1 = new stdClass();
         $value1->foo = 1;
         $value1->bar = 2;
 
-        $value2 = new stdClass;
+        $value2 = new stdClass();
         $value2->foo = 3;
         $value2->bar = 4;
 
@@ -223,7 +223,7 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
     public function testEncodeArrayIncreasesReferenceId()
     {
-        $value = new stdClass;
+        $value = new stdClass();
 
         $this->encoder->encode(array());
 
@@ -237,19 +237,19 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
         // Force 16 class defs to be made to be made ...
         for ($i = 0; $i < 16; ++$i) {
-            $value = new stdClass;
+            $value = new stdClass();
             $value->{'prop' . $i} = $i;
 
             $buffer .= $this->encoder->encode($value);
         }
 
         // This class def should be the 16th (0xa0) ...
-        $this->assertSameBinary("C\x08stdClass\x90O\xa0", $this->encoder->encode(new stdClass));
+        $this->assertSameBinary("C\x08stdClass\x90O\xa0", $this->encoder->encode(new stdClass()));
     }
 
     public function testEncodeObjectWithCircularReference()
     {
-        $object = new stdClass;
+        $object = new stdClass();
         $object->a = null;
         $object->b = $object;
 
@@ -258,7 +258,7 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
     public function testEncodeObjectWithCircularReferenceInWrapper()
     {
-        $object = new stdClass;
+        $object = new stdClass();
         $object->a = null;
         $object->b = $object;
 
@@ -270,12 +270,12 @@ class EncoderTest extends PHPUnit_Framework_TestCase
     public function testEncodeUnsupportedObject()
     {
         $this->setExpectedException('Icecave\Flax\Exception\EncodeException', 'Can not encode object of type "Exception".');
-        $this->encoder->encode(new Exception);
+        $this->encoder->encode(new Exception());
     }
 
     public function testReset()
     {
-        $value = new stdClass;
+        $value = new stdClass();
 
         $this->encoder->encode($value);
 
