@@ -4,32 +4,32 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3d766f7f471ea560532d21c883d16e93",
+    "hash": "bb24e6f8204f01f27b88757997febf75",
     "packages": [
         {
             "name": "eloquent/enumeration",
-            "version": "3.0.2",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eloquent/enumeration.git",
-                "reference": "ee87a3062d71a00cb61167f2d59dd479a129caf6"
+                "reference": "9c50109cf25b2008b9b8233b814e50e0cdf8b737"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eloquent/enumeration/zipball/ee87a3062d71a00cb61167f2d59dd479a129caf6",
-                "reference": "ee87a3062d71a00cb61167f2d59dd479a129caf6",
+                "url": "https://api.github.com/repos/eloquent/enumeration/zipball/9c50109cf25b2008b9b8233b814e50e0cdf8b737",
+                "reference": "9c50109cf25b2008b9b8233b814e50e0cdf8b737",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.3"
             },
             "require-dev": {
-                "icecave/archer": "~0.2"
+                "icecave/archer": "~1"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Eloquent\\Enumeration": "src"
+                "psr-4": {
+                    "Eloquent\\Enumeration\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -49,9 +49,11 @@
                 "class",
                 "enum",
                 "enumeration",
-                "set"
+                "multiton",
+                "set",
+                "type"
             ],
-            "time": "2013-03-04 09:52:52"
+            "time": "2014-03-13 01:16:59"
         },
         {
             "name": "guzzle/guzzle",
@@ -147,20 +149,20 @@
         },
         {
             "name": "icecave/chrono",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IcecaveStudios/chrono.git",
-                "reference": "b972d8a714c8a67efcff22be9b054351bcd3c39d"
+                "reference": "0ba16064c3fe88bfb0ac43d0b1cae61c36665c51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IcecaveStudios/chrono/zipball/b972d8a714c8a67efcff22be9b054351bcd3c39d",
-                "reference": "b972d8a714c8a67efcff22be9b054351bcd3c39d",
+                "url": "https://api.github.com/repos/IcecaveStudios/chrono/zipball/0ba16064c3fe88bfb0ac43d0b1cae61c36665c51",
+                "reference": "0ba16064c3fe88bfb0ac43d0b1cae61c36665c51",
                 "shasum": ""
             },
             "require": {
-                "icecave/isolator": "~2",
+                "icecave/isolator": "~2|~3",
                 "icecave/parity": "~1",
                 "php": ">=5.3"
             },
@@ -168,10 +170,12 @@
                 "eloquent/liberator": "~1",
                 "icecave/archer": "~1"
             },
-            "suggest": {
-                "eloquent/asplode": "Drop-in exception-based error handling."
-            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Icecave\\Chrono\\": "src"
@@ -203,7 +207,7 @@
                 "time",
                 "timer"
             ],
-            "time": "2014-09-09 02:17:50"
+            "time": "2014-10-20 07:04:19"
         },
         {
             "name": "icecave/collections",
@@ -267,16 +271,16 @@
         },
         {
             "name": "icecave/isolator",
-            "version": "2.3.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IcecaveStudios/isolator.git",
-                "reference": "97c51fafa39c57a8f1a31f978a48fbe6cea4a5d5"
+                "reference": "7d975e5324cec69d2bcc2cda1e19c8f52923a48f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IcecaveStudios/isolator/zipball/97c51fafa39c57a8f1a31f978a48fbe6cea4a5d5",
-                "reference": "97c51fafa39c57a8f1a31f978a48fbe6cea4a5d5",
+                "url": "https://api.github.com/repos/IcecaveStudios/isolator/zipball/7d975e5324cec69d2bcc2cda1e19c8f52923a48f",
+                "reference": "7d975e5324cec69d2bcc2cda1e19c8f52923a48f",
                 "shasum": ""
             },
             "require": {
@@ -285,14 +289,19 @@
             "require-dev": {
                 "icecave/archer": "~1"
             },
-            "suggest": {
-                "eloquent/asplode": "Drop-in exception-based error handling."
-            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "3.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Icecave\\Isolator\\": "src"
-                }
+                },
+                "files": [
+                    "src/register-autoloader.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -308,14 +317,15 @@
             "description": "Dependency injection for global functions.",
             "homepage": "https://github.com/IcecaveStudios/isolator",
             "keywords": [
+                "Double",
                 "fake",
                 "mock",
-                "phake",
                 "phpunit",
+                "stub",
                 "test",
                 "unit"
             ],
-            "time": "2014-08-12 03:16:11"
+            "time": "2014-10-08 01:06:45"
         },
         {
             "name": "icecave/parity",
@@ -1361,16 +1371,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.16.0",
+            "version": "v1.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "8ce37115802e257a984a82d38254884085060024"
+                "reference": "42f758d9fe2146d1f0470604fc05ee43580873fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/8ce37115802e257a984a82d38254884085060024",
-                "reference": "8ce37115802e257a984a82d38254884085060024",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/42f758d9fe2146d1f0470604fc05ee43580873fc",
+                "reference": "42f758d9fe2146d1f0470604fc05ee43580873fc",
                 "shasum": ""
             },
             "require": {
@@ -1414,7 +1424,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-07-05 12:19:05"
+            "time": "2014-10-17 12:53:44"
         }
     ],
     "aliases": [],
@@ -1422,7 +1432,7 @@
     "stability-flags": [],
     "prefer-stable": false,
     "platform": {
-        "php": ">=5.3"
+        "php": ">=5.4"
     },
     "platform-dev": []
 }

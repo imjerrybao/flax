@@ -20,7 +20,7 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
         $this->request = Phake::mock('Guzzle\Http\Message\Request');
         $this->encoder = Phake::mock('Icecave\Flax\Message\Encoder');
         $this->decoder = Phake::mock('Icecave\Flax\Message\Decoder');
-        $this->isolator = Phake::mock(Isolator::className());
+        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
 
         $this->requestBuffer  = "H\x02\x00C...";
         $this->responseBuffer = "H\x02\x00R\x05hello";
@@ -30,9 +30,10 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
             $this->logger,
             $this->streamFactory,
             $this->encoder,
-            $this->decoder,
-            $this->isolator
+            $this->decoder
         );
+
+        $this->client->setIsolator($this->isolator);
 
         Phake::when($this->isolator)
             ->microtime(true)

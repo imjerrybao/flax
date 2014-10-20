@@ -1,9 +1,9 @@
 <?php
 namespace Icecave\Flax\Message;
 
-use Eloquent\Enumeration\Enumeration;
+use Eloquent\Enumeration\AbstractEnumeration;
 
-class HessianConstants extends Enumeration
+class HessianConstants extends AbstractEnumeration
 {
     const HEADER  = 0x48;
     const VERSION = "\x02\x00";

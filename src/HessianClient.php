@@ -14,28 +14,28 @@ use Icecave\Flax\Exception\RequireHeaderException;
 use Icecave\Flax\Exception\ServiceException;
 use Icecave\Flax\Message\Decoder;
 use Icecave\Flax\Message\Encoder;
-use Icecave\Isolator\Isolator;
+use Icecave\Isolator\IsolatorTrait;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 class HessianClient implements HessianClientInterface, LoggerAwareInterface
 {
+    use IsolatorTrait;
+
     /**
      * @param ClientInterface              $httpClient    The HTTP client used to make the request.
      * @param LoggerInterface|null         $logger        A PSR-3 logger to log requests against, or null to disable logging.
      * @param PhpStreamRequestFactory|null $streamFactory The stream factory used to create stream-based HTTP requests, or null to use the default.
      * @param Encoder|null                 $encoder       The Hessian message encoder, or null to use the default.
      * @param Decoder|null                 $decoder       The hessian message decoder, or null to use the default.
-     * @param Isolator|null                $isolator
      */
     public function __construct(
         ClientInterface $httpClient,
         LoggerInterface $logger = null,
         PhpStreamRequestFactory $streamFactory = null,
         Encoder $encoder = null,
-        Decoder $decoder = null,
-        Isolator $isolator = null
+        Decoder $decoder = null
     ) {
         if (null === $logger) {
             $logger = new NullLogger();
@@ -58,7 +58,6 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
         $this->streamFactory = $streamFactory;
         $this->encoder = $encoder;
         $this->decoder = $decoder;
-        $this->isolator = Isolator::get($isolator);
     }
 
     /**
@@ -127,9 +126,9 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
         );
 
         try {
-            $time = $this->isolator->microtime(true);
+            $time = $this->isolator()->microtime(true);
             list($reply, $fault) = $this->doRequest($name, $arguments);
-            $time = $this->isolator->microtime(true) - $time;
+            $time = $this->isolator()->microtime(true) - $time;
         } catch (Exception $e) {
             $this->logger->error(
                 'Error occurred while invoking "' . $methodDescription . '".',

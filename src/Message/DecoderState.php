@@ -1,9 +1,9 @@
 <?php
 namespace Icecave\Flax\Message;
 
-use Eloquent\Enumeration\Enumeration;
+use Eloquent\Enumeration\AbstractEnumeration;
 
-class DecoderState extends Enumeration
+class DecoderState extends AbstractEnumeration
 {
     const BEGIN        = 0;
     const VERSION      = 1;

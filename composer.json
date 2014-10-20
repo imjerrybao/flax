@@ -20,12 +20,12 @@
         }
     ],
     "require": {
-        "php": ">=5.3",
-        "eloquent/enumeration": "~3",
+        "php": ">=5.4",
+        "eloquent/enumeration": "~5",
         "guzzle/http": "~3",
         "icecave/chrono": "~1",
         "icecave/collections": "~1",
-        "icecave/isolator": "~2",
+        "icecave/isolator": "~3",
         "psr/log": "~1"
     },
     "require-dev": {
