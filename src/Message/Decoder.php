@@ -158,7 +158,11 @@ class Decoder
 
         $value = null;
         if ($this->serializationDecoder->tryFinalize($value)) {
-            $this->value = array($this->state === DecoderState::RPC_REPLY(), $value);
+            $this->value = [
+                $this->state === DecoderState::RPC_REPLY(),
+                $value,
+            ];
+
             $this->state = DecoderState::COMPLETE();
         }
     }

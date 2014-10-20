@@ -19,20 +19,20 @@ class EncoderTest extends PHPUnit_Framework_TestCase
     {
         $expectedResult = "C\x03foo\x93\x91\x92\x93";
 
-        $buffer = $this->encoder->encodeCall("foo", array(1, 2, 3));
+        $buffer = $this->encoder->encodeCall("foo", [1, 2, 3]);
 
         $this->assertSame($expectedResult, $buffer);
     }
 
     public function testReset()
     {
-        $this->encoder->encodeCall("foo", array(1, 2, 3));
+        $this->encoder->encodeCall("foo", [1, 2, 3]);
 
         $this->encoder->reset();
 
         $expectedResult = "C\x03foo\x93\x91\x92\x93";
 
-        $buffer = $this->encoder->encodeCall("foo", array(1, 2, 3));
+        $buffer = $this->encoder->encodeCall("foo", [1, 2, 3]);
 
         $this->assertSame($expectedResult, $buffer);
     }

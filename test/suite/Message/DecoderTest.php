@@ -24,16 +24,16 @@ class DecoderTest extends PHPUnit_Framework_TestCase
 
     public function decodeTestVectors()
     {
-        return array(
-            array(
+        return [
+            [
                 "H\x02\x00R\x91",
-                array(true, 1)
-            ),
-            array(
+                [true, 1]
+            ],
+            [
                 "H\x02\x00FH\x04code\x04testZ",
-                array(false, Map::create(array('code', 'test')))
-            ),
-        );
+                [false, Map::create(['code', 'test'])]
+            ],
+        ];
     }
 
     public function testDecodeFailureNotReset()
@@ -58,7 +58,7 @@ class DecoderTest extends PHPUnit_Framework_TestCase
 
         $value = null;
         $this->assertTrue($this->decoder->tryFinalize($value));
-        $this->assertSame(array(true, 1), $value);
+        $this->assertSame([true, 1], $value);
     }
 
     public function testTryFinalizeFailure()

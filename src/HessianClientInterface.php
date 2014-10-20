@@ -31,5 +31,5 @@ interface HessianClientInterface
      * @return mixed                                   The result of the Hessian call.
      * @throws Exception\AbstractHessianFaultException
      */
-    public function invokeArray($name, array $arguments = array());
+    public function invokeArray($name, array $arguments = []);
 }

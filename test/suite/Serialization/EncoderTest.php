@@ -90,16 +90,16 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
     public function binaryTestVectors()
     {
-        return array(
-            'binary - compact - empty' => array(
+        return [
+            'binary - compact - empty' => [
                 "\x20",
                 "",
-            ),
-            'binary - compact - hello' => array(
+            ],
+            'binary - compact - hello' => [
                 "\x25hello",
                 "hello",
-            ),
-        );
+            ],
+        ];
     }
 
     public function testEncodeBinaryMediumLength()
@@ -165,16 +165,16 @@ class EncoderTest extends PHPUnit_Framework_TestCase
 
     public function timestampTestVectors()
     {
-        return array(
-            'timestamp - milliseconds' => array(
+        return [
+            'timestamp - milliseconds' => [
                 "\x4a\x00\x00\x00\xd0\x4b\x92\x84\xb8",
                 894621091 * 1000
-            ),
-            'timestamp - minutes' => array(
+            ],
+            'timestamp - minutes' => [
                 "\x4b\x00\xe3\x83\x8f",
                 894621060 * 1000
-            ),
-        );
+            ],
+        ];
     }
 
     public function testEncodeMultipleObjects()
@@ -225,7 +225,7 @@ class EncoderTest extends PHPUnit_Framework_TestCase
     {
         $value = new stdClass();
 
-        $this->encoder->encode(array());
+        $this->encoder->encode([]);
 
         $this->assertSameBinary("C\x08stdClass\x90\x60", $this->encoder->encode($value));
         $this->assertSameBinary("Q\x91", $this->encoder->encode($value));

@@ -69,7 +69,7 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
 
         Phake::when($this->decoder)
             ->finalize()
-            ->thenReturn(array(true, 'hello'));
+            ->thenReturn([true, 'hello']);
     }
 
     public function testConstructorDefaults()
@@ -98,17 +98,17 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
 
         Phake::inOrder(
             Phake::verify($this->encoder)->encodeVersion(),
-            Phake::verify($this->encoder)->encodeCall('foo', array(1, 2, 3)),
+            Phake::verify($this->encoder)->encodeCall('foo', [1, 2, 3]),
             Phake::verify($this->httpClient)->post(null, null, $this->requestBuffer),
             Phake::verify($this->decoder)->feed("H\x02\x00R"),
             Phake::verify($this->decoder)->feed("\x05hello"),
             Phake::verify($this->decoder)->finalize(),
             Phake::verify($this->logger)->debug(
                 'Invoked "foo(integer, integer, integer)" in 0.5 second(s), with "string" reply.',
-                array(
-                    'arguments' => array(1, 2, 3),
+                [
+                    'arguments' => [1, 2, 3],
                     'reply' => 'hello',
-                )
+                ]
             )
         );
 
@@ -121,17 +121,17 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
 
         Phake::inOrder(
             Phake::verify($this->encoder)->encodeVersion(),
-            Phake::verify($this->encoder)->encodeCall('foo', array(1, 2, 3)),
+            Phake::verify($this->encoder)->encodeCall('foo', [1, 2, 3]),
             Phake::verify($this->httpClient)->post(null, null, $this->requestBuffer),
             Phake::verify($this->decoder)->feed("H\x02\x00R"),
             Phake::verify($this->decoder)->feed("\x05hello"),
             Phake::verify($this->decoder)->finalize(),
             Phake::verify($this->logger)->debug(
                 'Invoked "foo(integer, integer, integer)" in 0.5 second(s), with "string" reply.',
-                array(
-                    'arguments' => array(1, 2, 3),
+                [
+                    'arguments' => [1, 2, 3],
                     'reply' => 'hello',
-                )
+                ]
             )
         );
 
@@ -140,21 +140,21 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
 
     public function testInvokeArray()
     {
-        $result = $this->client->invokeArray('foo', array(1, 2, 3));
+        $result = $this->client->invokeArray('foo', [1, 2, 3]);
 
         Phake::inOrder(
             Phake::verify($this->encoder)->encodeVersion(),
-            Phake::verify($this->encoder)->encodeCall('foo', array(1, 2, 3)),
+            Phake::verify($this->encoder)->encodeCall('foo', [1, 2, 3]),
             Phake::verify($this->httpClient)->post(null, null, $this->requestBuffer),
             Phake::verify($this->decoder)->feed("H\x02\x00R"),
             Phake::verify($this->decoder)->feed("\x05hello"),
             Phake::verify($this->decoder)->finalize(),
             Phake::verify($this->logger)->debug(
                 'Invoked "foo(integer, integer, integer)" in 0.5 second(s), with "string" reply.',
-                array(
-                    'arguments' => array(1, 2, 3),
+                [
+                    'arguments' => [1, 2, 3],
                     'reply' => 'hello',
-                )
+                ]
             )
         );
 
@@ -163,14 +163,14 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
 
     public function testInvokeArrayClassNameLogging()
     {
-        $result = $this->client->invokeArray('foo', array(new stdClass()));
+        $result = $this->client->invokeArray('foo', [new stdClass()]);
 
         Phake::verify($this->logger)->debug(
             'Invoked "foo(stdClass)" in 0.5 second(s), with "string" reply.',
-            array(
-                'arguments' => array(new stdClass()),
+            [
+                'arguments' => [new stdClass()],
                 'reply' => 'hello',
-            )
+            ]
         );
 
         $this->assertSame('hello', $result);
@@ -182,13 +182,13 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
     public function testInvokeFailure($exceptionType)
     {
         $properties = Map::create(
-            array('code', $exceptionType),
-            array('message', 'The message.')
+            ['code', $exceptionType],
+            ['message', 'The message.']
         );
 
         Phake::when($this->decoder)
             ->finalize()
-            ->thenReturn(array(false, $properties));
+            ->thenReturn([false, $properties]);
 
         $this->setExpectedException('Icecave\Flax\Exception\\' . $exceptionType, 'The message.');
 
@@ -197,10 +197,10 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             Phake::verify($this->logger)->debug(
                 'Invoked "foo(integer, integer, integer)" in 0.5 second(s), with "' . $exceptionType . '" fault: The message.',
-                array(
-                    'arguments' => array(1, 2, 3),
+                [
+                    'arguments' => [1, 2, 3],
                     'fault' => $properties
-                )
+                ]
             );
 
             throw $e;
@@ -210,13 +210,13 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
     public function testInvokeFailureUnknownExceptionType()
     {
         $properties = Map::create(
-            array('code', '<foo>'),
-            array('message', 'The message.')
+            ['code', '<foo>'],
+            ['message', 'The message.']
         );
 
         Phake::when($this->decoder)
             ->finalize()
-            ->thenReturn(array(false, $properties));
+            ->thenReturn([false, $properties]);
 
         $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Unknown Hessian fault code: <foo>.');
         $this->client->invoke('foo', 1, 2, 3);
@@ -225,12 +225,12 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
     public function testInvokeFailureMissingExceptionCode()
     {
         $properties = Map::create(
-            array('message', 'The message.')
+            ['message', 'The message.']
         );
 
         Phake::when($this->decoder)
             ->finalize()
-            ->thenReturn(array(false, $properties));
+            ->thenReturn([false, $properties]);
 
         $this->setExpectedException('Icecave\Flax\Exception\DecodeException', 'Encountered Hessian fault with no fault code.');
         $this->client->invoke('foo', 1, 2, 3);
@@ -238,12 +238,12 @@ class HessianClientTest extends PHPUnit_Framework_TestCase
 
     public function exceptionTypes()
     {
-        return array(
-            array('NoSuchMethodException'),
-            array('NoSuchObjectException'),
-            array('ProtocolException'),
-            array('RequireHeaderException'),
-            array('ServiceException'),
-        );
+        return [
+            ['NoSuchMethodException'],
+            ['NoSuchObjectException'],
+            ['ProtocolException'],
+            ['RequireHeaderException'],
+            ['ServiceException'],
+        ];
     }
 }

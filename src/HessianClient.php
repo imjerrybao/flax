@@ -106,7 +106,7 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
      * @return mixed                                   The result of the Hessian call.
      * @throws Exception\AbstractHessianFaultException
      */
-    public function invokeArray($name, array $arguments = array())
+    public function invokeArray($name, array $arguments = [])
     {
         $typeName = function ($value) {
             if (is_object($value)) {
@@ -132,10 +132,10 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
         } catch (Exception $e) {
             $this->logger->error(
                 'Error occurred while invoking "' . $methodDescription . '".',
-                array(
+                [
                     'arguments' => $arguments,
-                    'exception' => $e
-                )
+                    'exception' => $e,
+                ]
             );
 
             throw $e;
@@ -144,10 +144,10 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
         if ($fault) {
             $this->logger->debug(
                 'Invoked "' . $methodDescription . '" in ' . $time . ' second(s), with "' . $reply['code'] . '" fault: ' . $fault->getMessage(),
-                array(
+                [
                     'arguments' => $arguments,
-                    'fault' => $reply
-                )
+                    'fault' => $reply,
+                ]
             );
 
             throw $fault;
@@ -155,10 +155,10 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
 
         $this->logger->debug(
             'Invoked "' . $methodDescription . '" in ' . $time . ' second(s), with "' . $typeName($reply) . '" reply.',
-            array(
+            [
                 'arguments' => $arguments,
-                'reply' => $reply
-            )
+                'reply' => $reply,
+            ]
         );
 
         return $reply;
@@ -189,9 +189,15 @@ class HessianClient implements HessianClientInterface, LoggerAwareInterface
         list($success, $value) = $this->decoder->finalize();
 
         if ($success) {
-            return array($value, null);
+            return [
+                $value,
+                null,
+            ];
         } else {
-            return array($value, $this->createFaultException($value));
+            return [
+                $value,
+                $this->createFaultException($value),
+            ];
         }
     }
 
