@@ -21,7 +21,7 @@ class HessianClientFactoryTest extends PHPUnit_Framework_TestCase
 
         $httpClient = Liberator::liberate($client)->httpClient;
 
-        $this->assertSame('Flax/0.0.0', Liberator::liberate($httpClient)->userAgent);
+        $this->assertSame('Flax/0.1.0', Liberator::liberate($httpClient)->userAgent);
         $this->assertSame('x-application/hessian', $httpClient->getDefaultOption('headers/Content-Type'));
     }
 }
